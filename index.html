@@ -9,16 +9,14 @@
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{width:100%;min-height:100%;overflow-x:hidden}
 
-/* ── FONTS via base64-free safe stack ── */
+/* ── FONTS ── */
 body{
-  font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
+  font-family:'Georgia','Times New Roman',serif;
   background:#05050f;
   color:#fff;
 }
-.font-display{
-  font-family:'Courier New',Courier,monospace;
-  letter-spacing:.05em;
-}
+.font-display{font-family:'Courier New',Courier,monospace;letter-spacing:.05em}
+.font-mono{font-family:'Courier New',Courier,monospace}
 
 /* ── CSS VARIABLES ── */
 :root{
@@ -26,65 +24,76 @@ body{
   --blue:#1e90ff;
   --cyan:#00d4ff;
   --dark:#05050f;
-  --dark2:#0b0b1a;
-  --dark3:#10101e;
   --card:#12121f;
-  --border:rgba(255,255,255,0.1);
-  --gold-dim:rgba(212,167,66,0.15);
-  --blue-dim:rgba(30,144,255,0.15);
+  --border:rgba(255,255,255,0.09);
+  --ease:cubic-bezier(0.4,0,0.2,1);
 }
 
 /* ── BACKGROUND ── */
 .bg-layer{
   position:fixed;inset:0;z-index:0;
   background:
-    radial-gradient(ellipse 60% 50% at 10% 10%, rgba(30,144,255,0.12) 0%, transparent 70%),
-    radial-gradient(ellipse 50% 40% at 90% 90%, rgba(212,167,66,0.1) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 50% at 10% 10%, rgba(30,144,255,0.10) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 40% at 90% 90%, rgba(212,167,66,0.08) 0%, transparent 70%),
     #05050f;
 }
 .grid-layer{
   position:fixed;inset:0;z-index:0;pointer-events:none;
   background-image:
-    linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px);
+    linear-gradient(rgba(255,255,255,0.016) 1px, transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,0.016) 1px,transparent 1px);
   background-size:50px 50px;
 }
 
 /* ── MAIN WRAPPER ── */
-#app{position:relative;z-index:1;min-height:100vh;padding:16px}
+#app{
+  position:relative;z-index:1;min-height:100vh;
+  padding:16px;
+  max-width:480px;
+  margin:0 auto;
+}
 
 /* ── PAGE SYSTEM ── */
-.page{display:none}
-.page.active{display:block}
+.page{display:none;opacity:0}
+.page.active{display:block;opacity:1}
+
+/* ── FADE ANIMATION ── */
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(14px)}
+  to{opacity:1;transform:translateY(0)}
+}
+.fade-in{animation:fadeUp .38s var(--ease) both}
 
 /* ── CARD BASE ── */
 .card{
   background:var(--card);
   border:1px solid var(--border);
   border-radius:16px;
-  transition:border-color .25s, transform .2s;
+  transition:border-color .3s var(--ease),transform .3s var(--ease),box-shadow .3s var(--ease);
 }
-.card:hover{border-color:rgba(212,167,66,0.35);transform:translateY(-1px)}
+.card:hover{border-color:rgba(212,167,66,0.3);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,0.3)}
 
 /* ── BADGE ── */
 .badge{
   display:inline-block;
-  background:rgba(212,167,66,0.1);
+  background:rgba(212,167,66,0.07);
   border:1px solid rgba(212,167,66,0.3);
   border-radius:999px;
-  padding:5px 18px;
-  font-size:11px;
-  letter-spacing:.15em;
+  padding:6px 20px;
+  font-size:10px;
+  letter-spacing:.25em;
   color:var(--gold);
   font-family:'Courier New',monospace;
   font-weight:700;
+  text-transform:uppercase;
+  box-shadow:0 0 18px rgba(212,167,66,0.07);
 }
 
 /* ── DIVIDER ── */
 .divider{
-  width:80px;height:3px;
-  background:linear-gradient(90deg, transparent, var(--gold), transparent);
-  margin:16px auto 24px;
+  width:72px;height:2px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  margin:14px auto 22px;
   border-radius:99px;
 }
 
@@ -95,378 +104,436 @@ body{
   border-radius:12px;
   font-family:'Courier New',monospace;
   font-weight:700;
-  font-size:15px;
+  font-size:14px;
   letter-spacing:.1em;
   cursor:pointer;
   border:1px solid;
-  transition:all .25s;
+  transition:background .28s var(--ease),border-color .28s var(--ease),
+             transform .22s var(--ease),box-shadow .28s var(--ease);
   text-align:center;
   text-decoration:none;
+  -webkit-user-select:none;user-select:none;
 }
 .btn-gold{
-  background:rgba(212,167,66,0.1);
-  border-color:rgba(212,167,66,0.5);
+  background:rgba(212,167,66,0.09);
+  border-color:rgba(212,167,66,0.45);
   color:var(--gold);
 }
-.btn-gold:hover, .btn-gold:active{
-  background:rgba(212,167,66,0.22);
+.btn-gold:hover,.btn-gold:active{
+  background:rgba(212,167,66,0.2);
   border-color:var(--gold);
   transform:translateY(-2px);
-  box-shadow:0 6px 20px rgba(212,167,66,0.15);
+  box-shadow:0 6px 22px rgba(212,167,66,0.14);
 }
 .btn-blue{
-  background:rgba(30,144,255,0.1);
-  border-color:rgba(30,144,255,0.5);
+  background:rgba(30,144,255,0.09);
+  border-color:rgba(30,144,255,0.45);
   color:var(--cyan);
 }
-.btn-blue:hover, .btn-blue:active{
-  background:rgba(30,144,255,0.2);
+.btn-blue:hover,.btn-blue:active{
+  background:rgba(30,144,255,0.18);
   border-color:var(--cyan);
   transform:translateY(-2px);
-  box-shadow:0 6px 20px rgba(0,212,255,0.12);
+  box-shadow:0 6px 22px rgba(0,212,255,0.11);
 }
 .btn-back{
   display:inline-flex;align-items:center;gap:8px;
-  background:rgba(255,255,255,0.05);
-  border:1px solid rgba(255,255,255,0.12);
-  color:#aaa;
-  padding:10px 18px;
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.1);
+  color:#888;
+  padding:9px 16px;
   border-radius:10px;
-  font-size:14px;
+  font-size:13px;
   cursor:pointer;
-  margin-bottom:24px;
-  transition:all .2s;
+  margin-bottom:22px;
+  transition:background .25s var(--ease),color .25s var(--ease),transform .2s var(--ease);
   font-family:inherit;
+  letter-spacing:.02em;
 }
-.btn-back:hover{background:rgba(255,255,255,0.1);color:#fff}
+.btn-back:hover,.btn-back:active{
+  background:rgba(255,255,255,0.09);
+  color:#ddd;
+  transform:translateX(-2px);
+}
 
 /* ── TYPOGRAPHY ── */
 .page-title{
   font-family:'Courier New',monospace;
-  font-size:26px;
+  font-size:22px;
   font-weight:900;
-  letter-spacing:.05em;
+  letter-spacing:.08em;
   color:var(--gold);
-  margin-bottom:4px;
+  margin-bottom:3px;
+  text-shadow:0 0 22px rgba(212,167,66,0.18);
 }
-.page-subtitle{color:#666;font-size:14px;margin-bottom:24px}
+.page-subtitle{
+  color:#4a4a5a;
+  font-size:12px;
+  margin-bottom:20px;
+  letter-spacing:.05em;
+}
 
 /* ── HOME PAGE ── */
 .home-header{
   text-align:center;
-  padding:40px 0 32px;
-}
-.home-tournament-label{
-  font-family:'Courier New',monospace;
-  font-size:11px;
-  letter-spacing:.2em;
-  color:var(--gold);
-  margin-bottom:12px;
+  padding:36px 0 28px;
 }
 .home-title{
   font-family:'Courier New',monospace;
-  font-size:clamp(28px, 8vw, 52px);
+  font-size:clamp(24px,8vw,48px);
   font-weight:900;
-  line-height:1.1;
-  letter-spacing:.03em;
+  line-height:1.08;
+  letter-spacing:.04em;
   color:#fff;
-  text-shadow:0 0 30px rgba(212,167,66,0.15);
+  text-shadow:0 0 40px rgba(212,167,66,0.15),0 2px 0 rgba(0,0,0,0.5);
   margin-bottom:4px;
 }
-.home-title .accent{color:var(--gold)}
-.home-desc{
-  color:#999;
-  font-size:15px;
-  line-height:1.7;
-  max-width:340px;
-  margin:0 auto 32px;
+.home-title .accent{
+  color:var(--gold);
+  text-shadow:0 0 28px rgba(212,167,66,0.3);
 }
-.home-desc .highlight{color:var(--gold);font-weight:600}
-.home-buttons{display:flex;flex-direction:column;gap:12px;max-width:340px;margin:0 auto 40px}
+.home-desc{
+  color:#777;
+  font-size:13px;
+  line-height:1.85;
+  max-width:300px;
+  margin:0 auto 28px;
+  font-style:italic;
+}
+.home-desc .highlight{color:var(--gold);font-weight:700;font-style:normal}
+.home-buttons{
+  display:flex;flex-direction:column;gap:11px;
+  max-width:320px;margin:0 auto 36px;
+}
 .partners-box{
-  background:rgba(212,167,66,0.06);
-  border:1px solid rgba(212,167,66,0.15);
+  background:rgba(212,167,66,0.05);
+  border:1px solid rgba(212,167,66,0.12);
   border-radius:12px;
-  padding:16px 20px;
+  padding:14px 20px;
   text-align:center;
-  max-width:340px;
+  max-width:320px;
   margin:0 auto;
 }
-.partners-label{font-size:10px;letter-spacing:.15em;color:#555;margin-bottom:6px}
+.partners-label{
+  font-size:9px;letter-spacing:.18em;color:#444;
+  margin-bottom:5px;text-transform:uppercase;
+}
 .partners-names{
   font-family:'Courier New',monospace;
   color:var(--gold);
-  font-size:14px;
+  font-size:13px;
   font-weight:700;
-  letter-spacing:.05em;
+  letter-spacing:.06em;
 }
 
 /* ── TEAM GRID ── */
 .team-grid{
   display:grid;
-  grid-template-columns:repeat(2, 1fr);
-  gap:12px;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
 }
 .team-item{
   background:var(--card);
   border:1px solid var(--border);
-  border-radius:14px;
-  padding:16px 14px;
+  border-radius:13px;
+  padding:15px 13px;
   cursor:pointer;
   text-align:left;
-  transition:all .22s;
+  transition:border-color .28s var(--ease),background .28s var(--ease),transform .22s var(--ease),box-shadow .28s var(--ease);
   width:100%;
+  -webkit-user-select:none;user-select:none;
 }
-.team-item:hover, .team-item:active{
-  border-color:rgba(212,167,66,0.4);
-  background:#1a1a2e;
-  transform:scale(1.02);
+.team-item:hover,.team-item:active{
+  border-color:rgba(212,167,66,0.38);
+  background:#161625;
+  transform:scale(1.025);
+  box-shadow:0 6px 18px rgba(0,0,0,0.35);
 }
 .team-letter{
-  width:40px;height:40px;
-  border-radius:10px;
+  width:38px;height:38px;
+  border-radius:9px;
   display:flex;align-items:center;justify-content:center;
   font-family:'Courier New',monospace;
   font-weight:900;
-  font-size:18px;
+  font-size:17px;
   color:#fff;
   margin-bottom:8px;
 }
 .team-name{
   font-family:'Courier New',monospace;
   font-weight:700;
-  font-size:15px;
-  color:#fff;
-  margin-bottom:3px;
+  font-size:14px;
+  color:#e8e8f0;
+  margin-bottom:2px;
+  letter-spacing:.02em;
 }
-.team-tap{font-size:11px;color:#555}
+.team-tap{font-size:10px;color:#444;letter-spacing:.03em}
 
 /* ── TEAM DETAIL ── */
 .team-detail-header{
   background:var(--card);
   border:1px solid var(--border);
   border-radius:16px;
-  padding:32px 20px;
+  padding:30px 20px;
   text-align:center;
-  margin-bottom:16px;
+  margin-bottom:14px;
 }
 .team-detail-badge{
-  width:72px;height:72px;
-  border-radius:18px;
+  width:68px;height:68px;
+  border-radius:16px;
   display:flex;align-items:center;justify-content:center;
   font-family:'Courier New',monospace;
   font-weight:900;
-  font-size:30px;
+  font-size:28px;
   color:#fff;
-  margin:0 auto 16px;
+  margin:0 auto 14px;
 }
 .team-detail-name{
   font-family:'Courier New',monospace;
-  font-size:24px;
+  font-size:22px;
   font-weight:900;
   color:var(--gold);
-  margin-bottom:6px;
+  margin-bottom:5px;
+  letter-spacing:.04em;
 }
-.team-detail-sub{color:#555;font-size:13px;margin-bottom:20px}
-.team-detail-hr{height:1px;background:rgba(255,255,255,0.08);margin:20px 0}
-.team-detail-msg{font-size:16px;color:#ccc;font-weight:600;margin-bottom:6px}
-.team-detail-wait{color:#555;font-size:13px}
+.team-detail-sub{color:#3a3a4a;font-size:12px;margin-bottom:18px;letter-spacing:.04em}
+.team-detail-hr{height:1px;background:rgba(255,255,255,0.07);margin:18px 0}
+.team-detail-msg{font-size:15px;color:#bbb;font-weight:600;margin-bottom:5px}
+.team-detail-wait{color:#444;font-size:12px;font-style:italic}
 
 /* ── REGULASI LIST ── */
-.reg-list{display:flex;flex-direction:column;gap:10px}
+.reg-list{display:flex;flex-direction:column;gap:8px}
 .reg-item{
   background:var(--card);
   border:1px solid var(--border);
-  border-radius:14px;
-  padding:16px;
+  border-radius:13px;
+  padding:14px 15px;
   cursor:pointer;
-  display:flex;align-items:center;gap:14px;
+  display:flex;align-items:center;gap:13px;
   text-align:left;
   width:100%;
-  transition:all .22s;
+  transition:border-color .28s var(--ease),background .28s var(--ease),transform .22s var(--ease),box-shadow .25s var(--ease);
+  -webkit-user-select:none;user-select:none;
 }
-.reg-item:hover, .reg-item:active{
-  background:#1a1a2e;
-  border-color:rgba(212,167,66,0.35);
-  transform:translateX(3px);
+.reg-item:hover,.reg-item:active{
+  background:#141422;
+  border-color:rgba(212,167,66,0.3);
+  transform:translateX(4px);
+  box-shadow:0 4px 16px rgba(0,0,0,0.3);
 }
 .reg-icon{
-  width:46px;height:46px;min-width:46px;
-  border-radius:12px;
+  width:44px;height:44px;min-width:44px;
+  border-radius:11px;
   display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
 }
-.reg-icon svg{width:22px;height:22px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.reg-icon.filled svg{fill:#fff;stroke:none}
-.reg-text{flex:1}
+.reg-icon svg{
+  width:21px;height:21px;
+  stroke:#fff;fill:none;
+  stroke-width:2;stroke-linecap:round;stroke-linejoin:round;
+}
+.reg-text{flex:1;min-width:0}
 .reg-title{
   font-family:'Courier New',monospace;
   font-weight:700;
-  font-size:15px;
-  color:#fff;
-  margin-bottom:3px;
+  font-size:13px;
+  color:#e0e0ee;
+  margin-bottom:2px;
+  letter-spacing:.025em;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
 }
-.reg-sub{font-size:12px;color:#555}
-.reg-arrow{color:#444;font-size:18px;flex-shrink:0}
+.reg-sub{font-size:10.5px;color:#3e3e50;letter-spacing:.02em}
+.reg-arrow{
+  color:#333;font-size:17px;flex-shrink:0;
+  transition:color .25s var(--ease),transform .25s var(--ease);
+}
+.reg-item:hover .reg-arrow{color:#888;transform:translateX(3px)}
 
 /* ── REGULASI DETAIL ── */
 .reg-detail-title{
   font-family:'Courier New',monospace;
-  font-size:22px;
+  font-size:20px;
   font-weight:900;
-  letter-spacing:.04em;
-  margin-bottom:4px;
+  letter-spacing:.05em;
+  margin-bottom:6px;
+  line-height:1.2;
 }
-.reg-detail-divider{height:3px;width:60px;border-radius:99px;margin-bottom:20px}
+.reg-detail-divider{height:3px;width:50px;border-radius:99px;margin-bottom:18px}
 .reg-body{
   background:var(--card);
   border:1px solid var(--border);
-  border-radius:14px;
-  padding:20px;
+  border-radius:13px;
+  padding:18px;
 }
-.reg-body p{color:#bbb;font-size:14px;line-height:1.7;margin-bottom:10px}
-.reg-body ul{color:#bbb;font-size:14px;line-height:1.7;margin-left:18px;margin-bottom:10px}
+.reg-body p{
+  color:#a8a8bc;font-size:13.5px;line-height:1.85;
+  margin-bottom:12px;font-style:italic;
+}
+.reg-body p:last-child{margin-bottom:0}
+.reg-body ul{color:#a8a8bc;font-size:13.5px;line-height:1.8;margin-left:16px;margin-bottom:10px}
 .reg-body li{margin-bottom:5px}
-.reg-body .highlight{color:var(--gold);font-weight:600}
-.reg-body .highlight-blue{color:var(--cyan);font-weight:600}
-.reg-body .highlight-red{color:#f87171;font-weight:600}
-.reg-body .highlight-green{color:#4ade80;font-weight:600}
+.reg-body .highlight{color:var(--gold);font-weight:600;font-style:normal}
+.reg-body .highlight-blue{color:var(--cyan);font-weight:600;font-style:normal}
+.reg-body .highlight-red{color:#f87171;font-weight:600;font-style:normal}
+.reg-body .highlight-green{color:#4ade80;font-weight:600;font-style:normal}
 
+/* ── INFO / WARN BOXES ── */
 .info-box{
-  background:rgba(255,255,255,0.04);
-  border:1px solid rgba(255,255,255,0.1);
+  background:rgba(255,255,255,0.03);
+  border:1px solid rgba(255,255,255,0.08);
   border-radius:10px;
-  padding:14px;
+  padding:13px 14px;
   margin:10px 0;
-  font-size:14px;
+  font-size:13.5px;
+  color:#a8a8bc;
+  line-height:1.75;
 }
 .warn-box{
-  background:rgba(248,113,113,0.07);
-  border-left:4px solid #f87171;
+  background:rgba(248,113,113,0.06);
+  border-left:3px solid #f87171;
   border-radius:0 10px 10px 0;
-  padding:14px;
+  padding:13px 14px;
   margin:10px 0;
 }
-.warn-title{color:#f87171;font-weight:700;font-size:14px;margin-bottom:8px}
-
+.warn-title{
+  color:#f87171;font-weight:700;
+  font-size:13px;margin-bottom:7px;
+  font-style:normal;letter-spacing:.03em;
+}
 .section-title{
   font-family:'Courier New',monospace;
   font-weight:700;
-  font-size:13px;
+  font-size:12px;
   letter-spacing:.08em;
-  margin-bottom:10px;
-  margin-top:4px;
+  margin-bottom:8px;
+  margin-top:3px;
 }
 
-/* Contact buttons */
+/* ── CONTACT ── */
 .contact-link{
-  display:flex;align-items:center;gap:14px;
+  display:flex;align-items:center;gap:13px;
   background:linear-gradient(135deg,#128c7e,#075e54);
   border-radius:12px;
-  padding:14px 16px;
-  margin-bottom:10px;
+  padding:13px 15px;
+  margin-bottom:9px;
   text-decoration:none;
-  transition:all .2s;
+  transition:transform .25s var(--ease),box-shadow .25s var(--ease),opacity .2s;
 }
-.contact-link:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(37,211,102,0.2)}
+.contact-link:hover,.contact-link:active{
+  transform:translateY(-2px);
+  box-shadow:0 8px 22px rgba(37,211,102,0.18);
+}
 .contact-num{
-  width:36px;height:36px;min-width:36px;
-  background:rgba(255,255,255,0.15);
+  width:34px;height:34px;min-width:34px;
+  background:rgba(255,255,255,0.13);
   border-radius:50%;
   display:flex;align-items:center;justify-content:center;
   font-family:'Courier New',monospace;
   font-weight:900;
   color:#fff;
-  font-size:15px;
+  font-size:14px;
 }
-.contact-name{color:#fff;font-weight:700;font-size:15px;margin-bottom:2px}
-.contact-num-text{color:rgba(255,255,255,0.7);font-size:12px}
+.contact-name{color:#fff;font-weight:700;font-size:14px;margin-bottom:1px}
+.contact-num-text{color:rgba(255,255,255,0.6);font-size:11.5px}
 
-/* Prize boxes */
+/* ── PRIZE BOXES ── */
 .prize-box{
-  display:flex;align-items:center;gap:14px;
+  display:flex;align-items:center;gap:13px;
   background:var(--card);
-  border-radius:12px;
-  padding:14px 16px;
-  margin-bottom:10px;
+  border-radius:11px;
+  padding:13px 15px;
+  margin-bottom:8px;
+  transition:transform .22s var(--ease);
 }
+.prize-box:hover{transform:translateX(3px)}
 .prize-medal{
-  width:40px;height:40px;min-width:40px;
+  width:38px;height:38px;min-width:38px;
   border-radius:50%;
   display:flex;align-items:center;justify-content:center;
   font-family:'Courier New',monospace;
   font-weight:900;
-  font-size:16px;
+  font-size:15px;
   color:#000;
+  flex-shrink:0;
 }
-.prize-rank{font-weight:700;font-size:15px;margin-bottom:2px}
-.prize-desc{color:#777;font-size:13px}
+.prize-rank{font-weight:700;font-size:14px;margin-bottom:1px}
+.prize-desc{color:#5a5a6a;font-size:12px}
 
-/* Format stage boxes */
+/* ── FORMAT STAGE BOXES ── */
 .stage-box{
-  background:rgba(255,255,255,0.03);
-  border:1px solid rgba(255,255,255,0.08);
+  background:rgba(255,255,255,0.025);
+  border:1px solid rgba(255,255,255,0.07);
   border-radius:10px;
-  padding:14px;
-  margin-bottom:10px;
+  padding:13px;
+  margin-bottom:9px;
 }
 .stage-box-title{
   font-family:'Courier New',monospace;
   font-weight:700;
-  font-size:13px;
-  letter-spacing:.08em;
-  margin-bottom:8px;
+  font-size:12px;
+  letter-spacing:.1em;
+  margin-bottom:9px;
 }
 .stage-box ul{list-style:none;margin:0;padding:0}
 .stage-box ul li{
-  color:#aaa;font-size:13px;
+  color:#8888a0;font-size:12.5px;
   padding:4px 0;
-  border-bottom:1px solid rgba(255,255,255,0.05);
+  border-bottom:1px solid rgba(255,255,255,0.04);
   display:flex;align-items:flex-start;gap:8px;
+  line-height:1.75;
+  font-style:italic;
 }
 .stage-box ul li:last-child{border-bottom:none}
-.stage-box ul li::before{content:"›";color:var(--gold);font-weight:900;flex-shrink:0}
+.stage-box ul li::before{
+  content:"›";color:var(--gold);
+  font-weight:900;flex-shrink:0;
+  font-style:normal;margin-top:1px;
+}
 
-/* In-game rule items */
+/* ── RULE ITEMS ── */
 .rule-item{
-  display:flex;gap:12px;
-  background:rgba(255,255,255,0.03);
-  border:1px solid rgba(255,255,255,0.07);
+  display:flex;gap:11px;
+  background:rgba(255,255,255,0.025);
+  border:1px solid rgba(255,255,255,0.06);
   border-radius:10px;
-  padding:12px;
-  margin-bottom:8px;
+  padding:12px 13px;
+  margin-bottom:7px;
+  transition:border-color .25s var(--ease),background .25s var(--ease);
+}
+.rule-item:hover{
+  background:rgba(255,255,255,0.04);
+  border-color:rgba(255,255,255,0.1);
 }
 .rule-num{
   font-family:'Courier New',monospace;
   font-weight:900;
   color:var(--gold);
-  font-size:14px;
+  font-size:13px;
   flex-shrink:0;
   min-width:20px;
+  line-height:1.75;
 }
-.rule-text{color:#aaa;font-size:13px;line-height:1.6}
+.rule-text{color:#8888a0;font-size:12.5px;line-height:1.8;font-style:italic}
 
-/* Scrollbar */
-::-webkit-scrollbar{width:4px}
-::-webkit-scrollbar-track{background:#05050f}
-::-webkit-scrollbar-thumb{background:var(--gold);border-radius:4px}
-
-/* Fade animation */
-@keyframes fadeUp{
-  from{opacity:0;transform:translateY(16px)}
-  to{opacity:1;transform:translateY(0)}
-}
-.fade-in{animation:fadeUp .35s ease both}
-
-/* ── PULSE dot ── */
+/* ── PULSE DOT ── */
 .live-dot{
   display:inline-block;
-  width:8px;height:8px;
+  width:7px;height:7px;
   border-radius:50%;
   background:#f87171;
-  margin-right:6px;
-  animation:pulse 1.5s infinite;
+  margin-right:5px;
+  vertical-align:middle;
+  animation:pulse 1.6s ease-in-out infinite;
 }
-@keyframes pulse{0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(.8)}}
+@keyframes pulse{
+  0%,100%{opacity:1;transform:scale(1)}
+  50%{opacity:.45;transform:scale(.75)}
+}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-track{background:#05050f}
+::-webkit-scrollbar-thumb{background:var(--gold);border-radius:4px}
 </style>
 </head>
 <body>
@@ -592,8 +659,19 @@ body{
           <svg viewBox="0 0 24 24"><path d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
         </div>
         <div class="reg-text">
-          <div class="reg-title">Regulasi In Game</div>
+          <div class="reg-title">Regulasi Dalam Game</div>
           <div class="reg-sub">Aturan dalam pertandingan</div>
+        </div>
+        <div class="reg-arrow">›</div>
+      </button>
+
+      <button class="reg-item" onclick="showReg('gh')">
+        <div class="reg-icon" style="background:linear-gradient(135deg,#38bdf8,#0369a1)">
+          <svg viewBox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+        </div>
+        <div class="reg-text">
+          <div class="reg-title">Pembagian GH &amp; Room</div>
+          <div class="reg-sub">Gaming House &amp; room pertandingan</div>
         </div>
         <div class="reg-arrow">›</div>
       </button>
@@ -702,35 +780,47 @@ var REG = {
     title:'Format Pertandingan',
     color:'#a855f7',
     html:function(){return(
-      '<div class="stage-box"><div class="stage-box-title" style="color:#d4a742">GROUP STAGE</div><ul>'+
-      '<li>Terdiri dari 2 group, setiap group 6 tim</li>'+
-      '<li>Penentuan group melalui spin</li>'+
-      '<li>Setiap tim melalui 5x pertandingan BO3</li>'+
-      '<li>Tim urutan 1–4 melaju ke Double Elimination</li>'+
+      '<div class="stage-box"><div class="stage-box-title" style="color:#d4a742">&#9654; GROUP STAGE</div><ul>'+
+      '<li>Pertandingan dimulai dengan format <span style="color:#d4a742;font-weight:600">Group Stage</span>, terdiri dari 2 group; masing-masing berisi 6 tim.</li>'+
+      '<li>Penentuan tim masuk group mana dilakukan melalui <span style="color:#d4a742;font-weight:600">spin</span>.</li>'+
+      '<li>Setiap tim melalui <span style="color:#d4a742;font-weight:600">5&times; pertandingan BO1</span> pada babak group stage.</li>'+
+      '<li>Tim urutan <span style="color:#d4a742;font-weight:600">1&ndash;4</span> dipastikan melaju ke fase play-off / double elimination.</li>'+
       '</ul></div>'+
-      '<div class="stage-box"><div class="stage-box-title" style="color:#00d4ff">DOUBLE ELIMINATION</div><ul>'+
-      '<li>Tim dispin untuk bertemu lawan di group berbeda</li>'+
-      '<li>Tim kalah di babak awal masih bisa melaju via lower bracket</li>'+
-      '<li>Setiap pertandingan bersifat BO3</li>'+
+      '<div class="stage-box"><div class="stage-box-title" style="color:#00d4ff">&#9654; DOUBLE ELIMINATION</div><ul>'+
+      '<li>Tim dispin untuk bertemu lawan dari group yang <span style="color:#00d4ff;font-weight:600">berbeda</span>.</li>'+
+      '<li>Tim yang kalah di babak awal masih bisa melaju melalui <span style="color:#00d4ff;font-weight:600">lower bracket</span>.</li>'+
+      '<li>Setiap pertandingan pada fase ini bersifat <span style="color:#00d4ff;font-weight:600">BO3</span>.</li>'+
       '</ul></div>'+
-      '<div class="stage-box" style="border-color:rgba(212,167,66,0.3)"><div class="stage-box-title" style="color:#d4a742">FINAL LOWER BRACKET</div><ul>'+
-      '<li><span class="live-dot"></span>Admin live di TikTok!</li>'+
-      '<li>Format: BO3</li>'+
+      '<div class="stage-box" style="border-color:rgba(212,167,66,0.35)"><div class="stage-box-title" style="color:#d4a742">&#9654; FINAL LOWER BRACKET</div><ul>'+
+      '<li><span class="live-dot"></span>Admin akan <span style="color:#f87171;font-weight:600">live di TikTok</span> untuk menyaksikan keseruan pertandingan!</li>'+
+      '<li>Format Final Lower Bracket: <span style="color:#d4a742;font-weight:600">BO5</span>.</li>'+
       '</ul></div>'+
-      '<div class="stage-box" style="border-color:rgba(212,167,66,0.5)"><div class="stage-box-title" style="color:#d4a742">GRAND FINAL</div><ul>'+
-      '<li><span class="live-dot"></span>Admin live di TikTok!</li>'+
-      '<li>Format: BO5</li>'+
+      '<div class="stage-box" style="border-color:rgba(212,167,66,0.6)"><div class="stage-box-title" style="color:#d4a742">&#9654; GRAND FINAL</div><ul>'+
+      '<li><span class="live-dot"></span>Admin kembali <span style="color:#f87171;font-weight:600">live di TikTok</span> dan memantau keseruan Grand Final!</li>'+
+      '<li>Format Grand Final: <span style="color:#d4a742;font-weight:600">BO5</span>.</li>'+
       '</ul></div>'
     );}
   },
   ingame:{
-    title:'Regulasi In Game',
+    title:'Regulasi Dalam Game',
     color:'#10b981',
     html:function(){return(
-      '<div class="rule-item"><div class="rule-num">1.</div><div class="rule-text">Dilarang keras melakukan <span class="highlight-red">chat all</span>, apapun alasannya. Jika melanggar, match tersebut menjadi point free bagi tim lawan (harus ada bukti).</div></div>'+
-      '<div class="rule-item"><div class="rule-num">2.</div><div class="rule-text">Tidak diperbolehkan melakukan <span class="highlight-red">radio all</span> (selain radio yang bersifat all, diperbolehkan). Toleransi 1x, jika lebih match menjadi point free.</div></div>'+
-      '<div class="rule-item"><div class="rule-num">3.</div><div class="rule-text">Pemain hanya boleh menggunakan <span class="highlight">2 akun berbeda</span>, lebih dari itu akan kena sanksi.</div></div>'+
-      '<div class="rule-item"><div class="rule-num">4.</div><div class="rule-text">Tidak diperkenankan untuk menonton pertandingan bagi roster tim lawan, admin tour, dll.</div></div>'
+      '<div class="rule-item"><div class="rule-num">1.</div><div class="rule-text">Dilarang keras melakukan <span class="highlight-red">chat all</span>, apapun alasannya. Jika secara sengaja atau tidak sengaja melanggar, maka match tersebut akan menjadi <span class="highlight">point free</span> bagi tim lawan (diharuskan membawa bukti).</div></div>'+
+      '<div class="rule-item"><div class="rule-num">2.</div><div class="rule-text">Tidak diperbolehkan melakukan <span class="highlight-red">radio all</span> (selain radio yang bersifat all, diperbolehkan). Jika sengaja atau tidak sengaja melakukan radio all dalam <span class="highlight">1&times;</span>, tim masih diberi toleransi. Jika lebih, match tersebut akan menjadi <span class="highlight">point free</span> bagi tim lawan.</div></div>'+
+      '<div class="rule-item"><div class="rule-num">3.</div><div class="rule-text">Pemain hanya boleh menggunakan <span class="highlight">2 akun berbeda</span>. Lebih dari itu? Dipastikan pemain tersebut terkena sanksi dan tim yang menaunginya terkena sanksi juga.</div></div>'+
+      '<div class="rule-item"><div class="rule-num">4.</div><div class="rule-text">Pertandingan hanya boleh disaksikan oleh <span class="highlight">admin tour / panitia</span>, selain itu tidak boleh. Ketika panitia menonton pertandingan, <span class="highlight-blue">chat all</span> dapat berfungsi untuk meminta melakukan <em>pause</em>. Namun, urgensi harus memadai &mdash; bukan karena alasan sepele.</div></div>'
+    );}
+  },
+  gh:{
+    title:'Pembagian GH & Room Pertandingan',
+    color:'#38bdf8',
+    html:function(){return(
+      '<p>Mula-mula, tiap tim akan bergabung ke <span class="highlight">GH (Gaming House/Group)</span> masing-masing di komunitas LODC <em>(contoh: Fomfa GH)</em>. Pastikan setiap pemain dari roster bergabung ke GH tim masing-masing.</p>'+
+      '<div class="warn-box" style="background:rgba(248,113,113,0.07);border-left-color:#f87171"><div class="warn-title">⚠ Perhatian</div><p style="color:#bbb;font-size:13px;margin:0">Jika pemain tidak bergabung ke GH tim, maka pemain tersebut <span class="highlight-red">tidak bisa dikalkulasikan</span> memasuki roster tim tersebut.</p></div>'+
+      '<div class="info-box" style="margin-top:14px"><div class="section-title" style="color:#38bdf8;margin-bottom:8px">&#128101; Pembagian Room Pertandingan</div>'+
+      '<p style="color:#bbb;font-size:13px;margin-bottom:0">Di setiap pertandingan, salah satu tim akan dipilih untuk <span class="highlight">open room</span>, kemudian dapat menshare-nya melalui <span class="highlight">kode room</span> atau <span class="highlight">link WhatsApp</span> yang langsung tersinkronisasi.</p></div>'+
+      '<div class="info-box"><div class="section-title" style="color:#38bdf8;margin-bottom:8px">&#128279; Cara Share Room</div>'+
+      '<p style="color:#bbb;font-size:13px;margin:0">Setelah mengirim link atau kode room ke <span class="highlight">GH tim sendiri</span>, kalian dapat mentag salah satu admin guna mengshare kode room atau link tersebut ke <span class="highlight">GH tim lawan</span>.</p></div>'
     );}
   },
   contact:{
@@ -760,10 +850,10 @@ var REG = {
     color:'#fb923c',
     html:function(){return(
       '<div class="info-box" style="text-align:center;font-size:14px">Untuk mengikuti kompetisi ini, <span class="highlight-green">TIDAK DIPERKENANKAN BIAYA</span> sepeser pun!</div>'+
-      '<div style="text-align:center;margin:16px 0"><div style="color:#666;font-size:12px;margin-bottom:4px">Pool Prize</div><div style="font-family:Courier New,monospace;font-size:32px;font-weight:900;color:#d4a742">215k</div></div>'+
+      '<div style="text-align:center;margin:16px 0"><div style="color:#666;font-size:12px;margin-bottom:4px">Pool Prize</div><div style="font-family:Courier New,monospace;font-size:32px;font-weight:900;color:#d4a742">225k</div></div>'+
       '<div class="prize-box" style="border-left:4px solid #facc15">'+
         '<div class="prize-medal" style="background:#facc15">1</div>'+
-        '<div><div class="prize-rank" style="color:#facc15">Juara 1</div><div class="prize-desc">140k + Sertifikat Kejuaraan</div></div>'+
+        '<div><div class="prize-rank" style="color:#facc15">Juara 1</div><div class="prize-desc">150k + Sertifikat Kejuaraan</div></div>'+
       '</div>'+
       '<div class="prize-box" style="border-left:4px solid #d1d5db">'+
         '<div class="prize-medal" style="background:#d1d5db">2</div>'+
