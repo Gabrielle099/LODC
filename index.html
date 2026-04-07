@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>Land Of Down Championship</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
 <style>
 /* ── RESET ── */
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -11,38 +12,74 @@ html,body{width:100%;min-height:100%;overflow-x:hidden}
 
 /* ── FONTS ── */
 body{
-  font-family:'Georgia','Times New Roman',serif;
-  background:#05050f;
+  font-family:'Outfit',sans-serif;
+  background:#0a0a12;
   color:#fff;
 }
-.font-display{font-family:'Courier New',Courier,monospace;letter-spacing:.05em}
-.font-mono{font-family:'Courier New',Courier,monospace}
+.font-display{font-family:'Space Grotesk',sans-serif;letter-spacing:.03em}
+.font-mono{font-family:'Space Grotesk',sans-serif}
 
-/* ── CSS VARIABLES ── */
+/* ── CSS VARIABLES - AURORA THEME ── */
 :root{
-  --gold:#d4a742;
-  --blue:#1e90ff;
-  --cyan:#00d4ff;
-  --dark:#05050f;
-  --card:#12121f;
-  --border:rgba(255,255,255,0.09);
+  --aurora-1:#00ffc8;
+  --aurora-2:#7b61ff;
+  --aurora-3:#ff6b9d;
+  --dark:#0a0a12;
+  --card:rgba(15,15,25,0.85);
+  --border:rgba(255,255,255,0.08);
   --ease:cubic-bezier(0.4,0,0.2,1);
+  --glass:rgba(255,255,255,0.03);
 }
 
-/* ── BACKGROUND ── */
+/* ── BACKGROUND AURORA ── */
 .bg-layer{
   position:fixed;inset:0;z-index:0;
+  background:#0a0a12;
+  overflow:hidden;
+}
+.aurora-blob{
+  position:absolute;
+  border-radius:50%;
+  filter:blur(80px);
+  opacity:0.4;
+  animation:auroraFloat 20s ease-in-out infinite;
+}
+.aurora-blob:nth-child(1){
+  width:400px;height:400px;
+  background:var(--aurora-1);
+  top:-100px;left:-100px;
+  animation-delay:0s;
+}
+.aurora-blob:nth-child(2){
+  width:350px;height:350px;
+  background:var(--aurora-2);
+  bottom:-80px;right:-80px;
+  animation-delay:-7s;
+}
+.aurora-blob:nth-child(3){
+  width:300px;height:300px;
+  background:var(--aurora-3);
+  top:40%;left:50%;
+  animation-delay:-14s;
+}
+@keyframes auroraFloat{
+  0%,100%{transform:translate(0,0) scale(1)}
+  33%{transform:translate(30px,-30px) scale(1.1)}
+  66%{transform:translate(-20px,20px) scale(0.95)}
+}
+.glass-layer{
+  position:fixed;inset:0;z-index:0;pointer-events:none;
   background:
-    radial-gradient(ellipse 60% 50% at 10% 10%, rgba(30,144,255,0.10) 0%, transparent 70%),
-    radial-gradient(ellipse 50% 40% at 90% 90%, rgba(212,167,66,0.08) 0%, transparent 70%),
-    #05050f;
+    linear-gradient(135deg,rgba(0,255,200,0.02) 0%,transparent 50%),
+    linear-gradient(225deg,rgba(123,97,255,0.02) 0%,transparent 50%),
+    linear-gradient(315deg,rgba(255,107,157,0.02) 0%,transparent 50%);
 }
 .grid-layer{
   position:fixed;inset:0;z-index:0;pointer-events:none;
   background-image:
-    linear-gradient(rgba(255,255,255,0.016) 1px, transparent 1px),
-    linear-gradient(90deg,rgba(255,255,255,0.016) 1px,transparent 1px);
-  background-size:50px 50px;
+    linear-gradient(rgba(255,255,255,0.012) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,0.012) 1px,transparent 1px);
+  background-size:60px 60px;
 }
 
 /* ── MAIN WRAPPER ── */
@@ -59,53 +96,58 @@ body{
 
 /* ── FADE ANIMATION ── */
 @keyframes fadeUp{
-  from{opacity:0;transform:translateY(14px)}
+  from{opacity:0;transform:translateY(16px)}
   to{opacity:1;transform:translateY(0)}
 }
-.fade-in{animation:fadeUp .38s var(--ease) both}
+.fade-in{animation:fadeUp .4s var(--ease) both}
 
-/* ── CARD BASE ── */
+/* ── CARD BASE - GLASS EFFECT ── */
 .card{
   background:var(--card);
+  backdrop-filter:blur(12px);
   border:1px solid var(--border);
-  border-radius:16px;
+  border-radius:18px;
   transition:border-color .3s var(--ease),transform .3s var(--ease),box-shadow .3s var(--ease);
 }
-.card:hover{border-color:rgba(212,167,66,0.3);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,0.3)}
+.card:hover{
+  border-color:rgba(0,255,200,0.25);
+  transform:translateY(-2px);
+  box-shadow:0 12px 32px rgba(0,0,0,0.4),0 0 0 1px rgba(0,255,200,0.1)
+}
 
 /* ── BADGE ── */
 .badge{
   display:inline-block;
-  background:rgba(212,167,66,0.07);
-  border:1px solid rgba(212,167,66,0.3);
+  background:linear-gradient(135deg,rgba(0,255,200,0.08),rgba(123,97,255,0.08));
+  border:1px solid rgba(0,255,200,0.25);
   border-radius:999px;
-  padding:6px 20px;
+  padding:7px 22px;
   font-size:10px;
-  letter-spacing:.25em;
-  color:var(--gold);
-  font-family:'Courier New',monospace;
+  letter-spacing:.2em;
+  color:var(--aurora-1);
+  font-family:'Space Grotesk',sans-serif;
   font-weight:700;
   text-transform:uppercase;
-  box-shadow:0 0 18px rgba(212,167,66,0.07);
+  box-shadow:0 0 24px rgba(0,255,200,0.1);
 }
 
 /* ── DIVIDER ── */
 .divider{
-  width:72px;height:2px;
-  background:linear-gradient(90deg,transparent,var(--gold),transparent);
-  margin:14px auto 22px;
+  width:80px;height:2px;
+  background:linear-gradient(90deg,transparent,var(--aurora-1),var(--aurora-2),transparent);
+  margin:16px auto 24px;
   border-radius:99px;
 }
 
 /* ── BUTTONS ── */
 .btn{
   display:block;width:100%;
-  padding:14px 24px;
-  border-radius:12px;
-  font-family:'Courier New',monospace;
+  padding:15px 24px;
+  border-radius:14px;
+  font-family:'Space Grotesk',sans-serif;
   font-weight:700;
   font-size:14px;
-  letter-spacing:.1em;
+  letter-spacing:.08em;
   cursor:pointer;
   border:1px solid;
   transition:background .28s var(--ease),border-color .28s var(--ease),
@@ -115,115 +157,129 @@ body{
   -webkit-user-select:none;user-select:none;
 }
 .btn-gold{
-  background:rgba(212,167,66,0.09);
-  border-color:rgba(212,167,66,0.45);
-  color:var(--gold);
+  background:linear-gradient(135deg,rgba(0,255,200,0.1),rgba(123,97,255,0.1));
+  border-color:rgba(0,255,200,0.35);
+  color:var(--aurora-1);
 }
 .btn-gold:hover,.btn-gold:active{
-  background:rgba(212,167,66,0.2);
-  border-color:var(--gold);
+  background:linear-gradient(135deg,rgba(0,255,200,0.2),rgba(123,97,255,0.15));
+  border-color:var(--aurora-1);
   transform:translateY(-2px);
-  box-shadow:0 6px 22px rgba(212,167,66,0.14);
+  box-shadow:0 8px 28px rgba(0,255,200,0.15),0 0 0 1px rgba(0,255,200,0.2);
 }
 .btn-blue{
-  background:rgba(30,144,255,0.09);
-  border-color:rgba(30,144,255,0.45);
-  color:var(--cyan);
+  background:linear-gradient(135deg,rgba(123,97,255,0.1),rgba(255,107,157,0.1));
+  border-color:rgba(123,97,255,0.35);
+  color:var(--aurora-2);
 }
 .btn-blue:hover,.btn-blue:active{
-  background:rgba(30,144,255,0.18);
-  border-color:var(--cyan);
+  background:linear-gradient(135deg,rgba(123,97,255,0.2),rgba(255,107,157,0.15));
+  border-color:var(--aurora-2);
   transform:translateY(-2px);
-  box-shadow:0 6px 22px rgba(0,212,255,0.11);
+  box-shadow:0 8px 28px rgba(123,97,255,0.15);
 }
 .btn-back{
   display:inline-flex;align-items:center;gap:8px;
-  background:rgba(255,255,255,0.04);
-  border:1px solid rgba(255,255,255,0.1);
+  background:var(--glass);
+  backdrop-filter:blur(8px);
+  border:1px solid rgba(255,255,255,0.08);
   color:#888;
-  padding:9px 16px;
-  border-radius:10px;
+  padding:10px 18px;
+  border-radius:12px;
   font-size:13px;
   cursor:pointer;
-  margin-bottom:22px;
+  margin-bottom:24px;
   transition:background .25s var(--ease),color .25s var(--ease),transform .2s var(--ease);
-  font-family:inherit;
+  font-family:'Outfit',sans-serif;
   letter-spacing:.02em;
 }
 .btn-back:hover,.btn-back:active{
-  background:rgba(255,255,255,0.09);
+  background:rgba(255,255,255,0.06);
   color:#ddd;
-  transform:translateX(-2px);
+  transform:translateX(-3px);
 }
 
 /* ── TYPOGRAPHY ── */
 .page-title{
-  font-family:'Courier New',monospace;
-  font-size:22px;
-  font-weight:900;
-  letter-spacing:.08em;
-  color:var(--gold);
-  margin-bottom:3px;
-  text-shadow:0 0 22px rgba(212,167,66,0.18);
+  font-family:'Space Grotesk',sans-serif;
+  font-size:24px;
+  font-weight:700;
+  letter-spacing:.05em;
+  background:linear-gradient(135deg,var(--aurora-1),var(--aurora-2));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  margin-bottom:4px;
 }
 .page-subtitle{
-  color:#4a4a5a;
+  color:#5a5a6a;
   font-size:12px;
-  margin-bottom:20px;
-  letter-spacing:.05em;
+  margin-bottom:22px;
+  letter-spacing:.04em;
 }
 
 /* ── HOME PAGE ── */
 .home-header{
   text-align:center;
-  padding:36px 0 28px;
+  padding:40px 0 30px;
 }
 .home-title{
-  font-family:'Courier New',monospace;
-  font-size:clamp(24px,8vw,48px);
-  font-weight:900;
-  line-height:1.08;
-  letter-spacing:.04em;
+  font-family:'Space Grotesk',sans-serif;
+  font-size:clamp(26px,9vw,52px);
+  font-weight:700;
+  line-height:1.06;
+  letter-spacing:.03em;
   color:#fff;
-  text-shadow:0 0 40px rgba(212,167,66,0.15),0 2px 0 rgba(0,0,0,0.5);
-  margin-bottom:4px;
+  text-shadow:0 0 60px rgba(0,255,200,0.15);
+  margin-bottom:6px;
 }
 .home-title .accent{
-  color:var(--gold);
-  text-shadow:0 0 28px rgba(212,167,66,0.3);
+  background:linear-gradient(135deg,var(--aurora-1),var(--aurora-2),var(--aurora-3));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
 }
 .home-desc{
   color:#777;
   font-size:13px;
-  line-height:1.85;
-  max-width:300px;
-  margin:0 auto 28px;
-  font-style:italic;
+  line-height:1.9;
+  max-width:320px;
+  margin:0 auto 30px;
 }
-.home-desc .highlight{color:var(--gold);font-weight:700;font-style:normal}
+.home-desc .highlight{
+  background:linear-gradient(135deg,var(--aurora-1),var(--aurora-2));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  font-weight:700;
+}
 .home-buttons{
-  display:flex;flex-direction:column;gap:11px;
-  max-width:320px;margin:0 auto 36px;
+  display:flex;flex-direction:column;gap:12px;
+  max-width:320px;margin:0 auto 40px;
 }
 .partners-box{
-  background:rgba(212,167,66,0.05);
-  border:1px solid rgba(212,167,66,0.12);
-  border-radius:12px;
-  padding:14px 20px;
+  background:var(--card);
+  backdrop-filter:blur(12px);
+  border:1px solid rgba(0,255,200,0.12);
+  border-radius:14px;
+  padding:16px 22px;
   text-align:center;
   max-width:320px;
   margin:0 auto;
 }
 .partners-label{
   font-size:9px;letter-spacing:.18em;color:#444;
-  margin-bottom:5px;text-transform:uppercase;
+  margin-bottom:6px;text-transform:uppercase;
 }
 .partners-names{
-  font-family:'Courier New',monospace;
-  color:var(--gold);
+  font-family:'Space Grotesk',sans-serif;
+  background:linear-gradient(135deg,var(--aurora-1),var(--aurora-2));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
   font-size:13px;
   font-weight:700;
-  letter-spacing:.06em;
+  letter-spacing:.04em;
 }
 
 /* ── TEAM GRID ── */
@@ -234,9 +290,10 @@ body{
 }
 .team-item{
   background:var(--card);
+  backdrop-filter:blur(10px);
   border:1px solid var(--border);
-  border-radius:13px;
-  padding:15px 13px;
+  border-radius:15px;
+  padding:16px 14px;
   cursor:pointer;
   text-align:left;
   transition:border-color .28s var(--ease),background .28s var(--ease),transform .22s var(--ease),box-shadow .28s var(--ease);
@@ -244,27 +301,27 @@ body{
   -webkit-user-select:none;user-select:none;
 }
 .team-item:hover,.team-item:active{
-  border-color:rgba(212,167,66,0.38);
-  background:#161625;
-  transform:scale(1.025);
-  box-shadow:0 6px 18px rgba(0,0,0,0.35);
+  border-color:rgba(0,255,200,0.35);
+  background:rgba(20,20,35,0.9);
+  transform:scale(1.03);
+  box-shadow:0 8px 24px rgba(0,0,0,0.4),0 0 0 1px rgba(0,255,200,0.1);
 }
 .team-letter{
-  width:38px;height:38px;
-  border-radius:9px;
+  width:40px;height:40px;
+  border-radius:12px;
   display:flex;align-items:center;justify-content:center;
-  font-family:'Courier New',monospace;
-  font-weight:900;
-  font-size:17px;
+  font-family:'Space Grotesk',sans-serif;
+  font-weight:700;
+  font-size:18px;
   color:#fff;
-  margin-bottom:8px;
+  margin-bottom:10px;
 }
 .team-name{
-  font-family:'Courier New',monospace;
+  font-family:'Space Grotesk',sans-serif;
   font-weight:700;
   font-size:14px;
   color:#e8e8f0;
-  margin-bottom:2px;
+  margin-bottom:3px;
   letter-spacing:.02em;
 }
 .team-tap{font-size:10px;color:#444;letter-spacing:.03em}
@@ -272,273 +329,304 @@ body{
 /* ── TEAM DETAIL ── */
 .team-detail-header{
   background:var(--card);
+  backdrop-filter:blur(12px);
   border:1px solid var(--border);
-  border-radius:16px;
-  padding:30px 20px;
+  border-radius:18px;
+  padding:34px 22px;
   text-align:center;
-  margin-bottom:14px;
+  margin-bottom:16px;
 }
 .team-detail-badge{
-  width:68px;height:68px;
-  border-radius:16px;
+  width:72px;height:72px;
+  border-radius:18px;
   display:flex;align-items:center;justify-content:center;
-  font-family:'Courier New',monospace;
-  font-weight:900;
-  font-size:28px;
+  font-family:'Space Grotesk',sans-serif;
+  font-weight:700;
+  font-size:30px;
   color:#fff;
-  margin:0 auto 14px;
+  margin:0 auto 16px;
 }
 .team-detail-name{
-  font-family:'Courier New',monospace;
-  font-size:22px;
-  font-weight:900;
-  color:var(--gold);
-  margin-bottom:5px;
-  letter-spacing:.04em;
+  font-family:'Space Grotesk',sans-serif;
+  font-size:24px;
+  font-weight:700;
+  background:linear-gradient(135deg,var(--aurora-1),var(--aurora-2));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  margin-bottom:6px;
+  letter-spacing:.03em;
 }
-.team-detail-sub{color:#3a3a4a;font-size:12px;margin-bottom:18px;letter-spacing:.04em}
-.team-detail-hr{height:1px;background:rgba(255,255,255,0.07);margin:18px 0}
-.team-detail-msg{font-size:15px;color:#bbb;font-weight:600;margin-bottom:5px}
-.team-detail-wait{color:#444;font-size:12px;font-style:italic}
+.team-detail-sub{color:#3a3a4a;font-size:12px;margin-bottom:20px;letter-spacing:.04em}
+.team-detail-hr{height:1px;background:rgba(255,255,255,0.06);margin:20px 0}
+.team-detail-msg{font-size:15px;color:#bbb;font-weight:600;margin-bottom:6px}
+.team-detail-wait{color:#444;font-size:12px}
 
 /* ── REGULASI LIST ── */
-.reg-list{display:flex;flex-direction:column;gap:8px}
+.reg-list{display:flex;flex-direction:column;gap:9px}
 .reg-item{
   background:var(--card);
+  backdrop-filter:blur(10px);
   border:1px solid var(--border);
-  border-radius:13px;
-  padding:14px 15px;
+  border-radius:15px;
+  padding:15px 16px;
   cursor:pointer;
-  display:flex;align-items:center;gap:13px;
+  display:flex;align-items:center;gap:14px;
   text-align:left;
   width:100%;
   transition:border-color .28s var(--ease),background .28s var(--ease),transform .22s var(--ease),box-shadow .25s var(--ease);
   -webkit-user-select:none;user-select:none;
 }
 .reg-item:hover,.reg-item:active{
-  background:#141422;
-  border-color:rgba(212,167,66,0.3);
-  transform:translateX(4px);
-  box-shadow:0 4px 16px rgba(0,0,0,0.3);
+  background:rgba(20,20,35,0.9);
+  border-color:rgba(0,255,200,0.3);
+  transform:translateX(5px);
+  box-shadow:0 6px 20px rgba(0,0,0,0.35);
 }
 .reg-icon{
-  width:44px;height:44px;min-width:44px;
-  border-radius:11px;
+  width:46px;height:46px;min-width:46px;
+  border-radius:13px;
   display:flex;align-items:center;justify-content:center;
   flex-shrink:0;
 }
 .reg-icon svg{
-  width:21px;height:21px;
+  width:22px;height:22px;
   stroke:#fff;fill:none;
   stroke-width:2;stroke-linecap:round;stroke-linejoin:round;
 }
 .reg-text{flex:1;min-width:0}
 .reg-title{
-  font-family:'Courier New',monospace;
+  font-family:'Space Grotesk',sans-serif;
   font-weight:700;
   font-size:13px;
   color:#e0e0ee;
-  margin-bottom:2px;
-  letter-spacing:.025em;
+  margin-bottom:3px;
+  letter-spacing:.02em;
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
 }
 .reg-sub{font-size:10.5px;color:#3e3e50;letter-spacing:.02em}
 .reg-arrow{
-  color:#333;font-size:17px;flex-shrink:0;
+  color:#333;font-size:18px;flex-shrink:0;
   transition:color .25s var(--ease),transform .25s var(--ease);
 }
-.reg-item:hover .reg-arrow{color:#888;transform:translateX(3px)}
+.reg-item:hover .reg-arrow{color:var(--aurora-1);transform:translateX(4px)}
 
 /* ── REGULASI DETAIL ── */
 .reg-detail-title{
-  font-family:'Courier New',monospace;
-  font-size:20px;
-  font-weight:900;
-  letter-spacing:.05em;
-  margin-bottom:6px;
+  font-family:'Space Grotesk',sans-serif;
+  font-size:22px;
+  font-weight:700;
+  letter-spacing:.03em;
+  margin-bottom:8px;
   line-height:1.2;
 }
-.reg-detail-divider{height:3px;width:50px;border-radius:99px;margin-bottom:18px}
+.reg-detail-divider{height:3px;width:55px;border-radius:99px;margin-bottom:20px}
 .reg-body{
   background:var(--card);
+  backdrop-filter:blur(12px);
   border:1px solid var(--border);
-  border-radius:13px;
-  padding:18px;
+  border-radius:15px;
+  padding:20px;
 }
 .reg-body p{
-  color:#a8a8bc;font-size:13.5px;line-height:1.85;
-  margin-bottom:12px;font-style:italic;
+  color:#a8a8bc;font-size:13.5px;line-height:1.9;
+  margin-bottom:14px;
 }
 .reg-body p:last-child{margin-bottom:0}
-.reg-body ul{color:#a8a8bc;font-size:13.5px;line-height:1.8;margin-left:16px;margin-bottom:10px}
-.reg-body li{margin-bottom:5px}
-.reg-body .highlight{color:var(--gold);font-weight:600;font-style:normal}
-.reg-body .highlight-blue{color:var(--cyan);font-weight:600;font-style:normal}
-.reg-body .highlight-red{color:#f87171;font-weight:600;font-style:normal}
-.reg-body .highlight-green{color:#4ade80;font-weight:600;font-style:normal}
+.reg-body ul{color:#a8a8bc;font-size:13.5px;line-height:1.85;margin-left:18px;margin-bottom:12px}
+.reg-body li{margin-bottom:6px}
+.reg-body .highlight{
+  background:linear-gradient(135deg,var(--aurora-1),var(--aurora-2));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  font-weight:700;
+}
+.reg-body .highlight-blue{
+  color:var(--aurora-2);
+  font-weight:700;
+}
+.reg-body .highlight-red{color:#f87171;font-weight:700}
+.reg-body .highlight-green{color:#4ade80;font-weight:700}
 
 /* ── INFO / WARN BOXES ── */
 .info-box{
-  background:rgba(255,255,255,0.03);
-  border:1px solid rgba(255,255,255,0.08);
-  border-radius:10px;
-  padding:13px 14px;
-  margin:10px 0;
+  background:var(--glass);
+  backdrop-filter:blur(8px);
+  border:1px solid rgba(255,255,255,0.06);
+  border-radius:12px;
+  padding:14px 16px;
+  margin:12px 0;
   font-size:13.5px;
   color:#a8a8bc;
-  line-height:1.75;
+  line-height:1.8;
 }
 .warn-box{
   background:rgba(248,113,113,0.06);
   border-left:3px solid #f87171;
-  border-radius:0 10px 10px 0;
-  padding:13px 14px;
-  margin:10px 0;
+  border-radius:0 12px 12px 0;
+  padding:14px 16px;
+  margin:12px 0;
 }
 .warn-title{
   color:#f87171;font-weight:700;
-  font-size:13px;margin-bottom:7px;
-  font-style:normal;letter-spacing:.03em;
+  font-size:13px;margin-bottom:8px;
+  letter-spacing:.02em;
 }
 .section-title{
-  font-family:'Courier New',monospace;
+  font-family:'Space Grotesk',sans-serif;
   font-weight:700;
   font-size:12px;
-  letter-spacing:.08em;
-  margin-bottom:8px;
-  margin-top:3px;
+  letter-spacing:.06em;
+  margin-bottom:10px;
+  margin-top:4px;
 }
 
 /* ── CONTACT ── */
 .contact-link{
-  display:flex;align-items:center;gap:13px;
-  background:linear-gradient(135deg,#128c7e,#075e54);
-  border-radius:12px;
-  padding:13px 15px;
-  margin-bottom:9px;
+  display:flex;align-items:center;gap:14px;
+  background:linear-gradient(135deg,rgba(0,255,200,0.08),rgba(123,97,255,0.08));
+  border:1px solid rgba(0,255,200,0.15);
+  border-radius:14px;
+  padding:14px 16px;
+  margin-bottom:10px;
   text-decoration:none;
-  transition:transform .25s var(--ease),box-shadow .25s var(--ease),opacity .2s;
+  transition:transform .25s var(--ease),box-shadow .25s var(--ease),border-color .25s;
 }
 .contact-link:hover,.contact-link:active{
   transform:translateY(-2px);
-  box-shadow:0 8px 22px rgba(37,211,102,0.18);
+  border-color:rgba(0,255,200,0.35);
+  box-shadow:0 10px 28px rgba(0,255,200,0.12);
 }
 .contact-num{
-  width:34px;height:34px;min-width:34px;
-  background:rgba(255,255,255,0.13);
+  width:36px;height:36px;min-width:36px;
+  background:linear-gradient(135deg,var(--aurora-1),var(--aurora-2));
   border-radius:50%;
   display:flex;align-items:center;justify-content:center;
-  font-family:'Courier New',monospace;
-  font-weight:900;
-  color:#fff;
+  font-family:'Space Grotesk',sans-serif;
+  font-weight:700;
+  color:#0a0a12;
   font-size:14px;
 }
-.contact-name{color:#fff;font-weight:700;font-size:14px;margin-bottom:1px}
-.contact-num-text{color:rgba(255,255,255,0.6);font-size:11.5px}
+.contact-name{color:#fff;font-weight:700;font-size:14px;margin-bottom:2px}
+.contact-num-text{color:rgba(255,255,255,0.5);font-size:11.5px}
 
 /* ── PRIZE BOXES ── */
 .prize-box{
-  display:flex;align-items:center;gap:13px;
+  display:flex;align-items:center;gap:14px;
   background:var(--card);
-  border-radius:11px;
-  padding:13px 15px;
-  margin-bottom:8px;
+  backdrop-filter:blur(10px);
+  border-radius:13px;
+  padding:14px 16px;
+  margin-bottom:10px;
   transition:transform .22s var(--ease);
 }
-.prize-box:hover{transform:translateX(3px)}
+.prize-box:hover{transform:translateX(4px)}
 .prize-medal{
-  width:38px;height:38px;min-width:38px;
+  width:40px;height:40px;min-width:40px;
   border-radius:50%;
   display:flex;align-items:center;justify-content:center;
-  font-family:'Courier New',monospace;
-  font-weight:900;
-  font-size:15px;
-  color:#000;
+  font-family:'Space Grotesk',sans-serif;
+  font-weight:700;
+  font-size:16px;
+  color:#0a0a12;
   flex-shrink:0;
 }
-.prize-rank{font-weight:700;font-size:14px;margin-bottom:1px}
+.prize-rank{font-weight:700;font-size:14px;margin-bottom:2px}
 .prize-desc{color:#5a5a6a;font-size:12px}
 
 /* ── FORMAT STAGE BOXES ── */
 .stage-box{
-  background:rgba(255,255,255,0.025);
-  border:1px solid rgba(255,255,255,0.07);
-  border-radius:10px;
-  padding:13px;
-  margin-bottom:9px;
+  background:var(--glass);
+  backdrop-filter:blur(8px);
+  border:1px solid rgba(255,255,255,0.06);
+  border-radius:12px;
+  padding:14px;
+  margin-bottom:10px;
 }
 .stage-box-title{
-  font-family:'Courier New',monospace;
+  font-family:'Space Grotesk',sans-serif;
   font-weight:700;
   font-size:12px;
-  letter-spacing:.1em;
-  margin-bottom:9px;
+  letter-spacing:.08em;
+  margin-bottom:10px;
 }
 .stage-box ul{list-style:none;margin:0;padding:0}
 .stage-box ul li{
   color:#8888a0;font-size:12.5px;
-  padding:4px 0;
+  padding:5px 0;
   border-bottom:1px solid rgba(255,255,255,0.04);
-  display:flex;align-items:flex-start;gap:8px;
-  line-height:1.75;
-  font-style:italic;
+  display:flex;align-items:flex-start;gap:9px;
+  line-height:1.8;
 }
 .stage-box ul li:last-child{border-bottom:none}
 .stage-box ul li::before{
-  content:"›";color:var(--gold);
-  font-weight:900;flex-shrink:0;
-  font-style:normal;margin-top:1px;
+  content:"›";color:var(--aurora-1);
+  font-weight:700;flex-shrink:0;
+  margin-top:1px;
 }
 
 /* ── RULE ITEMS ── */
 .rule-item{
-  display:flex;gap:11px;
-  background:rgba(255,255,255,0.025);
-  border:1px solid rgba(255,255,255,0.06);
-  border-radius:10px;
-  padding:12px 13px;
-  margin-bottom:7px;
+  display:flex;gap:12px;
+  background:var(--glass);
+  backdrop-filter:blur(8px);
+  border:1px solid rgba(255,255,255,0.05);
+  border-radius:12px;
+  padding:13px 14px;
+  margin-bottom:8px;
   transition:border-color .25s var(--ease),background .25s var(--ease);
 }
 .rule-item:hover{
   background:rgba(255,255,255,0.04);
-  border-color:rgba(255,255,255,0.1);
+  border-color:rgba(255,255,255,0.08);
 }
 .rule-num{
-  font-family:'Courier New',monospace;
-  font-weight:900;
-  color:var(--gold);
+  font-family:'Space Grotesk',sans-serif;
+  font-weight:700;
+  background:linear-gradient(135deg,var(--aurora-1),var(--aurora-2));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
   font-size:13px;
   flex-shrink:0;
-  min-width:20px;
-  line-height:1.75;
+  min-width:22px;
+  line-height:1.8;
 }
-.rule-text{color:#8888a0;font-size:12.5px;line-height:1.8;font-style:italic}
+.rule-text{color:#8888a0;font-size:12.5px;line-height:1.85}
 
 /* ── PULSE DOT ── */
 .live-dot{
   display:inline-block;
   width:7px;height:7px;
   border-radius:50%;
-  background:#f87171;
-  margin-right:5px;
+  background:var(--aurora-3);
+  margin-right:6px;
   vertical-align:middle;
   animation:pulse 1.6s ease-in-out infinite;
 }
 @keyframes pulse{
   0%,100%{opacity:1;transform:scale(1)}
-  50%{opacity:.45;transform:scale(.75)}
+  50%{opacity:.4;transform:scale(.7)}
 }
 
 /* ── SCROLLBAR ── */
 ::-webkit-scrollbar{width:3px}
-::-webkit-scrollbar-track{background:#05050f}
-::-webkit-scrollbar-thumb{background:var(--gold);border-radius:4px}
+::-webkit-scrollbar-track{background:#0a0a12}
+::-webkit-scrollbar-thumb{
+  background:linear-gradient(180deg,var(--aurora-1),var(--aurora-2));
+  border-radius:4px;
+}
 </style>
 </head>
 <body>
 
-<div class="bg-layer"></div>
+<div class="bg-layer">
+  <div class="aurora-blob"></div>
+  <div class="aurora-blob"></div>
+  <div class="aurora-blob"></div>
+</div>
+<div class="glass-layer"></div>
 <div class="grid-layer"></div>
 
 <div id="app">
@@ -563,8 +651,8 @@ body{
     </div>
 
     <div class="home-buttons fade-in">
-      <button class="btn btn-gold" onclick="go('listTimPage')">▷ LIST TIM</button>
-      <button class="btn btn-blue" onclick="go('regulasiPage')">▷ REGULASI TURNAMEN</button>
+      <button class="btn btn-gold" onclick="go('listTimPage')">LIST TIM</button>
+      <button class="btn btn-blue" onclick="go('regulasiPage')">REGULASI TURNAMEN</button>
     </div>
 
     <div class="partners-box fade-in">
@@ -579,7 +667,7 @@ body{
   ════════════════════════════════════════ -->
   <div id="listTimPage" class="page">
     <button class="btn-back" onclick="go('homePage')">
-      ← Kembali
+      Kembali
     </button>
     <div class="page-title font-display">LIST TIM</div>
     <div class="page-subtitle">12 Tim Peserta Turnamen</div>
@@ -592,7 +680,7 @@ body{
   ════════════════════════════════════════ -->
   <div id="teamDetailPage" class="page">
     <button class="btn-back" onclick="go('listTimPage')">
-      ← Kembali ke List Tim
+      Kembali ke List Tim
     </button>
     <div id="teamDetailContent"></div>
   </div>
@@ -603,34 +691,12 @@ body{
   ════════════════════════════════════════ -->
   <div id="regulasiPage" class="page">
     <button class="btn-back" onclick="go('homePage')">
-      ← Kembali
+      Kembali
     </button>
     <div class="page-title font-display">REGULASI TURNAMEN</div>
     <div class="page-subtitle">Ketentuan dan Peraturan Resmi</div>
 
     <div class="reg-list">
-
-      <button class="reg-item" onclick="showReg('roster')">
-        <div class="reg-icon" style="background:linear-gradient(135deg,#d4a742,#b8860b)">
-          <svg viewBox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
-        </div>
-        <div class="reg-text">
-          <div class="reg-title">Regulasi Tim Roster</div>
-          <div class="reg-sub">Ketentuan pemain dan roster tim</div>
-        </div>
-        <div class="reg-arrow">›</div>
-      </button>
-
-      <button class="reg-item" onclick="showReg('waktu')">
-        <div class="reg-icon" style="background:linear-gradient(135deg,#1e90ff,#00d4ff)">
-          <svg viewBox="0 0 24 24"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-        </div>
-        <div class="reg-text">
-          <div class="reg-title">Rentang Waktu Turnamen</div>
-          <div class="reg-sub">Ketentuan waktu pertandingan</div>
-        </div>
-        <div class="reg-arrow">›</div>
-      </button>
 
       <button class="reg-item" onclick="showReg('larangan')">
         <div class="reg-icon" style="background:linear-gradient(135deg,#ef4444,#991b1b)">
@@ -644,12 +710,23 @@ body{
       </button>
 
       <button class="reg-item" onclick="showReg('format')">
-        <div class="reg-icon" style="background:linear-gradient(135deg,#a855f7,#ec4899)">
+        <div class="reg-icon" style="background:linear-gradient(135deg,var(--aurora-2),var(--aurora-3))">
           <svg viewBox="0 0 24 24"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
         </div>
         <div class="reg-text">
           <div class="reg-title">Format Pertandingan</div>
           <div class="reg-sub">Sistem dan format kompetisi</div>
+        </div>
+        <div class="reg-arrow">›</div>
+      </button>
+
+      <button class="reg-item" onclick="showReg('roster')">
+        <div class="reg-icon" style="background:linear-gradient(135deg,var(--aurora-1),#059669)">
+          <svg viewBox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+        </div>
+        <div class="reg-text">
+          <div class="reg-title">Regulasi Tim Roster</div>
+          <div class="reg-sub">Ketentuan pemain dan roster tim</div>
         </div>
         <div class="reg-arrow">›</div>
       </button>
@@ -665,8 +742,19 @@ body{
         <div class="reg-arrow">›</div>
       </button>
 
-      <button class="reg-item" onclick="showReg('gh')">
+      <button class="reg-item" onclick="showReg('waktu')">
         <div class="reg-icon" style="background:linear-gradient(135deg,#38bdf8,#0369a1)">
+          <svg viewBox="0 0 24 24"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        </div>
+        <div class="reg-text">
+          <div class="reg-title">Rentang Waktu Turnamen</div>
+          <div class="reg-sub">Ketentuan waktu pertandingan</div>
+        </div>
+        <div class="reg-arrow">›</div>
+      </button>
+
+      <button class="reg-item" onclick="showReg('gh')">
+        <div class="reg-icon" style="background:linear-gradient(135deg,#fb923c,#ea580c)">
           <svg viewBox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
         </div>
         <div class="reg-text">
@@ -678,7 +766,7 @@ body{
 
       <button class="reg-item" onclick="showReg('contact')">
         <div class="reg-icon" style="background:linear-gradient(135deg,#25d366,#128c7e)">
-          <svg viewBox="0 0 24 24" class="filled-svg" style="fill:#fff;stroke:none">
+          <svg viewBox="0 0 24 24" style="fill:#fff;stroke:none">
             <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
           </svg>
         </div>
@@ -690,7 +778,7 @@ body{
       </button>
 
       <button class="reg-item" onclick="showReg('fyi')">
-        <div class="reg-icon" style="background:linear-gradient(135deg,#fb923c,#ea580c)">
+        <div class="reg-icon" style="background:linear-gradient(135deg,var(--aurora-1),var(--aurora-2))">
           <svg viewBox="0 0 24 24"><path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
         </div>
         <div class="reg-text">
@@ -720,59 +808,38 @@ body{
   ════════════════════════════════════════ -->
   <div id="regDetailPage" class="page">
     <button class="btn-back" onclick="go('regulasiPage')">
-      ← Kembali ke Regulasi
+      Kembali ke Regulasi
     </button>
     <div id="regDetailContent"></div>
   </div>
 
-</div><!-- /#app -->
+</div>
 
 <script>
 // ─── TEAM DATA ───
 var COLORS = [
-  'linear-gradient(135deg,#1e90ff,#00d4ff)',
-  'linear-gradient(135deg,#d4a742,#b8860b)',
-  'linear-gradient(135deg,#a855f7,#7c3aed)',
-  'linear-gradient(135deg,#22c55e,#15803d)',
+  'linear-gradient(135deg,#00ffc8,#059669)',
+  'linear-gradient(135deg,#7b61ff,#4c1d95)',
+  'linear-gradient(135deg,#ff6b9d,#be185d)',
+  'linear-gradient(135deg,#00ffc8,#7b61ff)',
   'linear-gradient(135deg,#ef4444,#991b1b)',
   'linear-gradient(135deg,#22d3ee,#0891b2)',
   'linear-gradient(135deg,#f97316,#c2410c)',
-  'linear-gradient(135deg,#ec4899,#9d174d)',
+  'linear-gradient(135deg,#ff6b9d,#7b61ff)',
   'linear-gradient(135deg,#84cc16,#4d7c0f)',
   'linear-gradient(135deg,#f59e0b,#b45309)',
-  'linear-gradient(135deg,#6366f1,#4338ca)',
+  'linear-gradient(135deg,#7b61ff,#00ffc8)',
   'linear-gradient(135deg,#14b8a6,#0f766e)'
 ];
 
 // ─── REGULASI CONTENT ───
 var REG = {
-  roster:{
-    title:'Regulasi Tim Roster',
-    color:'#d4a742',
-    html:function(){return(
-      '<p>Tim yang akan berkompetisi terdiri dari <span class="highlight">12 tim</span>. Setiap tim harus terdiri dari minimal <span class="highlight">5 orang</span> dan maksimal <span class="highlight">8 orang</span>.</p>'+
-      '<p>Setiap tim harus melaporkan dengan jelas role dari masing-masing pemain yang menjadi bagian tim.</p>'+
-      '<p>Tim <strong>tidak diperbolehkan</strong> untuk menambah / mengurangi / mengganti pemain dari roster ketika masih di fase pertandingan; diperbolehkan saat waktu break menuju fase selanjutnya.</p>'+
-      '<div class="info-box"><span class="highlight-blue">Group Stage</span> → Break → <span class="highlight-blue">Double Elimination</span></div>'+
-      '<div class="warn-box"><div class="warn-title">⚠ Sanksi Pelanggaran:</div><ul><li>Didiskualifikasi sepenuhnya</li><li>Pengurangan Poin</li><li>Larangan salah satu player tidak diperbolehkan bermain</li></ul></div>'
-    );}
-  },
-  waktu:{
-    title:'Rentang Waktu Turnamen',
-    color:'#00d4ff',
-    html:function(){return(
-      '<p>Ketika pertandingan dimulai, salah satu tim akan membuat room dan membagikannya melalui code atau link kepada admin menuju GH tim lain.</p>'+
-      '<div class="info-box">Jika tim lawan tidak memasuki room secara penuh selama <span class="highlight">15 menit</span>, maka tim lawan akan kehilangan <span class="highlight-red">1 point</span>.</div>'+
-      '<p>Dari sana, match kedua akan dihitung kembali dari waktu sebelumnya dan menerapkan sistem yang serupa.</p>'
-    );}
-  },
   larangan:{
     title:'Larangan dan Sanksi',
     color:'#f87171',
     html:function(){return(
-      '<p>Pemain dilarang keras untuk melakukan kecurangan yang dapat merugikan tim lawan dan tim sendiri.</p>'+
-      '<div class="warn-box"><div class="warn-title">⛔ Cheat yang Dilarang:</div><ul><li>Script</li><li>Map Hack</li><li>Dll yang bersifat merugikan</li></ul></div>'+
-      '<div class="warn-box"><div class="warn-title">⚠ Sanksi:</div><ul><li>Player dibanned langsung dari turnamen</li><li>Tim yang menaungi mendapat pengurangan point</li><li>Kemungkinan sanksi tambahan lainnya</li></ul></div>'+
+      '<p>Pemain dilarang keras untuk melakukan kecurangan yang dapat merugikan tim lawan dan tim sendiri. Penggunaan cheat seperti: <span class="highlight-red">Script</span>, <span class="highlight-red">Map Hack</span>, dll yang bernilai merugikan, akan dipastikan mendapatkan sanksi!</p>'+
+      '<div class="warn-box"><div class="warn-title">SANKSI YANG DITERAPKAN:</div><ul><li>Player dibanned langsung dari turnamen</li><li>Tim yang menaungi akan mendapatkan pengurangan point</li><li>Pengawasan ketat jika masih kemungkinan</li><li>Dan kemungkinan-kemungkinan lainnya</li></ul></div>'+
       '<p>Selain itu, jika sebuah tim/player melanggar catatan-catatan lain, akan dipastikan melalui sanksi-sanksi yang telah ditetapkan.</p>'
     );}
   },
@@ -780,67 +847,83 @@ var REG = {
     title:'Format Pertandingan',
     color:'#a855f7',
     html:function(){return(
-      '<div class="stage-box"><div class="stage-box-title" style="color:#d4a742">&#9654; GROUP STAGE</div><ul>'+
-      '<li>Pertandingan dimulai dengan format <span style="color:#d4a742;font-weight:600">Group Stage</span>, terdiri dari 2 group; masing-masing berisi 6 tim.</li>'+
-      '<li>Penentuan tim masuk group mana dilakukan melalui <span style="color:#d4a742;font-weight:600">spin</span>.</li>'+
-      '<li>Setiap tim melalui <span style="color:#d4a742;font-weight:600">5&times; pertandingan BO1</span> pada babak group stage.</li>'+
-      '<li>Tim urutan <span style="color:#d4a742;font-weight:600">1&ndash;4</span> dipastikan melaju ke fase play-off / double elimination.</li>'+
+      '<div class="stage-box"><div class="stage-box-title" style="color:var(--aurora-1)">GROUP STAGE</div><ul>'+
+      '<li>Pertandingan dimulai dengan format <span style="color:var(--aurora-1);font-weight:700">Group Stage</span>, terdiri dari <span style="color:var(--aurora-1);font-weight:700">4 group</span>; setiap group terdiri dari <span style="color:var(--aurora-1);font-weight:700">6 tim</span>.</li>'+
+      '<li>Penentuan sebuah tim akan berada di group mana, akan dilakukan melalui <span style="color:var(--aurora-1);font-weight:700">spin</span>.</li>'+
+      '<li>Setiap tim akan melalui <span style="color:var(--aurora-1);font-weight:700">5x pertandingan BO1</span> pada babak group stage.</li>'+
+      '<li>Tim yang berada di urutan <span style="color:var(--aurora-1);font-weight:700">1-4</span>, dipastikan akan melaju pada fase play-off/double elimination.</li>'+
       '</ul></div>'+
-      '<div class="stage-box"><div class="stage-box-title" style="color:#00d4ff">&#9654; DOUBLE ELIMINATION</div><ul>'+
-      '<li>Tim dispin untuk bertemu lawan dari group yang <span style="color:#00d4ff;font-weight:600">berbeda</span>.</li>'+
-      '<li>Tim yang kalah di babak awal masih bisa melaju melalui <span style="color:#00d4ff;font-weight:600">lower bracket</span>.</li>'+
-      '<li>Setiap pertandingan pada fase ini bersifat <span style="color:#00d4ff;font-weight:600">BO3</span>.</li>'+
+      '<div class="stage-box"><div class="stage-box-title" style="color:var(--aurora-2)">DOUBLE ELIMINATION</div><ul>'+
+      '<li>Pada fase double elimination, tim akan dispin untuk bertemu lawan di group yang <span style="color:var(--aurora-2);font-weight:700">berbeda</span>.</li>'+
+      '<li>Tim yang kalah di babak awal, masih bisa melaju dengan melalui <span style="color:var(--aurora-2);font-weight:700">lower bracket</span>.</li>'+
+      '<li>Setiap pertandingan pada fase ini, bersifat <span style="color:var(--aurora-2);font-weight:700">BO3</span>.</li>'+
       '</ul></div>'+
-      '<div class="stage-box" style="border-color:rgba(212,167,66,0.35)"><div class="stage-box-title" style="color:#d4a742">&#9654; FINAL LOWER BRACKET</div><ul>'+
-      '<li><span class="live-dot"></span>Admin akan <span style="color:#f87171;font-weight:600">live di TikTok</span> untuk menyaksikan keseruan pertandingan!</li>'+
-      '<li>Format Final Lower Bracket: <span style="color:#d4a742;font-weight:600">BO5</span>.</li>'+
+      '<div class="stage-box" style="border-color:rgba(0,255,200,0.25)"><div class="stage-box-title" style="color:var(--aurora-1)">FINAL LOWER BRACKET</div><ul>'+
+      '<li><span class="live-dot"></span>Admin akan melakukan <span style="color:var(--aurora-3);font-weight:700">live di TikTok</span> guna menonton keseruan dari pertandingan yang akan selesai!</li>'+
+      '<li>Final lower bracket <span style="color:var(--aurora-1);font-weight:700">BO5</span> btw.</li>'+
       '</ul></div>'+
-      '<div class="stage-box" style="border-color:rgba(212,167,66,0.6)"><div class="stage-box-title" style="color:#d4a742">&#9654; GRAND FINAL</div><ul>'+
-      '<li><span class="live-dot"></span>Admin kembali <span style="color:#f87171;font-weight:600">live di TikTok</span> dan memantau keseruan Grand Final!</li>'+
-      '<li>Format Grand Final: <span style="color:#d4a742;font-weight:600">BO5</span>.</li>'+
+      '<div class="stage-box" style="border-color:rgba(123,97,255,0.3)"><div class="stage-box-title" style="color:var(--aurora-2)">GRAND FINAL</div><ul>'+
+      '<li><span class="live-dot"></span>Admin akan kembali melakukan <span style="color:var(--aurora-3);font-weight:700">live di TikTok</span> dan memantau keseruan dari Grand Final.</li>'+
+      '<li>Grand Final <span style="color:var(--aurora-2);font-weight:700">BO5</span>.</li>'+
       '</ul></div>'
+    );}
+  },
+  roster:{
+    title:'Regulasi Tim Roster',
+    color:'#00ffc8',
+    html:function(){return(
+      '<p>Tim yang akan berkompetisi terdiri dari <span class="highlight">24 tim</span>. Tim harus terdiri dari minimal <span class="highlight">5 orang</span> dan maksimal <span class="highlight">9 orang</span>.</p>'+
+      '<p>Setiap tim, harus melaporkan dengan jelas role dari masing-masing pemain yang menjadi bagian tim.</p>'+
+      '<p>Tim tidak diperbolehkan untuk menambah/mengurangi/mengganti pemain dari roster ketika masih di fase pertandingan; diperbolehkan saat waktu break menuju fase selanjutnya.</p>'+
+      '<div class="info-box"><em>Fase di sini adalah pergantian ke format pertandingan yang baru:</em><br><br><span class="highlight-blue">Group Stage</span> > Break > <span class="highlight-blue">Double Elimination</span></div>'+
+      '<div class="warn-box"><div class="warn-title">SANKSI PELANGGARAN:</div><ul><li>Didiskualifikasi sepenuhnya</li><li>Pengurangan Poin</li><li>Larangan untuk salah satu player tidak diperbolehkan bermain</li></ul></div>'
     );}
   },
   ingame:{
     title:'Regulasi Dalam Game',
     color:'#10b981',
     html:function(){return(
-      '<div class="rule-item"><div class="rule-num">1.</div><div class="rule-text">Dilarang keras melakukan <span class="highlight-red">chat all</span>, apapun alasannya. Jika secara sengaja atau tidak sengaja melanggar, maka match tersebut akan menjadi <span class="highlight">point free</span> bagi tim lawan (diharuskan membawa bukti).</div></div>'+
-      '<div class="rule-item"><div class="rule-num">2.</div><div class="rule-text">Tidak diperbolehkan melakukan <span class="highlight-red">radio all</span> (selain radio yang bersifat all, diperbolehkan). Jika sengaja atau tidak sengaja melakukan radio all dalam <span class="highlight">1&times;</span>, tim masih diberi toleransi. Jika lebih, match tersebut akan menjadi <span class="highlight">point free</span> bagi tim lawan.</div></div>'+
+      '<div class="rule-item"><div class="rule-num">1.</div><div class="rule-text">Dilarang keras untuk melakukan <span class="highlight-red">chat all</span>, terkecuali ada urgensi penting (wajib ada panitia yang menonton. Jika tidak, maka akan dinilai tidak sahih). Jika secara sengaja atau tidak sengaja melanggar, maka match tersebut akan menjadi <span class="highlight">point free</span> bagi tim lawan (diharuskan membawa bukti).</div></div>'+
+      '<div class="rule-item"><div class="rule-num">2.</div><div class="rule-text">Tidak diperbolehkan melakukan <span class="highlight-red">radio all</span> (selain radio yang bersifat all, diperbolehkan). Jika secara sengaja atau tidak sengaja melakukan radio all dalam <span class="highlight">1-2x</span>, tim masih diberi toleransi. Jika lebih, match tersebut akan menjadi <span class="highlight">point free</span> bagi tim lawan.</div></div>'+
       '<div class="rule-item"><div class="rule-num">3.</div><div class="rule-text">Pemain hanya boleh menggunakan <span class="highlight">2 akun berbeda</span>. Lebih dari itu? Dipastikan pemain tersebut terkena sanksi dan tim yang menaunginya terkena sanksi juga.</div></div>'+
-      '<div class="rule-item"><div class="rule-num">4.</div><div class="rule-text">Pertandingan hanya boleh disaksikan oleh <span class="highlight">admin tour / panitia</span>, selain itu tidak boleh. Ketika panitia menonton pertandingan, <span class="highlight-blue">chat all</span> dapat berfungsi untuk meminta melakukan <em>pause</em>. Namun, urgensi harus memadai &mdash; bukan karena alasan sepele.</div></div>'
+      '<div class="rule-item"><div class="rule-num">4.</div><div class="rule-text">Pemain yang tidak bermain/bukan bagian tim, tidak diperkenankan untuk menyaksikan pertandingan tersebut, terkecuali panitia.</div></div>'
+    );}
+  },
+  waktu:{
+    title:'Rentang Waktu Turnamen',
+    color:'#38bdf8',
+    html:function(){return(
+      '<p>Ketika pertandingan dimulai, salah satu tim akan membuat room dan membagikannya melalui code atau link kepada admin menuju GH tim lain.</p>'+
+      '<div class="info-box">Jika tim lawan tidak memasuki room secara penuh selama <span class="highlight">15 menit</span>, maka tim lawan akan kehilangan <span class="highlight-red">1 point</span>.</div>'+
+      '<p>Dari sana, match kedua akan dihitung kembali dari waktu sebelumnya dan menerapkan sistem yang serupa.</p>'
     );}
   },
   gh:{
     title:'Pembagian GH & Room Pertandingan',
-    color:'#38bdf8',
+    color:'#fb923c',
     html:function(){return(
       '<p>Mula-mula, tiap tim akan bergabung ke <span class="highlight">GH (Gaming House/Group)</span> masing-masing di komunitas LODC <em>(contoh: Fomfa GH)</em>. Pastikan setiap pemain dari roster bergabung ke GH tim masing-masing.</p>'+
-      '<div class="warn-box" style="background:rgba(248,113,113,0.07);border-left-color:#f87171"><div class="warn-title">⚠ Perhatian</div><p style="color:#bbb;font-size:13px;margin:0">Jika pemain tidak bergabung ke GH tim, maka pemain tersebut <span class="highlight-red">tidak bisa dikalkulasikan</span> memasuki roster tim tersebut.</p></div>'+
-      '<div class="info-box" style="margin-top:14px"><div class="section-title" style="color:#38bdf8;margin-bottom:8px">&#128101; Pembagian Room Pertandingan</div>'+
+      '<div class="warn-box" style="background:rgba(248,113,113,0.07);border-left-color:#f87171"><div class="warn-title">Perhatian</div><p style="color:#bbb;font-size:13px;margin:0">Jika pemain tidak bergabung ke GH tim, maka pemain tersebut <span class="highlight-red">tidak bisa dikalkulasikan</span> memasuki roster tim tersebut.</p></div>'+
+      '<div class="info-box" style="margin-top:14px"><div class="section-title" style="color:var(--aurora-1);margin-bottom:8px">Pembagian Room Pertandingan</div>'+
       '<p style="color:#bbb;font-size:13px;margin-bottom:0">Di setiap pertandingan, salah satu tim akan dipilih untuk <span class="highlight">open room</span>, kemudian dapat menshare-nya melalui <span class="highlight">kode room</span> atau <span class="highlight">link WhatsApp</span> yang langsung tersinkronisasi.</p></div>'+
-      '<div class="info-box"><div class="section-title" style="color:#38bdf8;margin-bottom:8px">&#128279; Cara Share Room</div>'+
+      '<div class="info-box"><div class="section-title" style="color:var(--aurora-1);margin-bottom:8px">Cara Share Room</div>'+
       '<p style="color:#bbb;font-size:13px;margin:0">Setelah mengirim link atau kode room ke <span class="highlight">GH tim sendiri</span>, kalian dapat mentag salah satu admin guna mengshare kode room atau link tersebut ke <span class="highlight">GH tim lawan</span>.</p></div>'
     );}
   },
   contact:{
     title:'Admin Contact',
-    color:'#25d366',
+    color:'#00ffc8',
     html:function(){return(
       '<a href="https://wa.me/6285381927438" target="_blank" rel="noopener" class="contact-link">'+
         '<div class="contact-num">1</div>'+
         '<div><div class="contact-name">Lifany</div><div class="contact-num-text">+62 853-8192-7438</div></div>'+
       '</a>'+
-      '<a href="https://wa.me/6285714249130" target="_blank" rel="noopener" class="contact-link">'+
-        '<div class="contact-num">2</div>'+
-        '<div><div class="contact-name">Duta</div><div class="contact-num-text">+62 857-1424-9130</div></div>'+
-      '</a>'+
       '<a href="https://wa.me/6281225974441" target="_blank" rel="noopener" class="contact-link">'+
-        '<div class="contact-num">3</div>'+
+        '<div class="contact-num">2</div>'+
         '<div><div class="contact-name">Daffxy</div><div class="contact-num-text">+62 812-2597-4441</div></div>'+
       '</a>'+
       '<a href="https://wa.me/6281371485814" target="_blank" rel="noopener" class="contact-link">'+
-        '<div class="contact-num">4</div>'+
+        '<div class="contact-num">3</div>'+
         '<div><div class="contact-name">Adit</div><div class="contact-num-text">+62 813-7148-5814</div></div>'+
       '</a>'
     );}
@@ -850,29 +933,29 @@ var REG = {
     color:'#fb923c',
     html:function(){return(
       '<div class="info-box" style="text-align:center;font-size:14px">Untuk mengikuti kompetisi ini, <span class="highlight-green">TIDAK DIPERKENANKAN BIAYA</span> sepeser pun!</div>'+
-      '<div style="text-align:center;margin:16px 0"><div style="color:#666;font-size:12px;margin-bottom:4px">Pool Prize</div><div style="font-family:Courier New,monospace;font-size:32px;font-weight:900;color:#d4a742">225k</div></div>'+
+      '<div style="text-align:center;margin:18px 0"><div style="color:#666;font-size:12px;margin-bottom:6px">Pool Prize</div><div style="font-family:Space Grotesk,sans-serif;font-size:36px;font-weight:700;background:linear-gradient(135deg,var(--aurora-1),var(--aurora-2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">280k</div></div>'+
       '<div class="prize-box" style="border-left:4px solid #facc15">'+
-        '<div class="prize-medal" style="background:#facc15">1</div>'+
-        '<div><div class="prize-rank" style="color:#facc15">Juara 1</div><div class="prize-desc">150k + Sertifikat Kejuaraan</div></div>'+
+        '<div class="prize-medal" style="background:linear-gradient(135deg,#facc15,#eab308)">1</div>'+
+        '<div><div class="prize-rank" style="color:#facc15">Juara 1</div><div class="prize-desc">170k + Sertif Kejuaraan</div></div>'+
       '</div>'+
       '<div class="prize-box" style="border-left:4px solid #d1d5db">'+
-        '<div class="prize-medal" style="background:#d1d5db">2</div>'+
-        '<div><div class="prize-rank" style="color:#d1d5db">Juara 2</div><div class="prize-desc">50k + Sertifikat Kejuaraan</div></div>'+
+        '<div class="prize-medal" style="background:linear-gradient(135deg,#d1d5db,#9ca3af)">2</div>'+
+        '<div><div class="prize-rank" style="color:#d1d5db">Juara 2</div><div class="prize-desc">70k + Sertif Kejuaraan</div></div>'+
       '</div>'+
       '<div class="prize-box" style="border-left:4px solid #fb923c">'+
-        '<div class="prize-medal" style="background:#fb923c">3</div>'+
-        '<div><div class="prize-rank" style="color:#fb923c">Juara 3</div><div class="prize-desc">25k + Sertifikat Kejuaraan</div></div>'+
+        '<div class="prize-medal" style="background:linear-gradient(135deg,#fb923c,#ea580c)">3</div>'+
+        '<div><div class="prize-rank" style="color:#fb923c">Juara 3</div><div class="prize-desc">40k + Sertif</div></div>'+
       '</div>'+
-      '<div class="info-box" style="text-align:center;margin-top:12px"><div style="color:#555;font-size:11px;margin-bottom:4px">SPECIAL PARTNERS</div><div style="font-family:Courier New,monospace;color:#00d4ff;font-weight:700">GABRIEL, HEKTA, DAFFXY &amp; ADIT</div></div>'
+      '<div class="info-box" style="text-align:center;margin-top:14px"><div style="color:#555;font-size:11px;margin-bottom:5px">SPECIAL PARTNERS</div><div style="font-family:Space Grotesk,sans-serif;background:linear-gradient(135deg,var(--aurora-1),var(--aurora-2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:700">GABRIEL, HEKTA, DAFFXY &amp; ADIT</div></div>'
     );}
   },
   jadwal:{
     title:'Jadwal Pertandingan',
     color:'#22d3ee',
     html:function(){return(
-      '<div style="text-align:center;padding:40px 0">'+
-        '<div style="font-size:36px;margin-bottom:12px">📅</div>'+
-        '<div style="color:#ccc;font-size:15px;margin-bottom:8px">Jadwal pertandingan akan diumumkan segera.</div>'+
+      '<div style="text-align:center;padding:44px 0">'+
+        '<div style="font-size:40px;margin-bottom:14px">...</div>'+
+        '<div style="color:#ccc;font-size:15px;margin-bottom:10px">Jadwal pertandingan akan diumumkan segera.</div>'+
         '<div style="color:#555;font-size:13px">Hubungi admin untuk informasi lebih lanjut.</div>'+
       '</div>'
     );}
@@ -886,13 +969,12 @@ function go(pageId){
   document.getElementById(current).classList.remove('active');
   var target = document.getElementById(pageId);
   target.classList.remove('fade-in');
-  // force reflow
   void target.offsetWidth;
   target.classList.add('active','fade-in');
   current = pageId;
   window.scrollTo(0,0);
   if(pageId === 'listTimPage') buildTeamGrid();
-  playClick();
+  playGlass();
 }
 
 // ─── TEAM GRID ───
@@ -935,33 +1017,63 @@ function showReg(id){
   var d = REG[id];
   var el = document.getElementById('regDetailContent');
   el.innerHTML =
-    '<div class="reg-detail-title fade-in" style="color:'+d.color+'">'+d.title+'</div>'+
-    '<div class="reg-detail-divider fade-in" style="background:'+d.color+'"></div>'+
+    '<div class="reg-detail-title fade-in" style="background:linear-gradient(135deg,var(--aurora-1),var(--aurora-2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">'+d.title+'</div>'+
+    '<div class="reg-detail-divider fade-in" style="background:linear-gradient(90deg,var(--aurora-1),var(--aurora-2),var(--aurora-3))"></div>'+
     '<div class="reg-body fade-in">'+d.html()+'</div>';
   go('regDetailPage');
 }
 
-// ─── SOUND ───
+// ─── GLASS SOUND EFFECT ───
 var AC = null;
 function initAC(){
   if(!AC) try{ AC = new (window.AudioContext||window.webkitAudioContext)(); }catch(e){}
 }
-function playClick(){
+function playGlass(){
   initAC();
   if(!AC) return;
   try{
-    var o=AC.createOscillator(), g=AC.createGain(), t=AC.currentTime;
-    o.type='sine';
-    o.frequency.setValueAtTime(3600,t);
-    o.frequency.exponentialRampToValueAtTime(2800,t+0.06);
-    g.gain.setValueAtTime(0,t);
-    g.gain.linearRampToValueAtTime(0.06,t+0.008);
-    g.gain.exponentialRampToValueAtTime(0.001,t+0.2);
-    o.connect(g); g.connect(AC.destination);
-    o.start(t); o.stop(t+0.2);
+    var t = AC.currentTime;
+    
+    // Main glass crack - high frequency sweep
+    var o1 = AC.createOscillator();
+    var g1 = AC.createGain();
+    o1.type = 'sine';
+    o1.frequency.setValueAtTime(2800, t);
+    o1.frequency.exponentialRampToValueAtTime(1800, t + 0.04);
+    o1.frequency.exponentialRampToValueAtTime(600, t + 0.12);
+    g1.gain.setValueAtTime(0, t);
+    g1.gain.linearRampToValueAtTime(0.08, t + 0.003);
+    g1.gain.exponentialRampToValueAtTime(0.001, t + 0.15);
+    o1.connect(g1); g1.connect(AC.destination);
+    o1.start(t); o1.stop(t + 0.15);
+    
+    // Glass shimmer 1
+    var o2 = AC.createOscillator();
+    var g2 = AC.createGain();
+    o2.type = 'sine';
+    o2.frequency.setValueAtTime(4200, t + 0.02);
+    o2.frequency.exponentialRampToValueAtTime(3200, t + 0.06);
+    g2.gain.setValueAtTime(0, t + 0.02);
+    g2.gain.linearRampToValueAtTime(0.04, t + 0.025);
+    g2.gain.exponentialRampToValueAtTime(0.001, t + 0.1);
+    o2.connect(g2); g2.connect(AC.destination);
+    o2.start(t + 0.02); o2.stop(t + 0.1);
+    
+    // Glass shimmer 2
+    var o3 = AC.createOscillator();
+    var g3 = AC.createGain();
+    o3.type = 'triangle';
+    o3.frequency.setValueAtTime(5600, t + 0.03);
+    o3.frequency.exponentialRampToValueAtTime(2400, t + 0.08);
+    g3.gain.setValueAtTime(0, t + 0.03);
+    g3.gain.linearRampToValueAtTime(0.03, t + 0.035);
+    g3.gain.exponentialRampToValueAtTime(0.001, t + 0.12);
+    o3.connect(g3); g3.connect(AC.destination);
+    o3.start(t + 0.03); o3.stop(t + 0.12);
+    
   }catch(e){}
 }
 document.addEventListener('click',function(){initAC();},{once:true});
 </script>
 </body>
-</html>
+          </html>
