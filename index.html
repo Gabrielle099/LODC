@@ -4,150 +4,122 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>Land Of Down Championship</title>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-/* ── RESET ── */
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{width:100%;min-height:100%;overflow-x:hidden}
 
-/* ── FONTS ── */
 body{
-  font-family:'Outfit',sans-serif;
-  background:#0a0a12;
+  font-family:'Inter',sans-serif;
+  background:#08080a;
   color:#fff;
 }
-.font-display{font-family:'Space Grotesk',sans-serif;letter-spacing:.03em}
-.font-mono{font-family:'Space Grotesk',sans-serif}
+.font-display{font-family:'Playfair Display',serif;letter-spacing:.02em}
+.font-mono{font-family:'Inter',sans-serif}
 
-/* ── CSS VARIABLES - AURORA THEME ── */
 :root{
-  --aurora-1:#00ffc8;
-  --aurora-2:#7b61ff;
-  --aurora-3:#ff6b9d;
-  --dark:#0a0a12;
-  --card:rgba(15,15,25,0.85);
-  --border:rgba(255,255,255,0.08);
+  --gold:#c9a962;
+  --gold-light:#e8d5a3;
+  --silver:#a8a8a8;
+  --accent:#c9a962;
+  --dark:#08080a;
+  --card:rgba(18,18,22,0.95);
+  --border:rgba(201,169,98,0.12);
   --ease:cubic-bezier(0.4,0,0.2,1);
-  --glass:rgba(255,255,255,0.03);
+  --glass:rgba(201,169,98,0.03);
 }
 
-/* ── BACKGROUND AURORA ── */
 .bg-layer{
   position:fixed;inset:0;z-index:0;
-  background:#0a0a12;
-  overflow:hidden;
+  background:#08080a;
 }
-.aurora-blob{
-  position:absolute;
+.ambient-light{
+  position:fixed;
   border-radius:50%;
-  filter:blur(80px);
-  opacity:0.4;
-  animation:auroraFloat 20s ease-in-out infinite;
+  filter:blur(120px);
+  opacity:0.15;
+  pointer-events:none;
 }
-.aurora-blob:nth-child(1){
+.ambient-light:nth-child(1){
+  width:500px;height:500px;
+  background:var(--gold);
+  top:-200px;left:-150px;
+}
+.ambient-light:nth-child(2){
   width:400px;height:400px;
-  background:var(--aurora-1);
-  top:-100px;left:-100px;
-  animation-delay:0s;
+  background:var(--gold);
+  bottom:-150px;right:-100px;
+  opacity:0.1;
 }
-.aurora-blob:nth-child(2){
-  width:350px;height:350px;
-  background:var(--aurora-2);
-  bottom:-80px;right:-80px;
-  animation-delay:-7s;
-}
-.aurora-blob:nth-child(3){
-  width:300px;height:300px;
-  background:var(--aurora-3);
-  top:40%;left:50%;
-  animation-delay:-14s;
-}
-@keyframes auroraFloat{
-  0%,100%{transform:translate(0,0) scale(1)}
-  33%{transform:translate(30px,-30px) scale(1.1)}
-  66%{transform:translate(-20px,20px) scale(0.95)}
-}
-.glass-layer{
+.texture-layer{
   position:fixed;inset:0;z-index:0;pointer-events:none;
-  background:
-    linear-gradient(135deg,rgba(0,255,200,0.02) 0%,transparent 50%),
-    linear-gradient(225deg,rgba(123,97,255,0.02) 0%,transparent 50%),
-    linear-gradient(315deg,rgba(255,107,157,0.02) 0%,transparent 50%);
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  opacity:0.03;
 }
 .grid-layer{
   position:fixed;inset:0;z-index:0;pointer-events:none;
   background-image:
-    linear-gradient(rgba(255,255,255,0.012) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(255,255,255,0.012) 1px,transparent 1px);
-  background-size:60px 60px;
+    linear-gradient(rgba(201,169,98,0.02) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(201,169,98,0.02) 1px,transparent 1px);
+  background-size:80px 80px;
 }
 
-/* ── MAIN WRAPPER ── */
 #app{
   position:relative;z-index:1;min-height:100vh;
-  padding:16px;
+  padding:18px;
   max-width:480px;
   margin:0 auto;
 }
 
-/* ── PAGE SYSTEM ── */
 .page{display:none;opacity:0}
 .page.active{display:block;opacity:1}
 
-/* ── FADE ANIMATION ── */
 @keyframes fadeUp{
-  from{opacity:0;transform:translateY(16px)}
+  from{opacity:0;transform:translateY(14px)}
   to{opacity:1;transform:translateY(0)}
 }
 .fade-in{animation:fadeUp .4s var(--ease) both}
 
-/* ── CARD BASE - GLASS EFFECT ── */
 .card{
   background:var(--card);
-  backdrop-filter:blur(12px);
   border:1px solid var(--border);
-  border-radius:18px;
+  border-radius:16px;
   transition:border-color .3s var(--ease),transform .3s var(--ease),box-shadow .3s var(--ease);
 }
 .card:hover{
-  border-color:rgba(0,255,200,0.25);
+  border-color:rgba(201,169,98,0.25);
   transform:translateY(-2px);
-  box-shadow:0 12px 32px rgba(0,0,0,0.4),0 0 0 1px rgba(0,255,200,0.1)
+  box-shadow:0 12px 32px rgba(0,0,0,0.5)
 }
 
-/* ── BADGE ── */
 .badge{
   display:inline-block;
-  background:linear-gradient(135deg,rgba(0,255,200,0.08),rgba(123,97,255,0.08));
-  border:1px solid rgba(0,255,200,0.25);
+  background:rgba(201,169,98,0.08);
+  border:1px solid rgba(201,169,98,0.3);
   border-radius:999px;
   padding:7px 22px;
-  font-size:10px;
-  letter-spacing:.2em;
-  color:var(--aurora-1);
-  font-family:'Space Grotesk',sans-serif;
-  font-weight:700;
+  font-size:9px;
+  letter-spacing:.22em;
+  color:var(--gold);
+  font-family:'Inter',sans-serif;
+  font-weight:600;
   text-transform:uppercase;
-  box-shadow:0 0 24px rgba(0,255,200,0.1);
 }
 
-/* ── DIVIDER ── */
 .divider{
-  width:80px;height:2px;
-  background:linear-gradient(90deg,transparent,var(--aurora-1),var(--aurora-2),transparent);
+  width:70px;height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
   margin:16px auto 24px;
-  border-radius:99px;
 }
 
-/* ── BUTTONS ── */
 .btn{
   display:block;width:100%;
   padding:15px 24px;
-  border-radius:14px;
-  font-family:'Space Grotesk',sans-serif;
-  font-weight:700;
-  font-size:14px;
-  letter-spacing:.08em;
+  border-radius:12px;
+  font-family:'Inter',sans-serif;
+  font-weight:600;
+  font-size:13px;
+  letter-spacing:.06em;
   cursor:pointer;
   border:1px solid;
   transition:background .28s var(--ease),border-color .28s var(--ease),
@@ -157,101 +129,87 @@ body{
   -webkit-user-select:none;user-select:none;
 }
 .btn-gold{
-  background:linear-gradient(135deg,rgba(0,255,200,0.1),rgba(123,97,255,0.1));
-  border-color:rgba(0,255,200,0.35);
-  color:var(--aurora-1);
+  background:rgba(201,169,98,0.08);
+  border-color:rgba(201,169,98,0.35);
+  color:var(--gold);
 }
 .btn-gold:hover,.btn-gold:active{
-  background:linear-gradient(135deg,rgba(0,255,200,0.2),rgba(123,97,255,0.15));
-  border-color:var(--aurora-1);
+  background:rgba(201,169,98,0.15);
+  border-color:var(--gold);
   transform:translateY(-2px);
-  box-shadow:0 8px 28px rgba(0,255,200,0.15),0 0 0 1px rgba(0,255,200,0.2);
+  box-shadow:0 8px 28px rgba(201,169,98,0.12);
 }
-.btn-blue{
-  background:linear-gradient(135deg,rgba(123,97,255,0.1),rgba(255,107,157,0.1));
-  border-color:rgba(123,97,255,0.35);
-  color:var(--aurora-2);
+.btn-silver{
+  background:rgba(168,168,168,0.06);
+  border-color:rgba(168,168,168,0.3);
+  color:var(--silver);
 }
-.btn-blue:hover,.btn-blue:active{
-  background:linear-gradient(135deg,rgba(123,97,255,0.2),rgba(255,107,157,0.15));
-  border-color:var(--aurora-2);
+.btn-silver:hover,.btn-silver:active{
+  background:rgba(168,168,168,0.12);
+  border-color:var(--silver);
   transform:translateY(-2px);
-  box-shadow:0 8px 28px rgba(123,97,255,0.15);
+  box-shadow:0 8px 28px rgba(168,168,168,0.08);
 }
 .btn-back{
   display:inline-flex;align-items:center;gap:8px;
-  background:var(--glass);
-  backdrop-filter:blur(8px);
+  background:rgba(255,255,255,0.03);
   border:1px solid rgba(255,255,255,0.08);
-  color:#888;
+  color:#666;
   padding:10px 18px;
-  border-radius:12px;
-  font-size:13px;
+  border-radius:10px;
+  font-size:12px;
   cursor:pointer;
   margin-bottom:24px;
   transition:background .25s var(--ease),color .25s var(--ease),transform .2s var(--ease);
-  font-family:'Outfit',sans-serif;
-  letter-spacing:.02em;
+  font-family:'Inter',sans-serif;
 }
 .btn-back:hover,.btn-back:active{
   background:rgba(255,255,255,0.06);
-  color:#ddd;
+  color:#aaa;
   transform:translateX(-3px);
 }
 
-/* ── TYPOGRAPHY ── */
 .page-title{
-  font-family:'Space Grotesk',sans-serif;
-  font-size:24px;
+  font-family:'Playfair Display',serif;
+  font-size:26px;
   font-weight:700;
-  letter-spacing:.05em;
-  background:linear-gradient(135deg,var(--aurora-1),var(--aurora-2));
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  background-clip:text;
+  letter-spacing:.02em;
+  color:var(--gold);
   margin-bottom:4px;
 }
 .page-subtitle{
-  color:#5a5a6a;
-  font-size:12px;
+  color:#4a4a4a;
+  font-size:11px;
   margin-bottom:22px;
-  letter-spacing:.04em;
+  letter-spacing:.05em;
 }
 
-/* ── HOME PAGE ── */
 .home-header{
   text-align:center;
   padding:40px 0 30px;
 }
 .home-title{
-  font-family:'Space Grotesk',sans-serif;
-  font-size:clamp(26px,9vw,52px);
+  font-family:'Playfair Display',serif;
+  font-size:clamp(24px,8vw,44px);
   font-weight:700;
-  line-height:1.06;
-  letter-spacing:.03em;
+  line-height:1.1;
+  letter-spacing:.02em;
   color:#fff;
-  text-shadow:0 0 60px rgba(0,255,200,0.15);
   margin-bottom:6px;
 }
 .home-title .accent{
-  background:linear-gradient(135deg,var(--aurora-1),var(--aurora-2),var(--aurora-3));
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  background-clip:text;
+  color:var(--gold);
 }
 .home-desc{
-  color:#777;
+  color:#666;
   font-size:13px;
   line-height:1.9;
-  max-width:320px;
+  max-width:300px;
   margin:0 auto 30px;
 }
 .home-desc .highlight{
-  background:linear-gradient(135deg,var(--aurora-1),var(--aurora-2));
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  background-clip:text;
-  font-weight:700;
+  color:var(--gold);
+  font-weight:600;
 }
 .home-buttons{
   display:flex;flex-direction:column;gap:12px;
@@ -259,8 +217,7 @@ body{
 }
 .partners-box{
   background:var(--card);
-  backdrop-filter:blur(12px);
-  border:1px solid rgba(0,255,200,0.12);
+  border:1px solid rgba(201,169,98,0.1);
   border-radius:14px;
   padding:16px 22px;
   text-align:center;
@@ -268,21 +225,18 @@ body{
   margin:0 auto;
 }
 .partners-label{
-  font-size:9px;letter-spacing:.18em;color:#444;
+  font-size:9px;letter-spacing:.18em;color:#3a3a3a;
   margin-bottom:6px;text-transform:uppercase;
 }
 .partners-names{
-  font-family:'Space Grotesk',sans-serif;
-  background:linear-gradient(135deg,var(--aurora-1),var(--aurora-2));
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  background-clip:text;
-  font-size:13px;
-  font-weight:700;
-  letter-spacing:.04em;
+  font-family:'Playfair Display',serif;
+  color:var(--gold);
+  font-size:12px;
+  font-weight:600;
+  letter-spacing:.02em;
+  line-height:1.5;
 }
 
-/* ── TEAM GRID ── */
 .team-grid{
   display:grid;
   grid-template-columns:repeat(2,1fr);
@@ -290,10 +244,9 @@ body{
 }
 .team-item{
   background:var(--card);
-  backdrop-filter:blur(10px);
   border:1px solid var(--border);
-  border-radius:15px;
-  padding:16px 14px;
+  border-radius:14px;
+  padding:14px 12px;
   cursor:pointer;
   text-align:left;
   transition:border-color .28s var(--ease),background .28s var(--ease),transform .22s var(--ease),box-shadow .28s var(--ease);
@@ -301,193 +254,214 @@ body{
   -webkit-user-select:none;user-select:none;
 }
 .team-item:hover,.team-item:active{
-  border-color:rgba(0,255,200,0.35);
-  background:rgba(20,20,35,0.9);
-  transform:scale(1.03);
-  box-shadow:0 8px 24px rgba(0,0,0,0.4),0 0 0 1px rgba(0,255,200,0.1);
+  border-color:rgba(201,169,98,0.35);
+  background:rgba(22,22,28,0.95);
+  transform:scale(1.02);
+  box-shadow:0 8px 24px rgba(0,0,0,0.4);
 }
-.team-letter{
-  width:40px;height:40px;
-  border-radius:12px;
+.team-num{
+  width:32px;height:32px;
+  border-radius:8px;
   display:flex;align-items:center;justify-content:center;
-  font-family:'Space Grotesk',sans-serif;
+  font-family:'Inter',sans-serif;
   font-weight:700;
-  font-size:18px;
+  font-size:13px;
   color:#fff;
-  margin-bottom:10px;
+  margin-bottom:8px;
+  background:rgba(201,169,98,0.15);
+  border:1px solid rgba(201,169,98,0.25);
 }
 .team-name{
-  font-family:'Space Grotesk',sans-serif;
-  font-weight:700;
-  font-size:14px;
-  color:#e8e8f0;
-  margin-bottom:3px;
-  letter-spacing:.02em;
+  font-family:'Inter',sans-serif;
+  font-weight:600;
+  font-size:12px;
+  color:#e8e8e8;
+  margin-bottom:2px;
+  letter-spacing:.01em;
+  line-height:1.3;
 }
-.team-tap{font-size:10px;color:#444;letter-spacing:.03em}
+.team-tap{font-size:9px;color:#3a3a3a;letter-spacing:.02em}
 
-/* ── TEAM DETAIL ── */
 .team-detail-header{
   background:var(--card);
-  backdrop-filter:blur(12px);
   border:1px solid var(--border);
-  border-radius:18px;
-  padding:34px 22px;
+  border-radius:16px;
+  padding:24px 20px;
   text-align:center;
-  margin-bottom:16px;
+  margin-bottom:14px;
 }
-.team-detail-badge{
-  width:72px;height:72px;
-  border-radius:18px;
+.team-detail-num{
+  width:56px;height:56px;
+  border-radius:14px;
   display:flex;align-items:center;justify-content:center;
-  font-family:'Space Grotesk',sans-serif;
+  font-family:'Inter',sans-serif;
   font-weight:700;
-  font-size:30px;
+  font-size:22px;
   color:#fff;
-  margin:0 auto 16px;
+  margin:0 auto 14px;
+  background:rgba(201,169,98,0.15);
+  border:1px solid rgba(201,169,98,0.25);
 }
 .team-detail-name{
-  font-family:'Space Grotesk',sans-serif;
-  font-size:24px;
+  font-family:'Playfair Display',serif;
+  font-size:20px;
   font-weight:700;
-  background:linear-gradient(135deg,var(--aurora-1),var(--aurora-2));
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  background-clip:text;
-  margin-bottom:6px;
+  color:var(--gold);
+  margin-bottom:4px;
+  letter-spacing:.02em;
+  line-height:1.3;
+}
+.team-detail-sub{color:#3a3a3a;font-size:11px;margin-bottom:16px;letter-spacing:.03em}
+.team-detail-hr{height:1px;background:rgba(255,255,255,0.05);margin:16px 0}
+
+.player-list{
+  text-align:left;
+  margin-bottom:12px;
+}
+.player-row{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:8px 0;
+  border-bottom:1px solid rgba(255,255,255,0.04);
+}
+.player-row:last-child{border-bottom:none}
+.player-name{
+  color:#ccc;
+  font-size:13px;
+  font-weight:500;
+}
+.player-role{
+  color:var(--gold);
+  font-size:11px;
+  font-weight:600;
   letter-spacing:.03em;
 }
-.team-detail-sub{color:#3a3a4a;font-size:12px;margin-bottom:20px;letter-spacing:.04em}
-.team-detail-hr{height:1px;background:rgba(255,255,255,0.06);margin:20px 0}
-.team-detail-msg{font-size:15px;color:#bbb;font-weight:600;margin-bottom:6px}
-.team-detail-wait{color:#444;font-size:12px}
+.cadangan-label{
+  color:#555;
+  font-size:10px;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  margin-top:12px;
+  margin-bottom:8px;
+}
 
-/* ── REGULASI LIST ── */
-.reg-list{display:flex;flex-direction:column;gap:9px}
+.reg-list{display:flex;flex-direction:column;gap:8px}
 .reg-item{
   background:var(--card);
-  backdrop-filter:blur(10px);
   border:1px solid var(--border);
-  border-radius:15px;
-  padding:15px 16px;
+  border-radius:14px;
+  padding:14px 15px;
   cursor:pointer;
-  display:flex;align-items:center;gap:14px;
+  display:flex;align-items:center;gap:13px;
   text-align:left;
   width:100%;
   transition:border-color .28s var(--ease),background .28s var(--ease),transform .22s var(--ease),box-shadow .25s var(--ease);
   -webkit-user-select:none;user-select:none;
 }
 .reg-item:hover,.reg-item:active{
-  background:rgba(20,20,35,0.9);
-  border-color:rgba(0,255,200,0.3);
-  transform:translateX(5px);
+  background:rgba(22,22,28,0.95);
+  border-color:rgba(201,169,98,0.3);
+  transform:translateX(4px);
   box-shadow:0 6px 20px rgba(0,0,0,0.35);
 }
 .reg-icon{
-  width:46px;height:46px;min-width:46px;
-  border-radius:13px;
+  width:42px;height:42px;min-width:42px;
+  border-radius:11px;
   display:flex;align-items:center;justify-content:center;
   flex-shrink:0;
 }
 .reg-icon svg{
-  width:22px;height:22px;
+  width:20px;height:20px;
   stroke:#fff;fill:none;
   stroke-width:2;stroke-linecap:round;stroke-linejoin:round;
 }
 .reg-text{flex:1;min-width:0}
 .reg-title{
-  font-family:'Space Grotesk',sans-serif;
-  font-weight:700;
-  font-size:13px;
-  color:#e0e0ee;
-  margin-bottom:3px;
-  letter-spacing:.02em;
+  font-family:'Inter',sans-serif;
+  font-weight:600;
+  font-size:12px;
+  color:#e0e0e0;
+  margin-bottom:2px;
+  letter-spacing:.01em;
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
 }
-.reg-sub{font-size:10.5px;color:#3e3e50;letter-spacing:.02em}
+.reg-sub{font-size:10px;color:#3a3a3a;letter-spacing:.02em}
 .reg-arrow{
-  color:#333;font-size:18px;flex-shrink:0;
+  color:#2a2a2a;font-size:16px;flex-shrink:0;
   transition:color .25s var(--ease),transform .25s var(--ease);
 }
-.reg-item:hover .reg-arrow{color:var(--aurora-1);transform:translateX(4px)}
+.reg-item:hover .reg-arrow{color:var(--gold);transform:translateX(3px)}
 
-/* ── REGULASI DETAIL ── */
 .reg-detail-title{
-  font-family:'Space Grotesk',sans-serif;
+  font-family:'Playfair Display',serif;
   font-size:22px;
   font-weight:700;
-  letter-spacing:.03em;
+  letter-spacing:.02em;
   margin-bottom:8px;
   line-height:1.2;
+  color:var(--gold);
 }
-.reg-detail-divider{height:3px;width:55px;border-radius:99px;margin-bottom:20px}
+.reg-detail-divider{height:2px;width:50px;border-radius:99px;margin-bottom:20px;background:var(--gold)}
 .reg-body{
   background:var(--card);
-  backdrop-filter:blur(12px);
   border:1px solid var(--border);
-  border-radius:15px;
-  padding:20px;
+  border-radius:14px;
+  padding:18px;
 }
 .reg-body p{
-  color:#a8a8bc;font-size:13.5px;line-height:1.9;
+  color:#999;font-size:13px;line-height:1.85;
   margin-bottom:14px;
 }
 .reg-body p:last-child{margin-bottom:0}
-.reg-body ul{color:#a8a8bc;font-size:13.5px;line-height:1.85;margin-left:18px;margin-bottom:12px}
-.reg-body li{margin-bottom:6px}
+.reg-body ul{color:#999;font-size:13px;line-height:1.8;margin-left:18px;margin-bottom:12px}
+.reg-body li{margin-bottom:5px}
 .reg-body .highlight{
-  background:linear-gradient(135deg,var(--aurora-1),var(--aurora-2));
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  background-clip:text;
-  font-weight:700;
+  color:var(--gold);
+  font-weight:600;
 }
 .reg-body .highlight-blue{
-  color:var(--aurora-2);
-  font-weight:700;
+  color:#8a8aff;
+  font-weight:600;
 }
-.reg-body .highlight-red{color:#f87171;font-weight:700}
-.reg-body .highlight-green{color:#4ade80;font-weight:700}
+.reg-body .highlight-red{color:#f87171;font-weight:600}
+.reg-body .highlight-green{color:#4ade80;font-weight:600}
 
-/* ── INFO / WARN BOXES ── */
 .info-box{
-  background:var(--glass);
-  backdrop-filter:blur(8px);
-  border:1px solid rgba(255,255,255,0.06);
-  border-radius:12px;
+  background:rgba(201,169,98,0.03);
+  border:1px solid rgba(201,169,98,0.08);
+  border-radius:10px;
   padding:14px 16px;
   margin:12px 0;
-  font-size:13.5px;
-  color:#a8a8bc;
-  line-height:1.8;
+  font-size:13px;
+  color:#999;
+  line-height:1.75;
 }
 .warn-box{
-  background:rgba(248,113,113,0.06);
-  border-left:3px solid #f87171;
-  border-radius:0 12px 12px 0;
+  background:rgba(248,113,113,0.05);
+  border-left:2px solid #f87171;
+  border-radius:0 10px 10px 0;
   padding:14px 16px;
   margin:12px 0;
 }
 .warn-title{
-  color:#f87171;font-weight:700;
-  font-size:13px;margin-bottom:8px;
+  color:#f87171;font-weight:600;
+  font-size:12px;margin-bottom:8px;
   letter-spacing:.02em;
 }
 .section-title{
-  font-family:'Space Grotesk',sans-serif;
-  font-weight:700;
-  font-size:12px;
-  letter-spacing:.06em;
+  font-family:'Inter',sans-serif;
+  font-weight:600;
+  font-size:11px;
+  letter-spacing:.05em;
   margin-bottom:10px;
   margin-top:4px;
+  color:var(--gold);
 }
 
-/* ── CONTACT ── */
 .contact-link{
   display:flex;align-items:center;gap:14px;
-  background:linear-gradient(135deg,rgba(0,255,200,0.08),rgba(123,97,255,0.08));
-  border:1px solid rgba(0,255,200,0.15);
-  border-radius:14px;
+  background:rgba(201,169,98,0.05);
+  border:1px solid rgba(201,169,98,0.12);
+  border-radius:12px;
   padding:14px 16px;
   margin-bottom:10px;
   text-decoration:none;
@@ -495,113 +469,104 @@ body{
 }
 .contact-link:hover,.contact-link:active{
   transform:translateY(-2px);
-  border-color:rgba(0,255,200,0.35);
-  box-shadow:0 10px 28px rgba(0,255,200,0.12);
+  border-color:rgba(201,169,98,0.3);
+  box-shadow:0 8px 24px rgba(201,169,98,0.08);
 }
 .contact-num{
   width:36px;height:36px;min-width:36px;
-  background:linear-gradient(135deg,var(--aurora-1),var(--aurora-2));
+  background:var(--gold);
   border-radius:50%;
   display:flex;align-items:center;justify-content:center;
-  font-family:'Space Grotesk',sans-serif;
+  font-family:'Inter',sans-serif;
   font-weight:700;
-  color:#0a0a12;
+  color:#08080a;
   font-size:14px;
 }
-.contact-name{color:#fff;font-weight:700;font-size:14px;margin-bottom:2px}
-.contact-num-text{color:rgba(255,255,255,0.5);font-size:11.5px}
+.contact-name{color:#fff;font-weight:600;font-size:14px;margin-bottom:2px}
+.contact-num-text{color:rgba(255,255,255,0.45);font-size:11px}
 
-/* ── PRIZE BOXES ── */
 .prize-box{
   display:flex;align-items:center;gap:14px;
   background:var(--card);
-  backdrop-filter:blur(10px);
-  border-radius:13px;
+  border-radius:12px;
   padding:14px 16px;
   margin-bottom:10px;
   transition:transform .22s var(--ease);
 }
-.prize-box:hover{transform:translateX(4px)}
+.prize-box:hover{transform:translateX(3px)}
 .prize-medal{
   width:40px;height:40px;min-width:40px;
   border-radius:50%;
   display:flex;align-items:center;justify-content:center;
-  font-family:'Space Grotesk',sans-serif;
+  font-family:'Inter',sans-serif;
   font-weight:700;
   font-size:16px;
-  color:#0a0a12;
+  color:#08080a;
   flex-shrink:0;
 }
-.prize-rank{font-weight:700;font-size:14px;margin-bottom:2px}
-.prize-desc{color:#5a5a6a;font-size:12px}
+.prize-rank{font-weight:600;font-size:14px;margin-bottom:2px}
+.prize-desc{color:#555;font-size:12px}
 
-/* ── FORMAT STAGE BOXES ── */
 .stage-box{
-  background:var(--glass);
-  backdrop-filter:blur(8px);
-  border:1px solid rgba(255,255,255,0.06);
+  background:rgba(201,169,98,0.02);
+  border:1px solid rgba(201,169,98,0.08);
   border-radius:12px;
   padding:14px;
   margin-bottom:10px;
 }
 .stage-box-title{
-  font-family:'Space Grotesk',sans-serif;
-  font-weight:700;
-  font-size:12px;
+  font-family:'Inter',sans-serif;
+  font-weight:600;
+  font-size:11px;
   letter-spacing:.08em;
   margin-bottom:10px;
+  color:var(--gold);
 }
 .stage-box ul{list-style:none;margin:0;padding:0}
 .stage-box ul li{
-  color:#8888a0;font-size:12.5px;
+  color:#888;font-size:12px;
   padding:5px 0;
-  border-bottom:1px solid rgba(255,255,255,0.04);
+  border-bottom:1px solid rgba(255,255,255,0.03);
   display:flex;align-items:flex-start;gap:9px;
-  line-height:1.8;
+  line-height:1.75;
 }
 .stage-box ul li:last-child{border-bottom:none}
 .stage-box ul li::before{
-  content:"›";color:var(--aurora-1);
+  content:"›";color:var(--gold);
   font-weight:700;flex-shrink:0;
   margin-top:1px;
 }
 
-/* ── RULE ITEMS ── */
 .rule-item{
   display:flex;gap:12px;
-  background:var(--glass);
-  backdrop-filter:blur(8px);
-  border:1px solid rgba(255,255,255,0.05);
-  border-radius:12px;
-  padding:13px 14px;
+  background:rgba(201,169,98,0.02);
+  border:1px solid rgba(201,169,98,0.06);
+  border-radius:10px;
+  padding:12px 14px;
   margin-bottom:8px;
   transition:border-color .25s var(--ease),background .25s var(--ease);
 }
 .rule-item:hover{
-  background:rgba(255,255,255,0.04);
-  border-color:rgba(255,255,255,0.08);
+  background:rgba(201,169,98,0.04);
+  border-color:rgba(201,169,98,0.1);
 }
 .rule-num{
-  font-family:'Space Grotesk',sans-serif;
+  font-family:'Inter',sans-serif;
   font-weight:700;
-  background:linear-gradient(135deg,var(--aurora-1),var(--aurora-2));
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  background-clip:text;
+  color:var(--gold);
   font-size:13px;
   flex-shrink:0;
-  min-width:22px;
-  line-height:1.8;
+  min-width:20px;
+  line-height:1.75;
 }
-.rule-text{color:#8888a0;font-size:12.5px;line-height:1.85}
+.rule-text{color:#888;font-size:12px;line-height:1.8}
 
-/* ── PULSE DOT ── */
 .live-dot{
   display:inline-block;
-  width:7px;height:7px;
+  width:6px;height:6px;
   border-radius:50%;
-  background:var(--aurora-3);
-  margin-right:6px;
+  background:#f87171;
+  margin-right:5px;
   vertical-align:middle;
   animation:pulse 1.6s ease-in-out infinite;
 }
@@ -610,30 +575,22 @@ body{
   50%{opacity:.4;transform:scale(.7)}
 }
 
-/* ── SCROLLBAR ── */
-::-webkit-scrollbar{width:3px}
-::-webkit-scrollbar-track{background:#0a0a12}
-::-webkit-scrollbar-thumb{
-  background:linear-gradient(180deg,var(--aurora-1),var(--aurora-2));
-  border-radius:4px;
-}
+::-webkit-scrollbar{width:2px}
+::-webkit-scrollbar-track{background:#08080a}
+::-webkit-scrollbar-thumb{background:var(--gold);border-radius:4px}
 </style>
 </head>
 <body>
 
 <div class="bg-layer">
-  <div class="aurora-blob"></div>
-  <div class="aurora-blob"></div>
-  <div class="aurora-blob"></div>
+  <div class="ambient-light"></div>
+  <div class="ambient-light"></div>
 </div>
-<div class="glass-layer"></div>
+<div class="texture-layer"></div>
 <div class="grid-layer"></div>
 
 <div id="app">
 
-  <!-- ════════════════════════════════════════
-       HOME PAGE
-  ════════════════════════════════════════ -->
   <div id="homePage" class="page active">
     <div class="home-header fade-in">
       <span class="badge">MOBILE LEGEND TOURNAMENT</span>
@@ -646,60 +603,45 @@ body{
       <p class="home-desc">
         Land Of Down Championship Adalah Turnamen Yang Berbasis
         Pada Game Mobile Legend Dan Terdiri Dari
-        <span class="highlight">12 Tim</span> Yang Berkompetisi.
+        <span class="highlight">24 Tim</span> Yang Berkompetisi.
       </p>
     </div>
 
     <div class="home-buttons fade-in">
       <button class="btn btn-gold" onclick="go('listTimPage')">LIST TIM</button>
-      <button class="btn btn-blue" onclick="go('regulasiPage')">REGULASI TURNAMEN</button>
+      <button class="btn btn-silver" onclick="go('regulasiPage')">REGULASI TURNAMEN</button>
     </div>
 
     <div class="partners-box fade-in">
       <div class="partners-label">SPECIAL PARTNERS</div>
-      <div class="partners-names">GABRIEL, HEKTA, DAFFXY &amp; ADIT</div>
+      <div class="partners-names">GABRIEL, HEKTA, DAFFXY, ADIT &amp; MR. TENGKOTAK</div>
     </div>
   </div>
 
 
-  <!-- ════════════════════════════════════════
-       LIST TIM PAGE
-  ════════════════════════════════════════ -->
   <div id="listTimPage" class="page">
-    <button class="btn-back" onclick="go('homePage')">
-      Kembali
-    </button>
+    <button class="btn-back" onclick="go('homePage')">Kembali</button>
     <div class="page-title font-display">LIST TIM</div>
-    <div class="page-subtitle">12 Tim Peserta Turnamen</div>
+    <div class="page-subtitle">24 Tim Peserta Turnamen</div>
     <div class="team-grid" id="teamGrid"></div>
   </div>
 
 
-  <!-- ════════════════════════════════════════
-       TEAM DETAIL PAGE
-  ════════════════════════════════════════ -->
   <div id="teamDetailPage" class="page">
-    <button class="btn-back" onclick="go('listTimPage')">
-      Kembali ke List Tim
-    </button>
+    <button class="btn-back" onclick="go('listTimPage')">Kembali ke List Tim</button>
     <div id="teamDetailContent"></div>
   </div>
 
 
-  <!-- ════════════════════════════════════════
-       REGULASI LIST PAGE
-  ════════════════════════════════════════ -->
   <div id="regulasiPage" class="page">
-    <button class="btn-back" onclick="go('homePage')">
-      Kembali
-    </button>
+    <button class="btn-back" onclick="go('homePage')">Kembali</button>
     <div class="page-title font-display">REGULASI TURNAMEN</div>
     <div class="page-subtitle">Ketentuan dan Peraturan Resmi</div>
 
     <div class="reg-list">
 
       <button class="reg-item" onclick="showReg('larangan')">
-        <div class="reg-icon" style="background:linear-gradient(135deg,#ef4444,#991b1b)">
+        <div class="reg-icon" style="background:linear-gradient(135deg,#dc2626,#7f1d1d)">
           <svg viewBox="0 0 24 24"><path d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"/></svg>
         </div>
         <div class="reg-text">
@@ -710,7 +652,7 @@ body{
       </button>
 
       <button class="reg-item" onclick="showReg('format')">
-        <div class="reg-icon" style="background:linear-gradient(135deg,var(--aurora-2),var(--aurora-3))">
+        <div class="reg-icon" style="background:linear-gradient(135deg,#c9a962,#8b7355)">
           <svg viewBox="0 0 24 24"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
         </div>
         <div class="reg-text">
@@ -721,7 +663,7 @@ body{
       </button>
 
       <button class="reg-item" onclick="showReg('roster')">
-        <div class="reg-icon" style="background:linear-gradient(135deg,var(--aurora-1),#059669)">
+        <div class="reg-icon" style="background:linear-gradient(135deg,#c9a962,#a0a0a0)">
           <svg viewBox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
         </div>
         <div class="reg-text">
@@ -743,7 +685,7 @@ body{
       </button>
 
       <button class="reg-item" onclick="showReg('waktu')">
-        <div class="reg-icon" style="background:linear-gradient(135deg,#38bdf8,#0369a1)">
+        <div class="reg-icon" style="background:linear-gradient(135deg,#6366f1,#4338ca)">
           <svg viewBox="0 0 24 24"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
         </div>
         <div class="reg-text">
@@ -754,7 +696,7 @@ body{
       </button>
 
       <button class="reg-item" onclick="showReg('gh')">
-        <div class="reg-icon" style="background:linear-gradient(135deg,#fb923c,#ea580c)">
+        <div class="reg-icon" style="background:linear-gradient(135deg,#f59e0b,#b45309)">
           <svg viewBox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
         </div>
         <div class="reg-text">
@@ -778,7 +720,7 @@ body{
       </button>
 
       <button class="reg-item" onclick="showReg('fyi')">
-        <div class="reg-icon" style="background:linear-gradient(135deg,var(--aurora-1),var(--aurora-2))">
+        <div class="reg-icon" style="background:linear-gradient(135deg,#c9a962,#c9a962)">
           <svg viewBox="0 0 24 24"><path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
         </div>
         <div class="reg-text">
@@ -789,7 +731,7 @@ body{
       </button>
 
       <button class="reg-item" onclick="showReg('jadwal')">
-        <div class="reg-icon" style="background:linear-gradient(135deg,#22d3ee,#2563eb)">
+        <div class="reg-icon" style="background:linear-gradient(135deg,#0ea5e9,#0369a1)">
           <svg viewBox="0 0 24 24"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
         </div>
         <div class="reg-text">
@@ -803,40 +745,351 @@ body{
   </div>
 
 
-  <!-- ════════════════════════════════════════
-       REGULASI DETAIL PAGE
-  ════════════════════════════════════════ -->
   <div id="regDetailPage" class="page">
-    <button class="btn-back" onclick="go('regulasiPage')">
-      Kembali ke Regulasi
-    </button>
+    <button class="btn-back" onclick="go('regulasiPage')">Kembali ke Regulasi</button>
     <div id="regDetailContent"></div>
   </div>
 
 </div>
 
 <script>
-// ─── TEAM DATA ───
-var COLORS = [
-  'linear-gradient(135deg,#00ffc8,#059669)',
-  'linear-gradient(135deg,#7b61ff,#4c1d95)',
-  'linear-gradient(135deg,#ff6b9d,#be185d)',
-  'linear-gradient(135deg,#00ffc8,#7b61ff)',
-  'linear-gradient(135deg,#ef4444,#991b1b)',
-  'linear-gradient(135deg,#22d3ee,#0891b2)',
-  'linear-gradient(135deg,#f97316,#c2410c)',
-  'linear-gradient(135deg,#ff6b9d,#7b61ff)',
-  'linear-gradient(135deg,#84cc16,#4d7c0f)',
-  'linear-gradient(135deg,#f59e0b,#b45309)',
-  'linear-gradient(135deg,#7b61ff,#00ffc8)',
-  'linear-gradient(135deg,#14b8a6,#0f766e)'
+var TEAMS = [
+  {
+    num:1,
+    name:"Tinzheal Tim",
+    players:[
+      {name:"Tinzhel",role:"Jungle"},
+      {name:"Patan",role:"Exp"},
+      {name:"Akil",role:"Mid"},
+      {name:"Ardo",role:"Gold"},
+      {name:"Daniel",role:"Roam"}
+    ],
+    cadangan:[]
+  },
+  {
+    num:2,
+    name:"Atheis Familia",
+    players:[
+      {name:"Aftav",role:"Jungle"},
+      {name:"Arthur",role:"Gold"},
+      {name:"Leta",role:"Mid"},
+      {name:"Auror",role:"Roam"},
+      {name:"Fakhri",role:"Exp"}
+    ],
+    cadangan:[
+      {name:"Gabriel",role:"Mid"},
+      {name:"Utup",role:"Jungle"}
+    ]
+  },
+  {
+    num:3,
+    name:"Abs Pret",
+    players:[
+      {name:"Pino",role:"Exp"},
+      {name:"Bevera",role:"Gold"},
+      {name:"Rapz",role:"Mid"},
+      {name:"Nduts",role:"Roam"},
+      {name:"Mozykite",role:"Jungle"}
+    ],
+    cadangan:[]
+  },
+  {
+    num:4,
+    name:"YAMAHA",
+    players:[
+      {name:"Rapli",role:"Jungle"},
+      {name:"Zwa",role:"Gold"},
+      {name:"Xam",role:"All Role"},
+      {name:"Adam",role:"Mid"},
+      {name:"Lenz",role:"Roam/Gold"}
+    ],
+    cadangan:[
+      {name:"Sekay",role:"Jungle"},
+      {name:"Kael",role:"Mid"},
+      {name:"Hilmi",role:"Gold"}
+    ]
+  },
+  {
+    num:5,
+    name:"Cungpret",
+    players:[
+      {name:"Farid",role:"Exp"},
+      {name:"Fadil",role:"Mid"},
+      {name:"Adrin",role:"Jung"},
+      {name:"Adit",role:"Roam"},
+      {name:"Bagas",role:"Gold"}
+    ],
+    cadangan:[]
+  },
+  {
+    num:6,
+    name:"Rongsuy Squad",
+    players:[
+      {name:"Nino",role:"Jungle"},
+      {name:"Arr",role:"Exp"},
+      {name:"Riko",role:"Gold"},
+      {name:"Firaz",role:"Mid"},
+      {name:"Noir",role:"Roam"}
+    ],
+    cadangan:[]
+  },
+  {
+    num:7,
+    name:"Stella Equitis",
+    players:[
+      {name:"Falz",role:"Jung"},
+      {name:"Rifki",role:"Mid"},
+      {name:"Walker",role:"Exp"},
+      {name:"Abdul",role:"Gold"},
+      {name:"Tengkotak",role:"Roam"}
+    ],
+    cadangan:[
+      {name:"Sampok",role:"All Role"}
+    ]
+  },
+  {
+    num:8,
+    name:"Partyan -1",
+    players:[
+      {name:"Damarr",role:"Jung"},
+      {name:"Fais",role:"Exp"},
+      {name:"Irfannn",role:"Gold"},
+      {name:"Javas",role:"Roam"},
+      {name:"Hann",role:"Mid"}
+    ],
+    cadangan:[
+      {name:"Ikbal",role:"Exp"},
+      {name:"Maruu",role:"Mid/Exp/Gold"}
+    ]
+  },
+  {
+    num:9,
+    name:"Amov",
+    players:[
+      {name:"Nivon",role:"Hyper"},
+      {name:"Zidan",role:"Gold"},
+      {name:"Nabil",role:"Roam"},
+      {name:"Alul",role:"Mid"},
+      {name:"Kevin",role:"Exp"}
+    ],
+    cadangan:[
+      {name:"Reval",role:"?"},
+      {name:"Alfian",role:"?"}
+    ]
+  },
+  {
+    num:10,
+    name:"ZEE2INF",
+    players:[
+      {name:"Ikoo",role:"Roam"},
+      {name:"Hamm",role:"Jung"},
+      {name:"Moon",role:"Mid"},
+      {name:"Leo",role:"Gold"},
+      {name:"Wass",role:"Exp"}
+    ],
+    cadangan:[]
+  },
+  {
+    num:11,
+    name:"Tilwing",
+    players:[
+      {name:"Dika",role:"Exp"},
+      {name:"Joydhan",role:"Jungle"},
+      {name:"Gavin",role:"Mid"},
+      {name:"Apta",role:"Roam"},
+      {name:"Alkap",role:"Gold"}
+    ],
+    cadangan:[]
+  },
+  {
+    num:12,
+    name:"Dientot Malah Ketawa",
+    players:[
+      {name:"Alop",role:"Jungle"},
+      {name:"Kije",role:"Roam"},
+      {name:"Hendra",role:"Mid"},
+      {name:"Ciel",role:"Gold"},
+      {name:"Tino",role:"Exp"}
+    ],
+    cadangan:[
+      {name:"Billy",role:"Gold/Jung"},
+      {name:"Venys",role:"Exp/Roam"}
+    ]
+  },
+  {
+    num:13,
+    name:"Slwly",
+    players:[
+      {name:"Paiz",role:"Roam"},
+      {name:"Wesley",role:"Gold"},
+      {name:"Kepin",role:"Exp"},
+      {name:"Feelkite",role:"Jungle"},
+      {name:"Moreno",role:"Mid"}
+    ],
+    cadangan:[]
+  },
+  {
+    num:14,
+    name:"KUMA",
+    players:[
+      {name:"Shin",role:"Mid"},
+      {name:"Rizz",role:"Jungle"},
+      {name:"Lepin",role:"Gold"},
+      {name:"Pano",role:"Exp"},
+      {name:"D1dut",role:"Roam"}
+    ],
+    cadangan:[
+      {name:"Yono",role:"Jungle"},
+      {name:"Kayy",role:"Roam"},
+      {name:"Zaki",role:"Gold"},
+      {name:"Denoir",role:"Exp"}
+    ]
+  },
+  {
+    num:15,
+    name:"Tarot Club",
+    players:[
+      {name:"Abdillah",role:"Jungle"},
+      {name:"Rohan",role:"Exp"},
+      {name:"Aldi",role:"Gold"},
+      {name:"Bima",role:"Roam"},
+      {name:"Rizki",role:"Mid"}
+    ],
+    cadangan:[]
+  },
+  {
+    num:16,
+    name:"Zenith",
+    players:[
+      {name:"Japar",role:"Jungle"},
+      {name:"Nden",role:"Gold"},
+      {name:"Ogah",role:"Mid"},
+      {name:"Badak",role:"Exp"},
+      {name:"Jack",role:"Roam"}
+    ],
+    cadangan:[
+      {name:"Rangga",role:"Roam"}
+    ]
+  },
+  {
+    num:17,
+    name:"JETIMOTI",
+    players:[
+      {name:"Pakry",role:"Gold"},
+      {name:"Yeka",role:"Roam"},
+      {name:"Farhan",role:"Exp"},
+      {name:"Owl",role:"Jungle"},
+      {name:"Gilan",role:"Mid"}
+    ],
+    cadangan:[
+      {name:"Ibar",role:"Gold"}
+    ]
+  },
+  {
+    num:18,
+    name:"WISAL API",
+    players:[
+      {name:"Vinn",role:"Jung"},
+      {name:"Kei",role:"Mid"},
+      {name:"Rayeon",role:"Gold"},
+      {name:"Naget",role:"Roam"},
+      {name:"Laura",role:"Exp"}
+    ],
+    cadangan:[]
+  },
+  {
+    num:19,
+    name:"WM GACOR",
+    players:[
+      {name:"Fangshin",role:"Exp"},
+      {name:"Kiki",role:"Gold"},
+      {name:"Pai",role:"Jungle"},
+      {name:"Cayliee",role:"Mid"},
+      {name:"Opet",role:"Roam"}
+    ],
+    cadangan:[]
+  },
+  {
+    num:20,
+    name:"DEATHBATLLE",
+    players:[
+      {name:"Ardy",role:"Mid"},
+      {name:"Adit",role:"Exp"},
+      {name:"Asmal",role:"Jungle"},
+      {name:"Dika",role:"Gold"},
+      {name:"Kenjiro",role:"Roam"}
+    ],
+    cadangan:[]
+  },
+  {
+    num:21,
+    name:"PKT",
+    players:[
+      {name:"Hapid",role:"Jungle"},
+      {name:"Fackheri",role:"Exp"},
+      {name:"Rafa",role:"Mid"},
+      {name:"Izaz",role:"Roam"},
+      {name:"Yayom",role:"Gold"}
+    ],
+    cadangan:[
+      {name:"Muzan",role:"Roam"},
+      {name:"Pucuk",role:"Exp"},
+      {name:"Kiki",role:"Jungle"}
+    ]
+  },
+  {
+    num:22,
+    name:"Radar Cianjur",
+    players:[
+      {name:"Yuzu",role:"Jungle"},
+      {name:"Ive",role:"Gold"},
+      {name:"Reas",role:"Mid"},
+      {name:"Kyro",role:"Roam"},
+      {name:"Af",role:"Exp"}
+    ],
+    cadangan:[
+      {name:"Kuze",role:"Exp"},
+      {name:"Nagi",role:"Roam"},
+      {name:"Naysila",role:"Roam"},
+      {name:"Yuzu",role:"Exp"}
+    ]
+  },
+  {
+    num:23,
+    name:"Zhuxin Love Zetian",
+    players:[
+      {name:"Ikky",role:"Roam"},
+      {name:"Heksa",role:"Jungle"},
+      {name:"Angga",role:"Gold"},
+      {name:"Coki",role:"Mid"},
+      {name:"Rizz",role:"Exp"}
+    ],
+    cadangan:[
+      {name:"Rapa",role:"All Role"}
+    ]
+  },
+  {
+    num:24,
+    name:"Anteiku",
+    players:[
+      {name:"Ave",role:"Mid"},
+      {name:"Ubay",role:"Jungle"},
+      {name:"Duta",role:"Exp"},
+      {name:"Taiga",role:"Roam"},
+      {name:"Merlo",role:"Gold"}
+    ],
+    cadangan:[
+      {name:"Arya",role:"Jungle"},
+      {name:"Ripa",role:"Gold"},
+      {name:"Morez",role:"Gold"},
+      {name:"Jxyden",role:"Jungle"}
+    ]
+  }
 ];
 
-// ─── REGULASI CONTENT ───
 var REG = {
   larangan:{
     title:'Larangan dan Sanksi',
-    color:'#f87171',
     html:function(){return(
       '<p>Pemain dilarang keras untuk melakukan kecurangan yang dapat merugikan tim lawan dan tim sendiri. Penggunaan cheat seperti: <span class="highlight-red">Script</span>, <span class="highlight-red">Map Hack</span>, dll yang bernilai merugikan, akan dipastikan mendapatkan sanksi!</p>'+
       '<div class="warn-box"><div class="warn-title">SANKSI YANG DITERAPKAN:</div><ul><li>Player dibanned langsung dari turnamen</li><li>Tim yang menaungi akan mendapatkan pengurangan point</li><li>Pengawasan ketat jika masih kemungkinan</li><li>Dan kemungkinan-kemungkinan lainnya</li></ul></div>'+
@@ -845,32 +1098,30 @@ var REG = {
   },
   format:{
     title:'Format Pertandingan',
-    color:'#a855f7',
     html:function(){return(
-      '<div class="stage-box"><div class="stage-box-title" style="color:var(--aurora-1)">GROUP STAGE</div><ul>'+
-      '<li>Pertandingan dimulai dengan format <span style="color:var(--aurora-1);font-weight:700">Group Stage</span>, terdiri dari <span style="color:var(--aurora-1);font-weight:700">4 group</span>; setiap group terdiri dari <span style="color:var(--aurora-1);font-weight:700">6 tim</span>.</li>'+
-      '<li>Penentuan sebuah tim akan berada di group mana, akan dilakukan melalui <span style="color:var(--aurora-1);font-weight:700">spin</span>.</li>'+
-      '<li>Setiap tim akan melalui <span style="color:var(--aurora-1);font-weight:700">5x pertandingan BO1</span> pada babak group stage.</li>'+
-      '<li>Tim yang berada di urutan <span style="color:var(--aurora-1);font-weight:700">1-4</span>, dipastikan akan melaju pada fase play-off/double elimination.</li>'+
+      '<div class="stage-box"><div class="stage-box-title">GROUP STAGE</div><ul>'+
+      '<li>Pertandingan dimulai dengan format <span class="highlight">Group Stage</span>, terdiri dari <span class="highlight">4 group</span>; setiap group terdiri dari <span class="highlight">6 tim</span>.</li>'+
+      '<li>Penentuan sebuah tim akan berada di group mana, akan dilakukan melalui <span class="highlight">spin</span>.</li>'+
+      '<li>Setiap tim akan melalui <span class="highlight">5x pertandingan BO1</span> pada babak group stage.</li>'+
+      '<li>Tim yang berada di urutan <span class="highlight">1-4</span>, dipastikan akan melaju pada fase play-off/double elimination.</li>'+
       '</ul></div>'+
-      '<div class="stage-box"><div class="stage-box-title" style="color:var(--aurora-2)">DOUBLE ELIMINATION</div><ul>'+
-      '<li>Pada fase double elimination, tim akan dispin untuk bertemu lawan di group yang <span style="color:var(--aurora-2);font-weight:700">berbeda</span>.</li>'+
-      '<li>Tim yang kalah di babak awal, masih bisa melaju dengan melalui <span style="color:var(--aurora-2);font-weight:700">lower bracket</span>.</li>'+
-      '<li>Setiap pertandingan pada fase ini, bersifat <span style="color:var(--aurora-2);font-weight:700">BO3</span>.</li>'+
+      '<div class="stage-box"><div class="stage-box-title">DOUBLE ELIMINATION</div><ul>'+
+      '<li>Pada fase double elimination, tim akan dispin untuk bertemu lawan di group yang <span class="highlight">berbeda</span>.</li>'+
+      '<li>Tim yang kalah di babak awal, masih bisa melaju dengan melalui <span class="highlight">lower bracket</span>.</li>'+
+      '<li>Setiap pertandingan pada fase ini, bersifat <span class="highlight">BO3</span>.</li>'+
       '</ul></div>'+
-      '<div class="stage-box" style="border-color:rgba(0,255,200,0.25)"><div class="stage-box-title" style="color:var(--aurora-1)">FINAL LOWER BRACKET</div><ul>'+
-      '<li><span class="live-dot"></span>Admin akan melakukan <span style="color:var(--aurora-3);font-weight:700">live di TikTok</span> guna menonton keseruan dari pertandingan yang akan selesai!</li>'+
-      '<li>Final lower bracket <span style="color:var(--aurora-1);font-weight:700">BO5</span> btw.</li>'+
+      '<div class="stage-box"><div class="stage-box-title">FINAL LOWER BRACKET</div><ul>'+
+      '<li><span class="live-dot"></span>Admin akan melakukan <span class="highlight-red">live di TikTok</span> guna menonton keseruan dari pertandingan yang akan selesai!</li>'+
+      '<li>Final lower bracket <span class="highlight">BO5</span> btw.</li>'+
       '</ul></div>'+
-      '<div class="stage-box" style="border-color:rgba(123,97,255,0.3)"><div class="stage-box-title" style="color:var(--aurora-2)">GRAND FINAL</div><ul>'+
-      '<li><span class="live-dot"></span>Admin akan kembali melakukan <span style="color:var(--aurora-3);font-weight:700">live di TikTok</span> dan memantau keseruan dari Grand Final.</li>'+
-      '<li>Grand Final <span style="color:var(--aurora-2);font-weight:700">BO5</span>.</li>'+
+      '<div class="stage-box"><div class="stage-box-title">GRAND FINAL</div><ul>'+
+      '<li><span class="live-dot"></span>Admin akan kembali melakukan <span class="highlight-red">live di TikTok</span> dan memantau keseruan dari Grand Final.</li>'+
+      '<li>Grand Final <span class="highlight">BO5</span>.</li>'+
       '</ul></div>'
     );}
   },
   roster:{
     title:'Regulasi Tim Roster',
-    color:'#00ffc8',
     html:function(){return(
       '<p>Tim yang akan berkompetisi terdiri dari <span class="highlight">24 tim</span>. Tim harus terdiri dari minimal <span class="highlight">5 orang</span> dan maksimal <span class="highlight">9 orang</span>.</p>'+
       '<p>Setiap tim, harus melaporkan dengan jelas role dari masing-masing pemain yang menjadi bagian tim.</p>'+
@@ -881,7 +1132,6 @@ var REG = {
   },
   ingame:{
     title:'Regulasi Dalam Game',
-    color:'#10b981',
     html:function(){return(
       '<div class="rule-item"><div class="rule-num">1.</div><div class="rule-text">Dilarang keras untuk melakukan <span class="highlight-red">chat all</span>, terkecuali ada urgensi penting (wajib ada panitia yang menonton. Jika tidak, maka akan dinilai tidak sahih). Jika secara sengaja atau tidak sengaja melanggar, maka match tersebut akan menjadi <span class="highlight">point free</span> bagi tim lawan (diharuskan membawa bukti).</div></div>'+
       '<div class="rule-item"><div class="rule-num">2.</div><div class="rule-text">Tidak diperbolehkan melakukan <span class="highlight-red">radio all</span> (selain radio yang bersifat all, diperbolehkan). Jika secara sengaja atau tidak sengaja melakukan radio all dalam <span class="highlight">1-2x</span>, tim masih diberi toleransi. Jika lebih, match tersebut akan menjadi <span class="highlight">point free</span> bagi tim lawan.</div></div>'+
@@ -891,7 +1141,6 @@ var REG = {
   },
   waktu:{
     title:'Rentang Waktu Turnamen',
-    color:'#38bdf8',
     html:function(){return(
       '<p>Ketika pertandingan dimulai, salah satu tim akan membuat room dan membagikannya melalui code atau link kepada admin menuju GH tim lain.</p>'+
       '<div class="info-box">Jika tim lawan tidak memasuki room secara penuh selama <span class="highlight">15 menit</span>, maka tim lawan akan kehilangan <span class="highlight-red">1 point</span>.</div>'+
@@ -900,19 +1149,17 @@ var REG = {
   },
   gh:{
     title:'Pembagian GH & Room Pertandingan',
-    color:'#fb923c',
     html:function(){return(
       '<p>Mula-mula, tiap tim akan bergabung ke <span class="highlight">GH (Gaming House/Group)</span> masing-masing di komunitas LODC <em>(contoh: Fomfa GH)</em>. Pastikan setiap pemain dari roster bergabung ke GH tim masing-masing.</p>'+
-      '<div class="warn-box" style="background:rgba(248,113,113,0.07);border-left-color:#f87171"><div class="warn-title">Perhatian</div><p style="color:#bbb;font-size:13px;margin:0">Jika pemain tidak bergabung ke GH tim, maka pemain tersebut <span class="highlight-red">tidak bisa dikalkulasikan</span> memasuki roster tim tersebut.</p></div>'+
-      '<div class="info-box" style="margin-top:14px"><div class="section-title" style="color:var(--aurora-1);margin-bottom:8px">Pembagian Room Pertandingan</div>'+
-      '<p style="color:#bbb;font-size:13px;margin-bottom:0">Di setiap pertandingan, salah satu tim akan dipilih untuk <span class="highlight">open room</span>, kemudian dapat menshare-nya melalui <span class="highlight">kode room</span> atau <span class="highlight">link WhatsApp</span> yang langsung tersinkronisasi.</p></div>'+
-      '<div class="info-box"><div class="section-title" style="color:var(--aurora-1);margin-bottom:8px">Cara Share Room</div>'+
-      '<p style="color:#bbb;font-size:13px;margin:0">Setelah mengirim link atau kode room ke <span class="highlight">GH tim sendiri</span>, kalian dapat mentag salah satu admin guna mengshare kode room atau link tersebut ke <span class="highlight">GH tim lawan</span>.</p></div>'
+      '<div class="warn-box" style="background:rgba(248,113,113,0.05);border-left-color:#f87171"><div class="warn-title">Perhatian</div><p style="color:#999;font-size:13px;margin:0">Jika pemain tidak bergabung ke GH tim, maka pemain tersebut <span class="highlight-red">tidak bisa dikalkulasikan</span> memasuki roster tim tersebut.</p></div>'+
+      '<div class="info-box" style="margin-top:14px"><div class="section-title">Pembagian Room Pertandingan</div>'+
+      '<p style="color:#999;font-size:13px;margin-bottom:0">Di setiap pertandingan, salah satu tim akan dipilih untuk <span class="highlight">open room</span>, kemudian dapat menshare-nya melalui <span class="highlight">kode room</span> atau <span class="highlight">link WhatsApp</span> yang langsung tersinkronisasi.</p></div>'+
+      '<div class="info-box"><div class="section-title">Cara Share Room</div>'+
+      '<p style="color:#999;font-size:13px;margin:0">Setelah mengirim link atau kode room ke <span class="highlight">GH tim sendiri</span>, kalian dapat mentag salah satu admin guna mengshare kode room atau link tersebut ke <span class="highlight">GH tim lawan</span>.</p></div>'
     );}
   },
   contact:{
     title:'Admin Contact',
-    color:'#00ffc8',
     html:function(){return(
       '<a href="https://wa.me/6285381927438" target="_blank" rel="noopener" class="contact-link">'+
         '<div class="contact-num">1</div>'+
@@ -930,39 +1177,36 @@ var REG = {
   },
   fyi:{
     title:'FYI',
-    color:'#fb923c',
     html:function(){return(
-      '<div class="info-box" style="text-align:center;font-size:14px">Untuk mengikuti kompetisi ini, <span class="highlight-green">TIDAK DIPERKENANKAN BIAYA</span> sepeser pun!</div>'+
-      '<div style="text-align:center;margin:18px 0"><div style="color:#666;font-size:12px;margin-bottom:6px">Pool Prize</div><div style="font-family:Space Grotesk,sans-serif;font-size:36px;font-weight:700;background:linear-gradient(135deg,var(--aurora-1),var(--aurora-2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">280k</div></div>'+
-      '<div class="prize-box" style="border-left:4px solid #facc15">'+
-        '<div class="prize-medal" style="background:linear-gradient(135deg,#facc15,#eab308)">1</div>'+
-        '<div><div class="prize-rank" style="color:#facc15">Juara 1</div><div class="prize-desc">170k + Sertif Kejuaraan</div></div>'+
+      '<div class="info-box" style="text-align:center;font-size:13px">Untuk mengikuti kompetisi ini, <span class="highlight-green">TIDAK DIPERKENANKAN BIAYA</span> sepeser pun!</div>'+
+      '<div style="text-align:center;margin:18px 0"><div style="color:#555;font-size:11px;margin-bottom:6px">Pool Prize</div><div style="font-family:Playfair Display,serif;font-size:38px;font-weight:700;color:var(--gold)">305k</div></div>'+
+      '<div class="prize-box" style="border-left:3px solid #c9a962">'+
+        '<div class="prize-medal" style="background:linear-gradient(135deg,#c9a962,#a08040)">1</div>'+
+        '<div><div class="prize-rank" style="color:#c9a962">Juara 1</div><div class="prize-desc">200k + Sertif Kejuaraan</div></div>'+
       '</div>'+
-      '<div class="prize-box" style="border-left:4px solid #d1d5db">'+
-        '<div class="prize-medal" style="background:linear-gradient(135deg,#d1d5db,#9ca3af)">2</div>'+
-        '<div><div class="prize-rank" style="color:#d1d5db">Juara 2</div><div class="prize-desc">70k + Sertif Kejuaraan</div></div>'+
+      '<div class="prize-box" style="border-left:3px solid #a8a8a8">'+
+        '<div class="prize-medal" style="background:linear-gradient(135deg,#a8a8a8,#888)">2</div>'+
+        '<div><div class="prize-rank" style="color:#a8a8a8">Juara 2</div><div class="prize-desc">70k + Sertif Kejuaraan</div></div>'+
       '</div>'+
-      '<div class="prize-box" style="border-left:4px solid #fb923c">'+
-        '<div class="prize-medal" style="background:linear-gradient(135deg,#fb923c,#ea580c)">3</div>'+
-        '<div><div class="prize-rank" style="color:#fb923c">Juara 3</div><div class="prize-desc">40k + Sertif</div></div>'+
+      '<div class="prize-box" style="border-left:3px solid #b87333">'+
+        '<div class="prize-medal" style="background:linear-gradient(135deg,#b87333,#8b5a2b)">3</div>'+
+        '<div><div class="prize-rank" style="color:#b87333">Juara 3</div><div class="prize-desc">35k + Sertif</div></div>'+
       '</div>'+
-      '<div class="info-box" style="text-align:center;margin-top:14px"><div style="color:#555;font-size:11px;margin-bottom:5px">SPECIAL PARTNERS</div><div style="font-family:Space Grotesk,sans-serif;background:linear-gradient(135deg,var(--aurora-1),var(--aurora-2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:700">GABRIEL, HEKTA, DAFFXY &amp; ADIT</div></div>'
+      '<div class="info-box" style="text-align:center;margin-top:16px"><div style="color:#3a3a3a;font-size:10px;margin-bottom:5px">SPECIAL PARTNERS</div><div style="font-family:Playfair Display,serif;color:var(--gold);font-weight:600;font-size:12px;line-height:1.5">GABRIEL, HEKTA, DAFFXY, ADIT &amp; MR. TENGKOTAK</div></div>'
     );}
   },
   jadwal:{
     title:'Jadwal Pertandingan',
-    color:'#22d3ee',
     html:function(){return(
       '<div style="text-align:center;padding:44px 0">'+
         '<div style="font-size:40px;margin-bottom:14px">...</div>'+
-        '<div style="color:#ccc;font-size:15px;margin-bottom:10px">Jadwal pertandingan akan diumumkan segera.</div>'+
-        '<div style="color:#555;font-size:13px">Hubungi admin untuk informasi lebih lanjut.</div>'+
+        '<div style="color:#999;font-size:14px;margin-bottom:10px">Jadwal pertandingan akan diumumkan segera.</div>'+
+        '<div style="color:#444;font-size:12px">Hubungi admin untuk informasi lebih lanjut.</div>'+
       '</div>'
     );}
   }
 };
 
-// ─── NAVIGATION ───
 var current = 'homePage';
 
 function go(pageId){
@@ -977,18 +1221,17 @@ function go(pageId){
   playGlass();
 }
 
-// ─── TEAM GRID ───
 function buildTeamGrid(){
   var g = document.getElementById('teamGrid');
   g.innerHTML = '';
-  for(var i=0;i<12;i++){
+  for(var i=0;i<TEAMS.length;i++){
     (function(idx){
-      var letter = String.fromCharCode(65+idx);
+      var t = TEAMS[idx];
       var btn = document.createElement('button');
       btn.className = 'team-item';
       btn.innerHTML =
-        '<div class="team-letter" style="background:'+COLORS[idx]+'">'+letter+'</div>'+
-        '<div class="team-name">Tim '+letter+'</div>'+
+        '<div class="team-num">'+t.num+'</div>'+
+        '<div class="team-name">'+t.name+'</div>'+
         '<div class="team-tap">Tap untuk detail</div>';
       btn.onclick = function(){ showTeamDetail(idx); };
       g.appendChild(btn);
@@ -996,34 +1239,47 @@ function buildTeamGrid(){
   }
 }
 
-// ─── TEAM DETAIL ───
 function showTeamDetail(idx){
-  var letter = String.fromCharCode(65+idx);
-  var el = document.getElementById('teamDetailContent');
-  el.innerHTML =
+  var t = TEAMS[idx];
+  var html =
     '<div class="team-detail-header fade-in">'+
-      '<div class="team-detail-badge" style="background:'+COLORS[idx]+'">'+letter+'</div>'+
-      '<div class="team-detail-name">Tim '+letter+'</div>'+
+      '<div class="team-detail-num">'+t.num+'</div>'+
+      '<div class="team-detail-name">'+t.name+'</div>'+
       '<div class="team-detail-sub">Land Of Down Championship</div>'+
       '<div class="team-detail-hr"></div>'+
-      '<div class="team-detail-msg">Pemain dan tim akan diumumkan segera.</div>'+
-      '<div class="team-detail-wait">Harap bersabar!</div>'+
-    '</div>';
+      '<div class="player-list">';
+  
+  for(var i=0;i<t.players.length;i++){
+    var p = t.players[i];
+    html += '<div class="player-row"><span class="player-name">'+p.name+'</span><span class="player-role">'+p.role+'</span></div>';
+  }
+  
+  html += '</div>';
+  
+  if(t.cadangan && t.cadangan.length > 0){
+    html += '<div class="cadangan-label">Cadangan</div><div class="player-list">';
+    for(var j=0;j<t.cadangan.length;j++){
+      var c = t.cadangan[j];
+      html += '<div class="player-row"><span class="player-name">'+c.name+'</span><span class="player-role">'+c.role+'</span></div>';
+    }
+    html += '</div>';
+  }
+  
+  html += '</div>';
+  
+  document.getElementById('teamDetailContent').innerHTML = html;
   go('teamDetailPage');
 }
 
-// ─── REGULASI DETAIL ───
 function showReg(id){
   var d = REG[id];
-  var el = document.getElementById('regDetailContent');
-  el.innerHTML =
-    '<div class="reg-detail-title fade-in" style="background:linear-gradient(135deg,var(--aurora-1),var(--aurora-2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">'+d.title+'</div>'+
-    '<div class="reg-detail-divider fade-in" style="background:linear-gradient(90deg,var(--aurora-1),var(--aurora-2),var(--aurora-3))"></div>'+
+  document.getElementById('regDetailContent').innerHTML =
+    '<div class="reg-detail-title fade-in">'+d.title+'</div>'+
+    '<div class="reg-detail-divider fade-in"></div>'+
     '<div class="reg-body fade-in">'+d.html()+'</div>';
   go('regDetailPage');
 }
 
-// ─── GLASS SOUND EFFECT ───
 var AC = null;
 function initAC(){
   if(!AC) try{ AC = new (window.AudioContext||window.webkitAudioContext)(); }catch(e){}
@@ -1033,47 +1289,31 @@ function playGlass(){
   if(!AC) return;
   try{
     var t = AC.currentTime;
-    
-    // Main glass crack - high frequency sweep
     var o1 = AC.createOscillator();
     var g1 = AC.createGain();
     o1.type = 'sine';
-    o1.frequency.setValueAtTime(2800, t);
-    o1.frequency.exponentialRampToValueAtTime(1800, t + 0.04);
-    o1.frequency.exponentialRampToValueAtTime(600, t + 0.12);
+    o1.frequency.setValueAtTime(2600, t);
+    o1.frequency.exponentialRampToValueAtTime(1600, t + 0.05);
+    o1.frequency.exponentialRampToValueAtTime(500, t + 0.12);
     g1.gain.setValueAtTime(0, t);
-    g1.gain.linearRampToValueAtTime(0.08, t + 0.003);
+    g1.gain.linearRampToValueAtTime(0.06, t + 0.003);
     g1.gain.exponentialRampToValueAtTime(0.001, t + 0.15);
     o1.connect(g1); g1.connect(AC.destination);
     o1.start(t); o1.stop(t + 0.15);
     
-    // Glass shimmer 1
     var o2 = AC.createOscillator();
     var g2 = AC.createGain();
     o2.type = 'sine';
-    o2.frequency.setValueAtTime(4200, t + 0.02);
-    o2.frequency.exponentialRampToValueAtTime(3200, t + 0.06);
+    o2.frequency.setValueAtTime(3800, t + 0.02);
+    o2.frequency.exponentialRampToValueAtTime(2800, t + 0.06);
     g2.gain.setValueAtTime(0, t + 0.02);
-    g2.gain.linearRampToValueAtTime(0.04, t + 0.025);
+    g2.gain.linearRampToValueAtTime(0.03, t + 0.025);
     g2.gain.exponentialRampToValueAtTime(0.001, t + 0.1);
     o2.connect(g2); g2.connect(AC.destination);
     o2.start(t + 0.02); o2.stop(t + 0.1);
-    
-    // Glass shimmer 2
-    var o3 = AC.createOscillator();
-    var g3 = AC.createGain();
-    o3.type = 'triangle';
-    o3.frequency.setValueAtTime(5600, t + 0.03);
-    o3.frequency.exponentialRampToValueAtTime(2400, t + 0.08);
-    g3.gain.setValueAtTime(0, t + 0.03);
-    g3.gain.linearRampToValueAtTime(0.03, t + 0.035);
-    g3.gain.exponentialRampToValueAtTime(0.001, t + 0.12);
-    o3.connect(g3); g3.connect(AC.destination);
-    o3.start(t + 0.03); o3.stop(t + 0.12);
-    
   }catch(e){}
 }
 document.addEventListener('click',function(){initAC();},{once:true});
 </script>
 </body>
-          </html>
+</html>
