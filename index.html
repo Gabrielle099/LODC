@@ -370,6 +370,23 @@ body{
   flex-shrink:0;
 }
 .reg-icon svg{
+  width:20px;margin-bottom:2px;
+  transition:border-color .28s var(--ease),background .28s var(--ease),transform .22s var(--ease),box-shadow .25s var(--ease);
+  -webkit-user-select:none;user-select:none;
+}
+.reg-item:hover,.reg-item:active{
+  background:rgba(22,22,28,0.95);
+  border-color:rgba(201,169,98,0.3);
+  transform:translateX(4px);
+  box-shadow:0 6px 20px rgba(0,0,0,0.35);
+}
+.reg-icon{
+  width:42px;height:42px;min-width:42px;
+  border-radius:11px;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+.reg-icon svg{
   width:20px;height:20px;
   stroke:#fff;fill:none;
   stroke-width:2;stroke-linecap:round;stroke-linejoin:round;
@@ -381,9 +398,7 @@ body{
   font-size:12px;
   color:#e0e0e0;
   margin-bottom:2px;
-  letter-spacing:.01em;
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-}
+  letter-spacing:.01em}
 .reg-sub{font-size:10px;color:#3a3a3a;letter-spacing:.02em}
 .reg-arrow{
   color:#2a2a2a;font-size:16px;flex-shrink:0;
@@ -573,6 +588,136 @@ body{
 @keyframes pulse{
   0%,100%{opacity:1;transform:scale(1)}
   50%{opacity:.4;transform:scale(.7)}
+}
+
+/* Schedule Slider */
+.schedule-container{
+  position:relative;
+  overflow:hidden;
+}
+.schedule-slider{
+  display:flex;
+  transition:transform 0.4s var(--ease);
+}
+.schedule-slide{
+  min-width:100%;
+  padding:0 2px;
+}
+.schedule-header{
+  text-align:center;
+  margin-bottom:16px;
+}
+.schedule-date{
+  font-family:'Playfair Display',serif;
+  font-size:16px;
+  font-weight:700;
+  color:var(--gold);
+  margin-bottom:4px;
+}
+.schedule-group{
+  font-family:'Inter',sans-serif;
+  font-size:13px;
+  color:#888;
+  letter-spacing:.1em;
+}
+.schedule-match{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:12px 14px;
+  margin-bottom:8px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+.match-team{
+  font-size:11px;
+  color:#ccc;
+  font-weight:500;
+  flex:1;
+  text-align:center;
+}
+.match-team:first-child{text-align:left}
+.match-team:last-child{text-align:right}
+.match-vs{
+  font-size:10px;
+  color:var(--gold);
+  font-weight:700;
+  padding:0 8px;
+}
+.schedule-time{
+  background:rgba(201,169,98,0.08);
+  border-radius:8px;
+  padding:8px 12px;
+  margin-bottom:12px;
+  text-align:center;
+}
+.time-label{
+  font-size:10px;
+  color:#666;
+  letter-spacing:.1em;
+  margin-bottom:2px;
+}
+.time-value{
+  font-family:'Inter',sans-serif;
+  font-size:14px;
+  font-weight:700;
+  color:var(--gold);
+}
+.schedule-note{
+  text-align:center;
+  font-size:11px;
+  color:#555;
+  margin-top:12px;
+  padding-top:12px;
+  border-top:1px solid rgba(255,255,255,0.05);
+}
+.schedule-nav{
+  display:flex;
+  justify-content:center;
+  gap:8px;
+  margin-top:16px;
+}
+.nav-dot{
+  width:8px;height:8px;
+  border-radius:50%;
+  background:rgba(201,169,98,0.2);
+  border:none;
+  cursor:pointer;
+  transition:background .25s var(--ease),transform .25s var(--ease);
+  padding:0;
+}
+.nav-dot.active{
+  background:var(--gold);
+  transform:scale(1.2);
+}
+.nav-dot:hover{
+  background:rgba(201,169,98,0.5);
+}
+.nav-arrows{
+  display:flex;
+  justify-content:space-between;
+  margin-top:12px;
+}
+.nav-btn{
+  background:rgba(201,169,98,0.08);
+  border:1px solid rgba(201,169,98,0.2);
+  border-radius:8px;
+  padding:8px 16px;
+  color:var(--gold);
+  font-size:12px;
+  font-weight:600;
+  cursor:pointer;
+  transition:background .25s var(--ease),border-color .25s var(--ease);
+  font-family:'Inter',sans-serif;
+}
+.nav-btn:hover{
+  background:rgba(201,169,98,0.15);
+  border-color:var(--gold);
+}
+.nav-btn:disabled{
+  opacity:0.3;
+  cursor:not-allowed;
 }
 
 ::-webkit-scrollbar{width:2px}
@@ -844,7 +989,8 @@ var TEAMS = [
       {name:"Tengkotak",role:"Roam"}
     ],
     cadangan:[
-      {name:"Sampok",role:"All Role"}
+      {name:"Sampok",role:"All Role"},
+      {name:"Yammy",role:"Mid"}
     ]
   },
   {
@@ -989,13 +1135,15 @@ var TEAMS = [
     num:18,
     name:"WISAL API",
     players:[
-      {name:"Vinn",role:"Jung"},
+      {name:"Vinn",role:"Jungle"},
       {name:"Kei",role:"Mid"},
       {name:"Rayeon",role:"Gold"},
       {name:"Naget",role:"Roam"},
       {name:"Laura",role:"Exp"}
     ],
-    cadangan:[]
+    cadangan:[
+      {name:"Rip",role:"Mid"}
+    ]
   },
   {
     num:19,
@@ -1198,16 +1346,92 @@ var REG = {
   jadwal:{
     title:'Jadwal Pertandingan',
     html:function(){return(
-      '<div style="text-align:center;padding:44px 0">'+
-        '<div style="font-size:40px;margin-bottom:14px">...</div>'+
-        '<div style="color:#999;font-size:14px;margin-bottom:10px">Jadwal pertandingan akan diumumkan segera.</div>'+
-        '<div style="color:#444;font-size:12px">Hubungi admin untuk informasi lebih lanjut.</div>'+
+      '<div class="schedule-container">'+
+        '<div class="schedule-slider" id="scheduleSlider">'+
+          
+          '<div class="schedule-slide">'+
+            '<div class="schedule-header">'+
+              '<div class="schedule-date">JUMAT, 10/04/2026</div>'+
+              '<div class="schedule-group">GRUP A</div>'+
+            '</div>'+
+            '<div class="schedule-time"><div class="time-label">JAM</div><div class="time-value">19.10</div></div>'+
+            '<div class="schedule-match"><span class="match-team">Dientot Ketawa</span><span class="match-vs">VS</span><span class="match-team">DEATHBATLLE</span></div>'+
+            '<div class="schedule-match"><span class="match-team">Slwly</span><span class="match-vs">VS</span><span class="match-team">Rongsuy Squad</span></div>'+
+            '<div class="schedule-match"><span class="match-team">Amov</span><span class="match-vs">VS</span><span class="match-team">WISAL API</span></div>'+
+            '<div class="schedule-time"><div class="time-label">JAM</div><div class="time-value">20.15</div></div>'+
+            '<div class="schedule-match"><span class="match-team">Dientot Ketawa</span><span class="match-vs">VS</span><span class="match-team">Rongsuy Squad</span></div>'+
+            '<div class="schedule-match"><span class="match-team">DEATHBATLLE</span><span class="match-vs">VS</span><span class="match-team">WISAL API</span></div>'+
+            '<div class="schedule-match"><span class="match-team">Slwly</span><span class="match-vs">VS</span><span class="match-team">Amov</span></div>'+
+            '<div class="schedule-note">NOTE: BO1</div>'+
+          '</div>'+
+          
+          '<div class="schedule-slide">'+
+            '<div class="schedule-header">'+
+              '<div class="schedule-date">JUMAT, 10/04/2026</div>'+
+              '<div class="schedule-group">GRUP B</div>'+
+            '</div>'+
+            '<div class="schedule-time"><div class="time-label">JAM</div><div class="time-value">19.10</div></div>'+
+            '<div class="schedule-match"><span class="match-team">Kuma</span><span class="match-vs">VS</span><span class="match-team">PKT</span></div>'+
+            '<div class="schedule-match"><span class="match-team">Tilwing</span><span class="match-vs">VS</span><span class="match-team">Cungpret</span></div>'+
+            '<div class="schedule-match"><span class="match-team">ABS Pret</span><span class="match-vs">VS</span><span class="match-team">Radar Cianjur</span></div>'+
+            '<div class="schedule-time"><div class="time-label">JAM</div><div class="time-value">20.15</div></div>'+
+            '<div class="schedule-match"><span class="match-team">Kuma</span><span class="match-vs">VS</span><span class="match-team">Cungpret</span></div>'+
+            '<div class="schedule-match"><span class="match-team">PKT</span><span class="match-vs">VS</span><span class="match-team">Radar Cianjur</span></div>'+
+            '<div class="schedule-match"><span class="match-team">Tilwing</span><span class="match-vs">VS</span><span class="match-team">ABS Pret</span></div>'+
+            '<div class="schedule-note">NOTE: BO1</div>'+
+          '</div>'+
+          
+          '<div class="schedule-slide">'+
+            '<div class="schedule-header">'+
+              '<div class="schedule-date">JUMAT, 10/04/2026</div>'+
+              '<div class="schedule-group">GRUP C</div>'+
+            '</div>'+
+            '<div class="schedule-time"><div class="time-label">JAM</div><div class="time-value">19.10</div></div>'+
+            '<div class="schedule-match"><span class="match-team">Stella</span><span class="match-vs">VS</span><span class="match-team">Atheis Family</span></div>'+
+            '<div class="schedule-match"><span class="match-team">WM GACOR</span><span class="match-vs">VS</span><span class="match-team">Partyan -1</span></div>'+
+            '<div class="schedule-match"><span class="match-team">Tinzhel Tim</span><span class="match-vs">VS</span><span class="match-team">Tarot Club</span></div>'+
+            '<div class="schedule-time"><div class="time-label">JAM</div><div class="time-value">20.15</div></div>'+
+            '<div class="schedule-match"><span class="match-team">Stella</span><span class="match-vs">VS</span><span class="match-team">Partyan -1</span></div>'+
+            '<div class="schedule-match"><span class="match-team">Atheis Family</span><span class="match-vs">VS</span><span class="match-team">Tarot Club</span></div>'+
+            '<div class="schedule-match"><span class="match-team">WM GACOR</span><span class="match-vs">VS</span><span class="match-team">Tinzhel Tim</span></div>'+
+            '<div class="schedule-note">NOTE: BO1</div>'+
+          '</div>'+
+          
+          '<div class="schedule-slide">'+
+            '<div class="schedule-header">'+
+              '<div class="schedule-date">JUMAT, 10/04/2026</div>'+
+              '<div class="schedule-group">GRUP D</div>'+
+            '</div>'+
+            '<div class="schedule-time"><div class="time-label">JAM</div><div class="time-value">19.10</div></div>'+
+            '<div class="schedule-match"><span class="match-team">JETIMOTI</span><span class="match-vs">VS</span><span class="match-team">ZENITH</span></div>'+
+            '<div class="schedule-match"><span class="match-team">ZEE2INF</span><span class="match-vs">VS</span><span class="match-team">Anteiku</span></div>'+
+            '<div class="schedule-match"><span class="match-team">Zhuxin Love Zetian</span><span class="match-vs">VS</span><span class="match-team">Yamaha</span></div>'+
+            '<div class="schedule-time"><div class="time-label">JAM</div><div class="time-value">20.15</div></div>'+
+            '<div class="schedule-match"><span class="match-team">JETIMOTI</span><span class="match-vs">VS</span><span class="match-team">Anteiku</span></div>'+
+            '<div class="schedule-match"><span class="match-team">Zenith</span><span class="match-vs">VS</span><span class="match-team">Yamaha</span></div>'+
+            '<div class="schedule-match"><span class="match-team">ZEE2INF</span><span class="match-vs">VS</span><span class="match-team">Zhuxin Love Zetian</span></div>'+
+            '<div class="schedule-note">NOTE: BO1</div>'+
+          '</div>'+
+          
+        '</div>'+
+        '<div class="schedule-nav">'+
+          '<button class="nav-dot active" onclick="goToSlide(0)"></button>'+
+          '<button class="nav-dot" onclick="goToSlide(1)"></button>'+
+          '<button class="nav-dot" onclick="goToSlide(2)"></button>'+
+          '<button class="nav-dot" onclick="goToSlide(3)"></button>'+
+        '</div>'+
+        '<div class="nav-arrows">'+
+          '<button class="nav-btn" id="prevBtn" onclick="prevSlide()">Sebelumnya</button>'+
+          '<button class="nav-btn" id="nextBtn" onclick="nextSlide()">Selanjutnya</button>'+
+        '</div>'+
       '</div>'
     );}
   }
 };
 
 var current = 'homePage';
+var currentSlide = 0;
+var totalSlides = 4;
 
 function go(pageId){
   document.getElementById(current).classList.remove('active');
@@ -1278,6 +1502,45 @@ function showReg(id){
     '<div class="reg-detail-divider fade-in"></div>'+
     '<div class="reg-body fade-in">'+d.html()+'</div>';
   go('regDetailPage');
+  if(id === 'jadwal'){
+    currentSlide = 0;
+    updateSlider();
+  }
+}
+
+function goToSlide(index){
+  currentSlide = index;
+  updateSlider();
+}
+
+function prevSlide(){
+  if(currentSlide > 0){
+    currentSlide--;
+    updateSlider();
+  }
+}
+
+function nextSlide(){
+  if(currentSlide < totalSlides - 1){
+    currentSlide++;
+    updateSlider();
+  }
+}
+
+function updateSlider(){
+  var slider = document.getElementById('scheduleSlider');
+  if(slider){
+    slider.style.transform = 'translateX(-' + (currentSlide * 100) + '%)';
+    var dots = document.querySelectorAll('.nav-dot');
+    for(var i=0;i<dots.length;i++){
+      dots[i].classList.remove('active');
+      if(i === currentSlide) dots[i].classList.add('active');
+    }
+    var prevBtn = document.getElementById('prevBtn');
+    var nextBtn = document.getElementById('nextBtn');
+    if(prevBtn) prevBtn.disabled = currentSlide === 0;
+    if(nextBtn) nextBtn.disabled = currentSlide === totalSlides - 1;
+  }
 }
 
 var AC = null;
