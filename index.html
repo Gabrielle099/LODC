@@ -63,6 +63,30 @@ body{
     linear-gradient(90deg,rgba(201,169,98,0.02) 1px,transparent 1px);
   background-size:80px 80px;
 }
+/* Dew/Glass Effect */
+.dew-layer{
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 20%, rgba(201,169,98,0.04) 0%, transparent 50%),
+    radial-gradient(ellipse 60% 80% at 80% 80%, rgba(201,169,98,0.03) 0%, transparent 50%),
+    radial-gradient(circle at 30% 70%, rgba(255,255,255,0.02) 0%, transparent 30%),
+    radial-gradient(circle at 70% 30%, rgba(255,255,255,0.015) 0%, transparent 25%),
+    radial-gradient(circle at 50% 50%, rgba(255,255,255,0.01) 0%, transparent 40%);
+  animation:dewShimmer 8s ease-in-out infinite;
+}
+@keyframes dewShimmer{
+  0%,100%{opacity:1;transform:scale(1)}
+  50%{opacity:0.85;transform:scale(1.02)}
+}
+.frost-overlay{
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:linear-gradient(180deg, 
+    rgba(255,255,255,0.02) 0%, 
+    transparent 30%,
+    transparent 70%,
+    rgba(255,255,255,0.015) 100%);
+  backdrop-filter:blur(0.5px);
+}
 
 #app{
   position:relative;z-index:1;min-height:100vh;
@@ -370,23 +394,6 @@ body{
   flex-shrink:0;
 }
 .reg-icon svg{
-  width:20px;margin-bottom:2px;
-  transition:border-color .28s var(--ease),background .28s var(--ease),transform .22s var(--ease),box-shadow .25s var(--ease);
-  -webkit-user-select:none;user-select:none;
-}
-.reg-item:hover,.reg-item:active{
-  background:rgba(22,22,28,0.95);
-  border-color:rgba(201,169,98,0.3);
-  transform:translateX(4px);
-  box-shadow:0 6px 20px rgba(0,0,0,0.35);
-}
-.reg-icon{
-  width:42px;height:42px;min-width:42px;
-  border-radius:11px;
-  display:flex;align-items:center;justify-content:center;
-  flex-shrink:0;
-}
-.reg-icon svg{
   width:20px;height:20px;
   stroke:#fff;fill:none;
   stroke-width:2;stroke-linecap:round;stroke-linejoin:round;
@@ -398,7 +405,8 @@ body{
   font-size:12px;
   color:#e0e0e0;
   margin-bottom:2px;
-  letter-spacing:.01em}
+  letter-spacing:.01em;
+}
 .reg-sub{font-size:10px;color:#3a3a3a;letter-spacing:.02em}
 .reg-arrow{
   color:#2a2a2a;font-size:16px;flex-shrink:0;
@@ -731,6 +739,8 @@ body{
   <div class="ambient-light"></div>
   <div class="ambient-light"></div>
 </div>
+<div class="dew-layer"></div>
+<div class="frost-overlay"></div>
 <div class="texture-layer"></div>
 <div class="grid-layer"></div>
 
@@ -909,7 +919,9 @@ var TEAMS = [
       {name:"Ardo",role:"Gold"},
       {name:"Daniel",role:"Roam"}
     ],
-    cadangan:[]
+    cadangan:[
+      {name:"Daniel",role:"Exp/Roam"}
+    ]
   },
   {
     num:2,
@@ -1142,7 +1154,8 @@ var TEAMS = [
       {name:"Laura",role:"Exp"}
     ],
     cadangan:[
-      {name:"Rip",role:"Mid"}
+      {name:"Rip",role:"Mid"},
+      {name:"Laura",role:"EXP"}
     ]
   },
   {
@@ -1189,17 +1202,17 @@ var TEAMS = [
     num:22,
     name:"Radar Cianjur",
     players:[
-      {name:"Yuzu",role:"Jungle"},
-      {name:"Ive",role:"Gold"},
+      {name:"Yuuzu",role:"Jung"},
+      {name:"Argi",role:"Gold"},
       {name:"Reas",role:"Mid"},
-      {name:"Kyro",role:"Roam"},
-      {name:"Af",role:"Exp"}
+      {name:"Nnox",role:"Exp"},
+      {name:"Nagi",role:"Roam"}
     ],
     cadangan:[
-      {name:"Kuze",role:"Exp"},
-      {name:"Nagi",role:"Roam"},
-      {name:"Naysila",role:"Roam"},
-      {name:"Yuzu",role:"Exp"}
+      {name:"Fioredelune",role:"Mid"},
+      {name:"AF",role:"Exp"},
+      {name:"Kryoo",role:"Roam"},
+      {name:"Naysilla",role:"Roam"}
     ]
   },
   {
@@ -1248,23 +1261,24 @@ var REG = {
     title:'Format Pertandingan',
     html:function(){return(
       '<div class="stage-box"><div class="stage-box-title">GROUP STAGE</div><ul>'+
-      '<li>Pertandingan dimulai dengan format <span class="highlight">Group Stage</span>, terdiri dari <span class="highlight">4 group</span>; setiap group terdiri dari <span class="highlight">6 tim</span>.</li>'+
-      '<li>Penentuan sebuah tim akan berada di group mana, akan dilakukan melalui <span class="highlight">spin</span>.</li>'+
-      '<li>Setiap tim akan melalui <span class="highlight">5x pertandingan BO1</span> pada babak group stage.</li>'+
-      '<li>Tim yang berada di urutan <span class="highlight">1-4</span>, dipastikan akan melaju pada fase play-off/double elimination.</li>'+
+      '<li>Pertandingan dimulai dengan format <span class="highlight">Group Stage</span>.</li>'+
+      '<li>Terdiri dari <span class="highlight">4 group</span>, setiap group terdiri dari <span class="highlight">6 tim</span>.</li>'+
+      '<li>Penentuan posisi group dilakukan melalui <span class="highlight">spin</span>.</li>'+
+      '<li>Setiap tim akan melalui <span class="highlight">5x pertandingan BO1</span>.</li>'+
+      '<li>Tim urutan <span class="highlight">1-4</span> akan melaju ke fase <span class="highlight">Double Elimination</span>.</li>'+
       '</ul></div>'+
       '<div class="stage-box"><div class="stage-box-title">DOUBLE ELIMINATION</div><ul>'+
-      '<li>Pada fase double elimination, tim akan dispin untuk bertemu lawan di group yang <span class="highlight">berbeda</span>.</li>'+
-      '<li>Tim yang kalah di babak awal, masih bisa melaju dengan melalui <span class="highlight">lower bracket</span>.</li>'+
-      '<li>Setiap pertandingan pada fase ini, bersifat <span class="highlight">BO3</span>.</li>'+
+      '<li>Tim akan dispin untuk bertemu lawan dari group yang <span class="highlight">berbeda</span>.</li>'+
+      '<li>Tim yang kalah di babak awal masih bisa melaju melalui <span class="highlight">lower bracket</span>.</li>'+
+      '<li>Setiap pertandingan bersifat <span class="highlight">BO3</span>.</li>'+
       '</ul></div>'+
       '<div class="stage-box"><div class="stage-box-title">FINAL LOWER BRACKET</div><ul>'+
-      '<li><span class="live-dot"></span>Admin akan melakukan <span class="highlight-red">live di TikTok</span> guna menonton keseruan dari pertandingan yang akan selesai!</li>'+
-      '<li>Final lower bracket <span class="highlight">BO5</span> btw.</li>'+
+      '<li>Admin akan <span class="highlight-red">live di TikTok</span> untuk menonton pertandingan.</li>'+
+      '<li>Format pertandingan: <span class="highlight">BO5</span>.</li>'+
       '</ul></div>'+
       '<div class="stage-box"><div class="stage-box-title">GRAND FINAL</div><ul>'+
-      '<li><span class="live-dot"></span>Admin akan kembali melakukan <span class="highlight-red">live di TikTok</span> dan memantau keseruan dari Grand Final.</li>'+
-      '<li>Grand Final <span class="highlight">BO5</span>.</li>'+
+      '<li>Admin akan kembali <span class="highlight-red">live di TikTok</span> untuk memantau keseruan Grand Final.</li>'+
+      '<li>Format pertandingan: <span class="highlight">BO5</span>.</li>'+
       '</ul></div>'
     );}
   },
@@ -1320,6 +1334,14 @@ var REG = {
       '<a href="https://wa.me/6281371485814" target="_blank" rel="noopener" class="contact-link">'+
         '<div class="contact-num">3</div>'+
         '<div><div class="contact-name">Adit</div><div class="contact-num-text">+62 813-7148-5814</div></div>'+
+      '</a>'+
+      '<a href="https://wa.me/6289671145468" target="_blank" rel="noopener" class="contact-link">'+
+        '<div class="contact-num">4</div>'+
+        '<div><div class="contact-name">Alve</div><div class="contact-num-text">+62 896-7114-5468</div></div>'+
+      '</a>'+
+      '<a href="https://wa.me/62895393657149" target="_blank" rel="noopener" class="contact-link">'+
+        '<div class="contact-num">5</div>'+
+        '<div><div class="contact-name">Mr. Tengkotak</div><div class="contact-num-text">+62 895-3936-57149</div></div>'+
       '</a>'
     );}
   },
@@ -1552,31 +1574,60 @@ function playGlass(){
   if(!AC) return;
   try{
     var t = AC.currentTime;
+    
+    // Main glass crack
     var o1 = AC.createOscillator();
     var g1 = AC.createGain();
     o1.type = 'sine';
-    o1.frequency.setValueAtTime(2600, t);
-    o1.frequency.exponentialRampToValueAtTime(1600, t + 0.05);
-    o1.frequency.exponentialRampToValueAtTime(500, t + 0.12);
+    o1.frequency.setValueAtTime(2400, t);
+    o1.frequency.exponentialRampToValueAtTime(1400, t + 0.06);
+    o1.frequency.exponentialRampToValueAtTime(400, t + 0.15);
     g1.gain.setValueAtTime(0, t);
-    g1.gain.linearRampToValueAtTime(0.06, t + 0.003);
-    g1.gain.exponentialRampToValueAtTime(0.001, t + 0.15);
+    g1.gain.linearRampToValueAtTime(0.07, t + 0.004);
+    g1.gain.exponentialRampToValueAtTime(0.001, t + 0.18);
     o1.connect(g1); g1.connect(AC.destination);
-    o1.start(t); o1.stop(t + 0.15);
+    o1.start(t); o1.stop(t + 0.18);
     
+    // Glass shimmer 1
     var o2 = AC.createOscillator();
     var g2 = AC.createGain();
     o2.type = 'sine';
-    o2.frequency.setValueAtTime(3800, t + 0.02);
-    o2.frequency.exponentialRampToValueAtTime(2800, t + 0.06);
-    g2.gain.setValueAtTime(0, t + 0.02);
-    g2.gain.linearRampToValueAtTime(0.03, t + 0.025);
-    g2.gain.exponentialRampToValueAtTime(0.001, t + 0.1);
+    o2.frequency.setValueAtTime(4000, t + 0.015);
+    o2.frequency.exponentialRampToValueAtTime(2600, t + 0.07);
+    g2.gain.setValueAtTime(0, t + 0.015);
+    g2.gain.linearRampToValueAtTime(0.045, t + 0.02);
+    g2.gain.exponentialRampToValueAtTime(0.001, t + 0.12);
     o2.connect(g2); g2.connect(AC.destination);
-    o2.start(t + 0.02); o2.stop(t + 0.1);
+    o2.start(t + 0.015); o2.stop(t + 0.12);
+    
+    // Glass shimmer 2
+    var o3 = AC.createOscillator();
+    var g3 = AC.createGain();
+    o3.type = 'triangle';
+    o3.frequency.setValueAtTime(5200, t + 0.025);
+    o3.frequency.exponentialRampToValueAtTime(2000, t + 0.09);
+    g3.gain.setValueAtTime(0, t + 0.025);
+    g3.gain.linearRampToValueAtTime(0.035, t + 0.03);
+    g3.gain.exponentialRampToValueAtTime(0.001, t + 0.14);
+    o3.connect(g3); g3.connect(AC.destination);
+    o3.start(t + 0.025); o3.stop(t + 0.14);
+    
+    // Dew drop
+    var o4 = AC.createOscillator();
+    var g4 = AC.createGain();
+    o4.type = 'sine';
+    o4.frequency.setValueAtTime(1800, t + 0.05);
+    o4.frequency.exponentialRampToValueAtTime(1200, t + 0.1);
+    o4.frequency.exponentialRampToValueAtTime(800, t + 0.18);
+    g4.gain.setValueAtTime(0, t + 0.05);
+    g4.gain.linearRampToValueAtTime(0.025, t + 0.055);
+    g4.gain.exponentialRampToValueAtTime(0.001, t + 0.2);
+    o4.connect(g4); g4.connect(AC.destination);
+    o4.start(t + 0.05); o4.stop(t + 0.2);
+    
   }catch(e){}
 }
 document.addEventListener('click',function(){initAC();},{once:true});
 </script>
 </body>
-</html>
+  </html>
