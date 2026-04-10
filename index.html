@@ -63,7 +63,6 @@ body{
     linear-gradient(90deg,rgba(201,169,98,0.02) 1px,transparent 1px);
   background-size:80px 80px;
 }
-/* Dew/Glass Effect */
 .dew-layer{
   position:fixed;inset:0;z-index:0;pointer-events:none;
   background:
@@ -598,7 +597,6 @@ body{
   50%{opacity:.4;transform:scale(.7)}
 }
 
-/* Schedule Slider */
 .schedule-container{
   position:relative;
   overflow:hidden;
@@ -632,11 +630,14 @@ body{
   background:var(--card);
   border:1px solid var(--border);
   border-radius:12px;
-  padding:12px 14px;
+  padding:10px 14px;
   margin-bottom:8px;
+}
+.match-teams{
   display:flex;
   align-items:center;
   justify-content:space-between;
+  margin-bottom:4px;
 }
 .match-team{
   font-size:11px;
@@ -652,6 +653,12 @@ body{
   color:var(--gold);
   font-weight:700;
   padding:0 8px;
+}
+.match-opr{
+  text-align:center;
+  font-size:9px;
+  color:#666;
+  font-style:italic;
 }
 .schedule-time{
   background:rgba(201,169,98,0.08);
@@ -917,10 +924,10 @@ var TEAMS = [
       {name:"Patan",role:"Exp"},
       {name:"Akil",role:"Mid"},
       {name:"Ardo",role:"Gold"},
-      {name:"Daniel",role:"Roam"}
+      {name:"Keenan",role:"Roam"}
     ],
     cadangan:[
-      {name:"Daniel",role:"Exp/Roam"}
+      {name:"Daniel",role:"Roam/Exp"}
     ]
   },
   {
@@ -1373,65 +1380,64 @@ var REG = {
           
           '<div class="schedule-slide">'+
             '<div class="schedule-header">'+
-              '<div class="schedule-date">JUMAT, 10/04/2026</div>'+
+              '<div class="schedule-date">SABTU, 11/04/2026</div>'+
               '<div class="schedule-group">GRUP A</div>'+
             '</div>'+
-            '<div class="schedule-time"><div class="time-label">JAM</div><div class="time-value">19.10</div></div>'+
-            '<div class="schedule-match"><span class="match-team">Dientot Ketawa</span><span class="match-vs">VS</span><span class="match-team">DEATHBATLLE</span></div>'+
-            '<div class="schedule-match"><span class="match-team">Slwly</span><span class="match-vs">VS</span><span class="match-team">Rongsuy Squad</span></div>'+
-            '<div class="schedule-match"><span class="match-team">Amov</span><span class="match-vs">VS</span><span class="match-team">WISAL API</span></div>'+
+            '<div class="schedule-match"><div class="match-teams"><span class="match-team">Dientot Ketawa</span><span class="match-vs">VS</span><span class="match-team">WISAL Api</span></div><div class="match-opr">Dientot Ketawa OPR</div></div>'+
+            '<div class="schedule-match"><div class="match-teams"><span class="match-team">Rongsuy Squad</span><span class="match-vs">VS</span><span class="match-team">Amov</span></div><div class="match-opr">Rongsuy Squad OPR</div></div>'+
+            '<div class="schedule-match"><div class="match-teams"><span class="match-team">DEATHBATLLE</span><span class="match-vs">VS</span><span class="match-team">Slwly</span></div><div class="match-opr">DEATHBATLLE OPR</div></div>'+
             '<div class="schedule-time"><div class="time-label">JAM</div><div class="time-value">20.15</div></div>'+
-            '<div class="schedule-match"><span class="match-team">Dientot Ketawa</span><span class="match-vs">VS</span><span class="match-team">Rongsuy Squad</span></div>'+
-            '<div class="schedule-match"><span class="match-team">DEATHBATLLE</span><span class="match-vs">VS</span><span class="match-team">WISAL API</span></div>'+
-            '<div class="schedule-match"><span class="match-team">Slwly</span><span class="match-vs">VS</span><span class="match-team">Amov</span></div>'+
+            '<div class="schedule-match"><div class="match-teams"><span class="match-team">Dientot Ketawa</span><span class="match-vs">VS</span><span class="match-team">Amov</span></div><div class="match-opr">Dientot Ketawa OPR</div></div>'+
+            '<div class="schedule-match"><div class="match-teams"><span class="match-team">Wisal Api</span><span class="match-vs">VS</span><span class="match-team">Slwly</span></div><div class="match-opr">Wisal Api OPR</div></div>'+
+            '<div class="schedule-match"><div class="match-teams"><span class="match-team">Rongsuy Squad</span><span class="match-vs">VS</span><span class="match-team">Deathbattle</span></div><div class="match-opr">Rongsuy Squad OPR</div></div>'+
             '<div class="schedule-note">NOTE: BO1</div>'+
           '</div>'+
           
           '<div class="schedule-slide">'+
             '<div class="schedule-header">'+
-              '<div class="schedule-date">JUMAT, 10/04/2026</div>'+
+              '<div class="schedule-date">SABTU, 11/04/2026</div>'+
               '<div class="schedule-group">GRUP B</div>'+
             '</div>'+
             '<div class="schedule-time"><div class="time-label">JAM</div><div class="time-value">19.10</div></div>'+
-            '<div class="schedule-match"><span class="match-team">Kuma</span><span class="match-vs">VS</span><span class="match-team">PKT</span></div>'+
-            '<div class="schedule-match"><span class="match-team">Tilwing</span><span class="match-vs">VS</span><span class="match-team">Cungpret</span></div>'+
-            '<div class="schedule-match"><span class="match-team">ABS Pret</span><span class="match-vs">VS</span><span class="match-team">Radar Cianjur</span></div>'+
+            '<div class="schedule-match"><div class="match-teams"><span class="match-team">Kuma</span><span class="match-vs">VS</span><span class="match-team">Radar Cianjur</span></div><div class="match-opr">KUMA OPR</div></div>'+
+            '<div class="schedule-match"><div class="match-teams"><span class="match-team">Cungpret</span><span class="match-vs">VS</span><span class="match-team">ABS Pret</span></div><div class="match-opr">Cungpret OPR</div></div>'+
+            '<div class="schedule-match"><div class="match-teams"><span class="match-team">PKT</span><span class="match-vs">VS</span><span class="match-team">Tilwing</span></div><div class="match-opr">PKT OPR</div></div>'+
             '<div class="schedule-time"><div class="time-label">JAM</div><div class="time-value">20.15</div></div>'+
-            '<div class="schedule-match"><span class="match-team">Kuma</span><span class="match-vs">VS</span><span class="match-team">Cungpret</span></div>'+
-            '<div class="schedule-match"><span class="match-team">PKT</span><span class="match-vs">VS</span><span class="match-team">Radar Cianjur</span></div>'+
-            '<div class="schedule-match"><span class="match-team">Tilwing</span><span class="match-vs">VS</span><span class="match-team">ABS Pret</span></div>'+
+            '<div class="schedule-match"><div class="match-teams"><span class="match-team">Kuma</span><span class="match-vs">VS</span><span class="match-team">ABS Pret</span></div><div class="match-opr">Kuma OPR</div></div>'+
+            '<div class="schedule-match"><div class="match-teams"><span class="match-team">Radar Cianjur</span><span class="match-vs">VS</span><span class="match-team">Tilwing</span></div><div class="match-opr">RADAR CIANJUR OPR</div></div>'+
+            '<div class="schedule-match"><div class="match-teams"><span class="match-team">Cungpret</span><span class="match-vs">VS</span><span class="match-team">PKT</span></div><div class="match-opr">Cungpret OPR</div></div>'+
             '<div class="schedule-note">NOTE: BO1</div>'+
           '</div>'+
           
           '<div class="schedule-slide">'+
             '<div class="schedule-header">'+
-              '<div class="schedule-date">JUMAT, 10/04/2026</div>'+
+              '<div class="schedule-date">SABTU, 11/04/2026</div>'+
               '<div class="schedule-group">GRUP C</div>'+
             '</div>'+
             '<div class="schedule-time"><div class="time-label">JAM</div><div class="time-value">19.10</div></div>'+
-            '<div class="schedule-match"><span class="match-team">Stella</span><span class="match-vs">VS</span><span class="match-team">Atheis Family</span></div>'+
-            '<div class="schedule-match"><span class="match-team">WM GACOR</span><span class="match-vs">VS</span><span class="match-team">Partyan -1</span></div>'+
-            '<div class="schedule-match"><span class="match-team">Tinzhel Tim</span><span class="match-vs">VS</span><span class="match-team">Tarot Club</span></div>'+
+            '<div class="schedule-match"><div class="match-teams"><span class="match-team">Stella</span><span class="match-vs">VS</span><span class="match-team">Tarot Club</span></div><div class="match-opr">STELLA OPR</div></div>'+
+            '<div class="schedule-match"><div class="match-teams"><span class="match-team">Partyan -1</span><span class="match-vs">VS</span><span class="match-team">Thinzel Tim</span></div><div class="match-opr">Partyan -1 OPR</div></div>'+
+            '<div class="schedule-match"><div class="match-teams"><span class="match-team">Atheis Family</span><span class="match-vs">VS</span><span class="match-team">WM Gacor</span></div><div class="match-opr">Atheis OPR</div></div>'+
             '<div class="schedule-time"><div class="time-label">JAM</div><div class="time-value">20.15</div></div>'+
-            '<div class="schedule-match"><span class="match-team">Stella</span><span class="match-vs">VS</span><span class="match-team">Partyan -1</span></div>'+
-            '<div class="schedule-match"><span class="match-team">Atheis Family</span><span class="match-vs">VS</span><span class="match-team">Tarot Club</span></div>'+
-            '<div class="schedule-match"><span class="match-team">WM GACOR</span><span class="match-vs">VS</span><span class="match-team">Tinzhel Tim</span></div>'+
+            '<div class="schedule-match"><div class="match-teams"><span class="match-team">Stella</span><span class="match-vs">VS</span><span class="match-team">Thinzel Tim</span></div><div class="match-opr">Stella OPR</div></div>'+
+            '<div class="schedule-match"><div class="match-teams"><span class="match-team">Tarot Club</span><span class="match-vs">VS</span><span class="match-team">WM Gacor</span></div><div class="match-opr">Tarot OPR</div></div>'+
+            '<div class="schedule-match"><div class="match-teams"><span class="match-team">Partyan -1</span><span class="match-vs">VS</span><span class="match-team">Atheis Family</span></div><div class="match-opr">Partyan -1 OPR</div></div>'+
             '<div class="schedule-note">NOTE: BO1</div>'+
           '</div>'+
           
           '<div class="schedule-slide">'+
             '<div class="schedule-header">'+
-              '<div class="schedule-date">JUMAT, 10/04/2026</div>'+
+              '<div class="schedule-date">SABTU, 11/04/2026</div>'+
               '<div class="schedule-group">GRUP D</div>'+
             '</div>'+
             '<div class="schedule-time"><div class="time-label">JAM</div><div class="time-value">19.10</div></div>'+
-            '<div class="schedule-match"><span class="match-team">JETIMOTI</span><span class="match-vs">VS</span><span class="match-team">ZENITH</span></div>'+
-            '<div class="schedule-match"><span class="match-team">ZEE2INF</span><span class="match-vs">VS</span><span class="match-team">Anteiku</span></div>'+
-            '<div class="schedule-match"><span class="match-team">Zhuxin Love Zetian</span><span class="match-vs">VS</span><span class="match-team">Yamaha</span></div>'+
+            '<div class="schedule-match"><div class="match-teams"><span class="match-team">JETIMOTI</span><span class="match-vs">VS</span><span class="match-team">Yamaha</span></div><div class="match-opr">JETIMOTI OPR</div></div>'+
+            '<div class="schedule-match"><div class="match-teams"><span class="match-team">Anteiku</span><span class="match-vs">VS</span><span class="match-team">Zhuxin Love Zetian</span></div><div class="match-opr">Anteiku OPR</div></div>'+
+            '<div class="schedule-match"><div class="match-teams"><span class="match-team">Zenith</span><span class="match-vs">VS</span><span class="match-team">Zee2Inf</span></div><div class="match-opr">Zenith OPR</div></div>'+
             '<div class="schedule-time"><div class="time-label">JAM</div><div class="time-value">20.15</div></div>'+
-            '<div class="schedule-match"><span class="match-team">JETIMOTI</span><span class="match-vs">VS</span><span class="match-team">Anteiku</span></div>'+
-            '<div class="schedule-match"><span class="match-team">Zenith</span><span class="match-vs">VS</span><span class="match-team">Yamaha</span></div>'+
-            '<div class="schedule-match"><span class="match-team">ZEE2INF</span><span class="match-vs">VS</span><span class="match-team">Zhuxin Love Zetian</span></div>'+
+            '<div class="schedule-match"><div class="match-teams"><span class="match-team">JETIMOTI</span><span class="match-vs">VS</span><span class="match-team">Zhuxin Love Zetian</span></div><div class="match-opr">JETIMOTI OPR</div></div>'+
+            '<div class="schedule-match"><div class="match-teams"><span class="match-team">Yamaha</span><span class="match-vs">VS</span><span class="match-team">Zee2Inf</span></div><div class="match-opr">Yamaha OPR</div></div>'+
+            '<div class="schedule-match"><div class="match-teams"><span class="match-team">Anteiku</span><span class="match-vs">VS</span><span class="match-team">Zenith</span></div><div class="match-opr">Anteiku OPR</div></div>'+
             '<div class="schedule-note">NOTE: BO1</div>'+
           '</div>'+
           
@@ -1574,8 +1580,6 @@ function playGlass(){
   if(!AC) return;
   try{
     var t = AC.currentTime;
-    
-    // Main glass crack
     var o1 = AC.createOscillator();
     var g1 = AC.createGain();
     o1.type = 'sine';
@@ -1588,7 +1592,6 @@ function playGlass(){
     o1.connect(g1); g1.connect(AC.destination);
     o1.start(t); o1.stop(t + 0.18);
     
-    // Glass shimmer 1
     var o2 = AC.createOscillator();
     var g2 = AC.createGain();
     o2.type = 'sine';
@@ -1600,7 +1603,6 @@ function playGlass(){
     o2.connect(g2); g2.connect(AC.destination);
     o2.start(t + 0.015); o2.stop(t + 0.12);
     
-    // Glass shimmer 2
     var o3 = AC.createOscillator();
     var g3 = AC.createGain();
     o3.type = 'triangle';
@@ -1612,7 +1614,6 @@ function playGlass(){
     o3.connect(g3); g3.connect(AC.destination);
     o3.start(t + 0.025); o3.stop(t + 0.14);
     
-    // Dew drop
     var o4 = AC.createOscillator();
     var g4 = AC.createGain();
     o4.type = 'sine';
@@ -1624,10 +1625,9 @@ function playGlass(){
     g4.gain.exponentialRampToValueAtTime(0.001, t + 0.2);
     o4.connect(g4); g4.connect(AC.destination);
     o4.start(t + 0.05); o4.stop(t + 0.2);
-    
   }catch(e){}
 }
 document.addEventListener('click',function(){initAC();},{once:true});
 </script>
 </body>
-  </html>
+</html>
